@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.kp1.link.ShortLink;
+import ua.shortener.link.ShortLink;
 
 import java.util.List;
 
