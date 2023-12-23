@@ -1,26 +1,26 @@
-# Data source settings
+# Def profile configuration
+
+# Data source settings for H2
 spring:
+  profiles:
+    active: prod
   datasource:
-    url: jdbc:postgresql://localhost:5432/shortener
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:shortenerdb
+    username: sa
+    password:
 
-  # flyway settings
+  # flyway settings for H2
   flyway:
-    url: jdbc:postgresql://localhost:5432/shortener
-    user: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:h2:mem:shortener
+    user: sa
+    password:
 
-  # JPA and Hibernate setup
+  # JPA and Hibernate setup for H2
   jpa:
-    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
       ddl-auto: none
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 # Server port
 server:
