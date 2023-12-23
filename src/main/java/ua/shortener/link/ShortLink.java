@@ -1,19 +1,22 @@
 package ua.shortener.link;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.shortener.users.User;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Table(name = "shortlink")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "shortlink")
 public class ShortLink {
 
     @Id
@@ -21,23 +24,26 @@ public class ShortLink {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long linkId;
 
-    @Column(name = "user_id")
-    private long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JsonIgnore
+    private User user;
 
     @Column(name = "originalurl ", nullable = false)
     private String originalUrl;
 
-    @Column(name = "token ", nullable = false)//
-    private String token; //8 символьний ключ
+    @Column(name = "tokenurl ", nullable = false)//
+    private String tokenUrl; //8 символьний ключ
 
     @Column(name = "shorturl  ", nullable = false)
     private String shortUrl; // https://short/+token
 
     @Column(name = "startdate  ", nullable = false)
-    private Date startDate; // дата утворення
+    @Builder.Default
+    private LocalDateTime startDate = LocalDateTime.now(); // дата утворення
 
     @Column(name = "finaldate  ", nullable = false)
-    private Date finalDate; // кінцева дата
+    private LocalDateTime finalDate= LocalDateTime.now().plusMonths(1);; // кінцева дата
 
     @Column(name = "visit  ", nullable = false)
     private int visit; // кількість переходів по посиланню

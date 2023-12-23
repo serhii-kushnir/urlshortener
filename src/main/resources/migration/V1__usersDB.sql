@@ -6,10 +6,12 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS shortlink (
                                          linkid BIGINT PRIMARY KEY AUTO_INCREMENT,
-                                         user_id BIGINT NOT NULL,
+                                         user_id BIGINT,
                                          originalurl VARCHAR(255) NOT NULL,
+                                         tokenurl VARCHAR(255) NOT NULL,
                                          shorturl VARCHAR(255) NOT NULL,
-                                         startdate DATE NOT NULL,
-                                         finaldate DATE NOT NULL,
-                                         visit INT NOT NULL
+                                         startdate DATETIME NOT NULL,
+                                         finaldate DATETIME NOT NULL,
+                                         visit INT NOT NULL,
+                                         FOREIGN KEY (user_id) REFERENCES users(user_id)
 );

@@ -10,17 +10,16 @@ import ua.shortener.link.ShortLink;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "users")
 public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
-
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -28,6 +27,6 @@ public class User {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @OneToMany(mappedBy = "shortLinkList")
+    @OneToMany(mappedBy = "user")
     List<ShortLink> shortLinkList;
 }
