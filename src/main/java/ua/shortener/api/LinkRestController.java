@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
-public class LinkRestController {
+public final class LinkRestController {
 
     private final LinkService linkService;
 

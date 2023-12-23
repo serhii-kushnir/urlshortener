@@ -24,20 +24,11 @@ public class LinkService {
     }
 
     public Link createLink(final Link link) {
-        if (isValidShortLink(link.getShortLink())) {
-            return linkRepository.save(link);
-        } else {
-            exception("Short link must be 8 characters long");
-            return null;
-        }
+        return linkRepository.save(link);
     }
 
     public void deleteLink(final String shortLink) {
         linkRepository.deleteById(shortLink);
-    }
-
-    private boolean isValidShortLink(final String shortLink) {
-        return shortLink != null && shortLink.length() == 8;
     }
 
     private static void exception(final String msg) {

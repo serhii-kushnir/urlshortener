@@ -9,6 +9,8 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+import static ua.shortener.service.ShortLinkGenerator.generateShortLink;
+
 @Entity
 @Data
 @Table(name = "links")
@@ -26,4 +28,11 @@ public class Link {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    public Link() {
+        this.shortLink = generateShortLink();
+        this.createdAt = LocalDateTime.now();
+        this.openCount = 0;
+    }
+
 }
