@@ -9,7 +9,7 @@ class ShortLinkGeneratorTest {
     @Test
     void generateShortLink_shouldReturnStringOfCorrectLength() {
         // given
-        ShortLinkGenerator underTest = new ShortLinkGenerator();
+        final ShortLinkGenerator underTest = new ShortLinkGenerator();
 
         // when
         String result = underTest.generateShortLink();
@@ -21,7 +21,7 @@ class ShortLinkGeneratorTest {
     @Test
     void generateShortLink_shouldReturnStringContainingOnlyAllowedCharacters() {
         // given
-        ShortLinkGenerator underTest = new ShortLinkGenerator();
+        final ShortLinkGenerator underTest = new ShortLinkGenerator();
 
         // when
         String result = underTest.generateShortLink();
@@ -33,7 +33,7 @@ class ShortLinkGeneratorTest {
     @Test
     void generateShortLink_shouldNotReturnTheSameResultTwice() {
         // given
-        ShortLinkGenerator underTest = new ShortLinkGenerator();
+        final ShortLinkGenerator underTest = new ShortLinkGenerator();
 
         // when
         String result1 = underTest.generateShortLink();
