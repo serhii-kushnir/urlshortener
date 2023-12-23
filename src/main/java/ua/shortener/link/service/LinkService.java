@@ -1,10 +1,10 @@
-package ua.shortener.service;
+package ua.shortener.link.service;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
-import ua.shortener.entity.Link;
+import ua.shortener.link.entity.Link;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +25,10 @@ public class LinkService {
 
     public Link createLink(final Link link) {
         return linkRepository.save(link);
+    }
+
+    public Link editLink(Link updatedLink) {
+        return linkRepository.save(updatedLink);
     }
 
     public void deleteLink(final String shortLink) {

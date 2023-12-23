@@ -1,4 +1,4 @@
-package ua.shortener.service;
+package ua.shortener.link.service;
 
 import org.springframework.stereotype.Service;
 
