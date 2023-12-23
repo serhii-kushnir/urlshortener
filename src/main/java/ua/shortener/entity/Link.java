@@ -34,5 +34,4 @@ public class Link {
         this.createdAt = LocalDateTime.now();
         this.openCount = 0;
     }
-
 }
