@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 import static ua.shortener.link.service.ShortLinkGenerator.generateShortLink;
 
+
 @Entity
 @Data
 @Table(name = "links")
