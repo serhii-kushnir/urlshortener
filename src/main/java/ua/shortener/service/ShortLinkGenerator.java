@@ -1,8 +1,14 @@
 package ua.shortener.service;
 
+import org.springframework.stereotype.Service;
+
 import java.security.SecureRandom;
 
+@Service
 public final class ShortLinkGenerator {
+
+    private ShortLinkGenerator() {
+    }
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int LENGTH = 8;
