@@ -2,11 +2,16 @@ version: '3'
 
 services:
   postgres:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: shortener
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DB_USERNAME: ${DB_USERNAME}
+        DB_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
 
   spring-app:
     image: kp/url-shortener:latest
@@ -16,9 +21,14 @@ services:
       - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/shortener
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_DATABASE: POSTGRESQL
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_JPA_SHOW_SQL: true
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+
+# docker build -t kp/url-shortener:latest .
+# docker-compose up -d
+# docker-compose up
+# docker-compose down
