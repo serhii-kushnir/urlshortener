@@ -15,7 +15,7 @@ class ShortLinkGeneratorTest {
         String result = underTest.generateShortLink();
 
         // then
-        assertThat(result).hasSize(7);
+        assertThat(result).hasSize(8);
     }
 
     @Test
