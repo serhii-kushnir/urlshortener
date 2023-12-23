@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "links")
 public class Link {
+
     @Id
     @Column(name = "short_link", length = 8)
     private String shortLink;

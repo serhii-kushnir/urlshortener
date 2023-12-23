@@ -12,6 +12,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class LinkService {
+
     private final LinkRepository linkRepository;
 
     public List<Link> getAllLinks() {
