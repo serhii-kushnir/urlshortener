@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="'Notes: ' + ${notes.size}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        .card {
+            --bs-card-border-width: 0;
+        }
+
+        .table {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table-row {
+            display: table-row;
+        }
+
+        .table-header,
+        .table-cell {
+            display: table-cell;
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .table-header {
+            font-weight: bold;
+            background-color: #e9e9e9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-3">
+        <div class="card">
+
+            <div class="card-header">
+                <h3 th:text="'Notes: ' + ${notes.size}"></h3>
+            </div>
+
+            <a th:href="@{/note/create}" class="btn btn-primary">Create Note</a>
+
+            <div class="card-body">
+
+                <form th:action="@{/note/list}">
+                    <div class="input-group mb-3 mt-3">
+                        <input type="text" class="form-control form-control-sm" th:name="search" th:value="${searchValue}">
+                        <button class="btn btn-sm btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </form>
+
+                <div class="table">
+                    <div class="table-row">
+                        <div class="table-header">Id</div>
+                        <div class="table-header">Title</div>
+                        <div class="table-header">Content</div>
+                        <div class="table-header">Actions</div>
+                    </div>
+
+                    <div th:each="note : ${notes}" class="table-row">
+                        <div class="table-cell" th:text="${note.id}"></div>
+                        <div class="table-cell" th:text="${note.title}"></div>
+                        <div class="table-cell" th:text="${note.content}"></div>
+                        <div class="table-cell">
+                            <a class="btn btn-sm btn-outline-secondary" th:href="'/note/edit?id=' + ${note.id}">Edit</a>
+                            <a class="btn btn-sm btn-outline-danger" th:href="'/note/delete?id=' + ${note.id}">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer>@2023 <a href="https://github.com/serhii-kushnir">Serhii Kushnir</a> | <a href="https://www.linkedin.com/in/serhii-kushnir1611/">LinkedIn</a></footer>
+        </div>
+    </div>
+</body>
+</html>
