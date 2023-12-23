@@ -1,4 +1,4 @@
-package ua.shortener.entity;
+package ua.shortener.link.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +9,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-import static ua.shortener.service.ShortLinkGenerator.generateShortLink;
+import static ua.shortener.link.service.ShortLinkGenerator.generateShortLink;
 
 @Entity
 @Data
