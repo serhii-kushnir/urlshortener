@@ -1,7 +1,8 @@
-package ua.shortener.link.entity;
+package ua.shortener.link;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import ua.shortener.user.User;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +30,7 @@ public class Link {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
 
     public Link() {
         this.shortLink = generateShortLink();

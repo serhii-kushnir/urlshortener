@@ -1,4 +1,4 @@
-package ua.shortener.link.entity;
+package ua.shortener.user;
 
 public enum Role {
     ADMIN,

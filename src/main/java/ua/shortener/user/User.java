@@ -1,8 +1,9 @@
-package ua.shortener.link.entity;
+package ua.shortener.user;
 
 
 import jakarta.persistence.*;
 import lombok.Data;
+import ua.shortener.link.Link;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
