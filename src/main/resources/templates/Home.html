@@ -25,10 +25,14 @@
     <!-----------------------------Input Form----------------------------------->
     <div>
         <div class="container input-container">
-            <input type="text" class="input-field" placeholder="put your url here" >
-            <a class="btn" role="button" data-bs-toggle="button" style="font-size:12px" th:href="@{/note/edit_note/{id}(id=${note.id})}">
-                <span class="bi bi-arrow-right-square" style="font-size:25px"></span>
-            </a>
+            <form action="Home.html">
+                <div style="margin-bottom: 20px;">
+                    <input type="text" class="input-field" placeholder="put your url here" >
+                </div>
+                <button type="submit" id="generateBtn" class="btn white-btn"
+                        style="font-size:15px;">generate</button>
+            </form>
+
         </div>
     </div>
     <!----------------------------- Teble container ----------------------------------->
@@ -58,8 +62,8 @@
                         </a>
                     </td>
                     <td>
-                        <a class="btn" role="button" data-bs-toggle="button" style="font-size:12px" th:href="@{/note/edit_note/{id}(id=${note.id})}"> ✏️ </a>
-                        <a class="btn" role="button" data-bs-toggle="button" style="font-size:12px" th:href="@{/note/edit_note/{id}(id=${note.id})}"> 🗑️ </a>
+                        <a class="btn" role="button" data-bs-toggle="button" data-bs-toggle="tooltip" title="edit" style="font-size:12px" th:href="@{/note/edit_note/{id}(id=${note.id})}"> ✏️ </a>
+                        <a class="btn" role="button" data-bs-toggle="button" data-bs-toggle="tooltip" title="remove" style="font-size:12px" th:href="@{/note/edit_note/{id}(id=${note.id})}"> 🗑️ </a>
                     </td>
                 </tr>
                 </tbody>
