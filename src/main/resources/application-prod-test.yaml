@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+#    url: ${DB_URL}
+    url: jdbc:postgresql://localhost:5432/shortener
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
