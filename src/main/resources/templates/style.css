@@ -14,9 +14,16 @@ body{
     background-attachment: fixed;
     overflow: hidden;
 }
+h1 {
+            color: white;
+}
+th{
+    color: white
+}
 .wrapper{
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 110vh;
     background: rgba(39, 39, 39, 0.4);
@@ -34,7 +41,7 @@ body{
 }
 .nav-logo p{
     color: white;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 600;
 }
 .nav-menu ul{
@@ -87,6 +94,12 @@ body{
     height: 420px;
     overflow: hidden;
     z-index: 2;
+}
+.container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
 }
 .login-container{
     position: absolute;
