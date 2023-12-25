@@ -31,7 +31,6 @@ public class Link {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
     public Link() {
         this.shortLink = generateShortLink();
         this.createdAt = LocalDateTime.now();
