@@ -1,4 +1,4 @@
-package ua.shortener.user.repository;
+package ua.shortener.user.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

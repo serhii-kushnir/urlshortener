@@ -6,9 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ua.shortener.user.Role;
 import ua.shortener.user.User;
-import ua.shortener.user.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

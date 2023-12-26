@@ -2,12 +2,11 @@
 
 # Data source settings for H2
 spring:
-#  profiles:
-#    active: prod
+  profiles:
+    active: prod
   datasource:
 #    added for comfort testing
     url: jdbc:h2:./shortenerdb
-#    url: jdbc:h2:mem:shortenerdb
     username: sa
     password:
 
@@ -15,7 +14,6 @@ spring:
   flyway:
     #    added for comfort testing
     url: jdbc:h2:./shortenerdb
-#    url: jdbc:h2:mem:shortener
     user: sa
     password:
 

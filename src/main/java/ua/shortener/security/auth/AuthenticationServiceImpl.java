@@ -14,7 +14,7 @@ import ua.shortener.security.auth.dto.SignUpRequest;
 import ua.shortener.security.jwt.JwtService;
 import ua.shortener.user.Role;
 import ua.shortener.user.User;
-import ua.shortener.user.repository.UserRepository;
+import ua.shortener.user.service.UserRepository;
 import ua.shortener.user.service.UserService;
 
 @Service
