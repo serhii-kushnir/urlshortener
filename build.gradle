@@ -25,7 +25,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //uncomment
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //added
+    runtimeOnly 'com.h2database:h2'
+    //added
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.12.3'
 
     implementation 'org.flywaydb:flyway-core'
 
