@@ -49,7 +49,7 @@ public final class LinkRestController {
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
 
         Link link = new Link();
-        link.setLink(dtoLink.getLink());
+        link.setUrl(dtoLink.getLink());
         link.setUser(existingUser);
 
         linkService.createLink(link);

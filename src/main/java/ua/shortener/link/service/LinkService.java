@@ -33,9 +33,8 @@ public final class LinkService {
     }
 
     public Link editLink(Link existingLink, DTOLink updatedDtoLink) {
-        // Перевірка, чи потрібно змінювати поле link
-        if (!existingLink.getLink().equals(updatedDtoLink.getLink())) {
-            existingLink.setLink(updatedDtoLink.getLink());
+        if (!existingLink.getUrl().equals(updatedDtoLink.getLink())) {
+            existingLink.setUrl(updatedDtoLink.getLink());
         }
 
         return linkRepository.save(existingLink);
