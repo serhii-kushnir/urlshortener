@@ -2,16 +2,20 @@ package ua.shortener.security.auth;
 
 
 import jakarta.servlet.http.HttpServletResponse;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import ua.shortener.security.auth.dto.JwtAuthenticationResponse;
 import ua.shortener.security.auth.dto.SignInRequest;
 import ua.shortener.security.auth.dto.SignUpRequest;
 import ua.shortener.security.jwt.JwtService;
+
 import ua.shortener.user.Role;
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserRepository;

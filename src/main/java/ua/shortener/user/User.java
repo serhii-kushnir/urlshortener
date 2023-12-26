@@ -1,8 +1,21 @@
 package ua.shortener.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.CascadeType;
+
 import lombok.Data;
+
 import ua.shortener.link.Link;
 
 import java.time.LocalDateTime;
@@ -18,15 +31,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "user_name", length = 100, nullable = false)
+    @Column(name = "user_name", length = 30, nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, length = 100,
-            columnDefinition = "VARCHAR(100) CHECK (password ~ '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$')")
+    @Column(nullable = false, columnDefinition = "VARCHAR(100) CHECK (password ~ '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$')")
     private String password;
 
-    @Column(nullable = false, length = 100,
-            columnDefinition = "VARCHAR(100) CHECK (email ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')")
+    @Column(nullable = false, length = 100, unique = true, columnDefinition = "VARCHAR(100) CHECK (email ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')")
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -39,7 +50,8 @@ public class User {
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Link> links = new ArrayList<>();
 
     @PrePersist

@@ -31,5 +31,4 @@ public class LinkRepositoryTest extends ContainersEnvironment {
         List<Link> list = linkRepository.findAll();
         assertEquals(0, list.size());
     }
-
 }
