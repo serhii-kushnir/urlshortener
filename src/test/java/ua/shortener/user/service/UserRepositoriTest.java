@@ -21,12 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = UrlShortenerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
-public class UserRepositoriTest extends ContainersEnvironment {
+class UserRepositoriTest extends ContainersEnvironment {
     @Autowired
     public UserRepository userRepository;
 
     @Test
-    public void WhenGetLinkExpectEmptyList(){
+    void WhenGetLinkExpectEmptyList(){
         List<User> list = userRepository.findAll();
         assertEquals(1, list.size());
     }
