@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +16,7 @@
 <div class="wrapper">
     <nav class="nav">
         <div class="nav-logo">
-            <p>URLshort</p>
+            <img src="images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
         </div>
         <div class="nav-button">
             <button class="btn white-btn" id="loginBtn" onclick="login()">Sign out</button>
@@ -25,7 +25,7 @@
     <!-----------------------------Input Form----------------------------------->
     <div>
         <div class="container input-container">
-            <form action="Home.html">
+            <form action="home.html">
                 <div style="margin-bottom: 20px;">
                     <input type="text" class="input-field" placeholder="put your url here" >
                 </div>
@@ -52,12 +52,13 @@
                 <tr th:each="link : ${linkList}">
                     <td style="padding-right: 40px;">
                         <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                           th:href="${link.link}">
+                           th:href="${linkList}">
                             original link
                         </a>
                     </td>
                     <td style="padding-left: 40px;">
-                        <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="#">
+                        <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                           th:href="${link.link}">
                             short link
                         </a>
                     </td>
