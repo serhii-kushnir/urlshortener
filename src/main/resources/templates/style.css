@@ -1,5 +1,6 @@
 /* POPPINS FONT */
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+ HEAD
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 *{
     margin: 0;
@@ -15,7 +16,7 @@ body{
     overflow: hidden;
 }
 h1 {
-            color: white;
+    color: white;
 }
 th{
     color: white
@@ -78,6 +79,7 @@ th{
 }
 generateBtn{
 margin-right: 40px;
+    margin-right: 40px;
 }
 .btn.white-btn{
     background: rgba(255, 255, 255, 0.7);
