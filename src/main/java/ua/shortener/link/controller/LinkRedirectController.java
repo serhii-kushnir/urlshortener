@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/sh")
 @RequiredArgsConstructor
 public class LinkRedirectController {
 

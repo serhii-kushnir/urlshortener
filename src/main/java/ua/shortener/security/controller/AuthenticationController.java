@@ -12,22 +12,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ua.shortener.security.auth.AuthenticationService;
-import ua.shortener.security.auth.dto.JwtAuthenticationResponse;
-import ua.shortener.security.auth.dto.SignInRequest;
-import ua.shortener.security.auth.dto.SignUpRequest;
+import ua.shortener.security.auth.dto.login.JwtLoginResponse;
+import ua.shortener.security.auth.dto.registration.JwtRegistrationResponse;
+import ua.shortener.security.auth.dto.login.LoginRequest;
+import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
-    @PostMapping("/signup")
-    public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody SignUpRequest request) {
-        return ResponseEntity.ok(authenticationService.signup(request));
+    @PostMapping("/register")
+    public ResponseEntity<JwtRegistrationResponse> register(@RequestBody RegistrationRequest request) {
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest request, HttpServletResponse servletRequest) {
-        return ResponseEntity.ok(authenticationService.signIn(request, servletRequest));
+    @PostMapping("/login")
+    public ResponseEntity<JwtLoginResponse> login(@RequestBody LoginRequest request, HttpServletResponse servletRequest) {
+        return ResponseEntity.ok(authenticationService.login(request, servletRequest));
+                //ResponseEntity.ok(authenticationService.login(request, servletRequest));
     }
 }
