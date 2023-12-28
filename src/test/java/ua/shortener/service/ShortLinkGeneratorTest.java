@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static ua.shortener.link.service.ShortLinkGenerator.generateShortLink;
 
-class ShortLinkGeneratorTestEntity {
+class ShortLinkGeneratorTest {
 
     @Test
     void generateShortLink_shouldReturnStringOfCorrectLength() {

@@ -1,11 +1,13 @@
 package ua.shortener.user.controller;
 
+import lombok.RequiredArgsConstructor;
+
 import ua.shortener.link.Link;
 import ua.shortener.user.User;
 import ua.shortener.user.dto.EditUserDTO;
 import ua.shortener.user.dto.UserEditAdminDTO;
 import ua.shortener.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,30 +15,26 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/user")
+@RequiredArgsConstructor
 public class UserRestController {
 
     private final UserService userService;
 
-    @Autowired
-    public UserRestController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @GetMapping("/all")
+    @GetMapping("/list")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUser();
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable long id) {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/user/{id}/links")
+    @GetMapping("/{id}/links")
     public ResponseEntity<List<Link>> getLinksByUserId(@PathVariable Long id) {
         List<Link> links = userService.getLinksByUserId(id);
         return ResponseEntity.ok(links);
@@ -56,12 +54,12 @@ public class UserRestController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable long id) {
         return userService.getUserById(id)
                 .map(user -> {
                     userService.deleteUser(id);
-                    return ResponseEntity.noContent().build();
+                    return ResponseEntity.ok().build();
                 })
                 .orElse(ResponseEntity.notFound().build());
     }

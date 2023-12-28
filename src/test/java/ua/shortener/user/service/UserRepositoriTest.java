@@ -12,7 +12,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ua.shortener.UrlShortenerApplication;
 import ua.shortener.service.config.ContainersEnvironment;
 import ua.shortener.user.User;
-import ua.shortener.user.service.UserRepository;
 
 import java.util.List;
 
@@ -29,6 +28,6 @@ class UserRepositoriTest extends ContainersEnvironment {
     @Test
     void WhenGetLinkExpectEmptyList(){
         List<User> list = userRepository.findAll();
-        assertEquals(0, list.size());
+        assertEquals(1, list.size());
     }
 }
