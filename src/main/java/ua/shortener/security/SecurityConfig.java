@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**"))
                         .permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/**"))
+                        .permitAll()
                         .anyRequest().authenticated());
         return http.build();
     }
