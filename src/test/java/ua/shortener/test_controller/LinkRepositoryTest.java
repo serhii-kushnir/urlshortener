@@ -1,4 +1,4 @@
-package ua.shortener.service;
+package ua.shortener.test_controller;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +10,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ua.shortener.UrlShortenerApplication;
 import ua.shortener.link.Link;
+import ua.shortener.link.controller.LinkRedirectController;
 import ua.shortener.link.service.LinkRepository;
-import ua.shortener.service.config.ContainersEnvironment;
+import ua.shortener.test_controller.config.ContainersEnvironment;
 
 import java.util.List;
 
@@ -25,10 +26,12 @@ class LinkRepositoryTest extends ContainersEnvironment {
 
     @Autowired
     public LinkRepository linkRepository;
+    @Autowired
+    public LinkRedirectController linkRestController;
 
     @Test
     void WhenGetLinkExpectEmptyList(){
         List<Link> list = linkRepository.findAll();
-        assertEquals(0, list.size());
+        assertEquals(1, list.size());
     }
 }

@@ -3,12 +3,13 @@ package ua.shortener.security.auth;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-import ua.shortener.security.auth.dto.JwtAuthenticationResponse;
-import ua.shortener.security.auth.dto.SignInRequest;
-import ua.shortener.security.auth.dto.SignUpRequest;
+import ua.shortener.security.auth.dto.login.JwtLoginResponse;
+import ua.shortener.security.auth.dto.registration.JwtRegistrationResponse;
+import ua.shortener.security.auth.dto.login.LoginRequest;
+import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 
 public interface AuthenticationService {
-    JwtAuthenticationResponse signup(SignUpRequest request);
+    JwtRegistrationResponse register(RegistrationRequest request);
 
-    JwtAuthenticationResponse signIn(SignInRequest request, HttpServletResponse servletRequest);
+    JwtLoginResponse login(LoginRequest request, HttpServletResponse servletRequest);
 }

@@ -32,10 +32,15 @@ public final class LinkService {
         linkRepository.deleteById(shortLink);
     }
 
-    public Link editLink(Link existingLink, DTOLink updatedDtoLink) {
-        if (!existingLink.getUrl().equals(updatedDtoLink.getLink())) {
-            existingLink.setUrl(updatedDtoLink.getLink());
+    public Link editLink(Link existingLink) {
+        if(linkRepository.findById(existingLink.getShortLink()).isEmpty()){
+            System.out.println("Such link not exist");
+            return null;
         }
+
+        //        if (!existingLink.getUrl().equals(updatedDtoLink.getLink())) {
+//            existingLink.setUrl(updatedDtoLink.getLink());
+//        }
 
         return linkRepository.save(existingLink);
     }

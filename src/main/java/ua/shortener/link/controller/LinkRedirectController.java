@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/sh")
 @RequiredArgsConstructor
 public class LinkRedirectController {
 
@@ -28,6 +28,9 @@ public class LinkRedirectController {
         if (link.isPresent()) {
             response.sendRedirect(link.get().getUrl());
             link.get().setOpenCount(link.get().getOpenCount() + 1);
+            Link link1 = link.get();
+            linkService.editLink(link1);
+
         } else {
             response.sendRedirect("/");
         }
