@@ -36,7 +36,7 @@ public class Link {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -53,5 +53,16 @@ public class Link {
         dtoLink.setOpenCount(this.getOpenCount());
 
         return dtoLink;
+    }
+
+    @Override
+    public String toString() {
+        return "Link{" +
+                "shortLink='" + shortLink + '\'' +
+                ", url='" + url + '\'' +
+                ", openCount=" + openCount +
+                ", createdAt=" + createdAt +
+                ", user=" + user.getName() +
+                '}';
     }
 }

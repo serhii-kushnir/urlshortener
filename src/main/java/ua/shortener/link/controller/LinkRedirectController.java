@@ -28,6 +28,9 @@ public class LinkRedirectController {
         if (link.isPresent()) {
             response.sendRedirect(link.get().getUrl());
             link.get().setOpenCount(link.get().getOpenCount() + 1);
+            Link link1 = link.get();
+            linkService.createLink(link1);
+
         } else {
             response.sendRedirect("/");
         }
