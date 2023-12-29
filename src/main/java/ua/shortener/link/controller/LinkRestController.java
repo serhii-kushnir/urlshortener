@@ -58,19 +58,30 @@ public final class LinkRestController {
     }
 
 
-    @PostMapping("/edit/{shortLink}")
-    public ResponseEntity<DTOLink> editLink(final @PathVariable String shortLink, final @RequestBody DTOLink updatedDtoLink) {
-        return linkService.getLinkByShortLink(shortLink)
-                .map(existingLink -> {
-                    Link editedLink = linkService.editLink(existingLink, updatedDtoLink);
+    @PostMapping("/edit")
+    public ResponseEntity<DTOLink> editLink(final @RequestBody DTOLink updatedDtoLink) {
+        //todo fix user problem
 
-                    // Зберегти оригінальний shortLink
-                    String originalShortLink = existingLink.getShortLink();
-                    editedLink.setShortLink(originalShortLink);
+        Link link = new Link();
+        link.setShortLink(updatedDtoLink.getShortLink());
+        link.setUrl(updatedDtoLink.getLink());
+        link.setOpenCount(updatedDtoLink.getOpenCount());
+        link.setUser(userRepository.findById(1L).orElseThrow());
+        linkService.editLink(link);
 
-                    return ResponseEntity.ok(editedLink.toDTO());
-                })
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(link.toDTO());
+
+//        linkService.getLinkByShortLink(shortLink)
+//                .map(existingLink -> {
+//                    Link editedLink = linkService.editLink(existingLink);
+//
+//                    // Зберегти оригінальний shortLink
+//                    String originalShortLink = existingLink.getShortLink();
+//                    editedLink.setShortLink(originalShortLink);
+//
+//                    return ResponseEntity.ok(editedLink.toDTO());
+//                })
+//                .orElse(ResponseEntity.notFound().build());
     }
 
 

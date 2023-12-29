@@ -62,7 +62,7 @@ public class Link {
                 ", url='" + url + '\'' +
                 ", openCount=" + openCount +
                 ", createdAt=" + createdAt +
-                ", user=" + user.getName() +
+                ", user=" + user.getName()+
                 '}';
     }
 }

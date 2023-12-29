@@ -29,7 +29,7 @@ public class LinkRedirectController {
             response.sendRedirect(link.get().getUrl());
             link.get().setOpenCount(link.get().getOpenCount() + 1);
             Link link1 = link.get();
-            linkService.createLink(link1);
+            linkService.editLink(link1);
 
         } else {
             response.sendRedirect("/");

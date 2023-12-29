@@ -25,6 +25,7 @@ import ua.shortener.user.service.UserRepository;
 import ua.shortener.user.service.UserService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 @Service
@@ -78,26 +79,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String password = request.getPassword();
 
         Optional<User> user = userRepository.findUserByEmail(email);
-        JwtRegistrationResponse response = JwtRegistrationResponse.builder().messages(new ArrayList<>()).errors(new ArrayList<>()).build();
+        JwtRegistrationResponse response = JwtRegistrationResponse.builder().errorMap(new HashMap<>()).build();
 
         if (user.isEmpty() && isPasswordValid(password)){
             response.setStatus(HttpStatus.OK.value());
-            response.getErrors().add(ResponseRegisterError.OK);
-            response.getMessages().add(ResponseRegisterError.OK.getMessage());
+            response.getErrorMap().put(ResponseRegisterError.OK, ResponseRegisterError.OK.getMessage());
             createUserFromRequest(request);
             return response;
         }
 
         if(!isPasswordValid(password)){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-            response.getErrors().add(ResponseRegisterError.BAD_PASSWORD);
-            response.getMessages().add(ResponseRegisterError.BAD_PASSWORD.getMessage());
+            response.getErrorMap().put(ResponseRegisterError.BAD_PASSWORD, ResponseRegisterError.BAD_PASSWORD.getMessage());
         }
 
         if (user.isPresent()){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-            response.getErrors().add(ResponseRegisterError.BAD_EMAIL);
-            response.getMessages().add(ResponseRegisterError.BAD_EMAIL.getMessage());
+            response.getErrorMap().put(ResponseRegisterError.BAD_EMAIL, ResponseRegisterError.BAD_EMAIL.getMessage());
         }
         return response;
     }
