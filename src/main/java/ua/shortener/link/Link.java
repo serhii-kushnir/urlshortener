@@ -1,5 +1,6 @@
 package ua.shortener.link;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
@@ -10,6 +11,7 @@ import jakarta.persistence.FetchType;
 
 import lombok.Data;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import ua.shortener.link.dto.DTOLink;
 import ua.shortener.user.User;
 
@@ -33,6 +35,8 @@ public class Link {
     @Column(name = "open_count", nullable = false)
     private Integer openCount;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
