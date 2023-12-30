@@ -12,6 +12,7 @@ import ua.shortener.UrlShortenerApplication;
 import ua.shortener.link.Link;
 import ua.shortener.link.controller.LinkRedirectController;
 import ua.shortener.link.service.LinkRepository;
+import ua.shortener.test_controller.config.ContainersEnvironment;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -20,7 +21,7 @@ import java.util.Optional;
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = UrlShortenerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApiTestController {
+public class ApiTestController extends ContainersEnvironment {
     @Autowired
     public LinkRepository linkRepository;
     @Autowired
