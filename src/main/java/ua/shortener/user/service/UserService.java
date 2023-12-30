@@ -82,4 +82,17 @@ public class UserService implements  UserDetailsService{
 
         return userWithLinkDTO;
     }
+
+    public UserDTO getUserInfoById(long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User with ID " + userId + " not found"));
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setName(user.getName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setCreatedAt(user.getCreatedAt());
+
+        return userDTO;
+    }
 }

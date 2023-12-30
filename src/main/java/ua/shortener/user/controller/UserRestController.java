@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import ua.shortener.link.Link;
 import ua.shortener.user.User;
 import ua.shortener.user.dto.EditUserDTO;
+import ua.shortener.user.dto.UserDTO;
 import ua.shortener.user.dto.UserEditAdminDTO;
 import ua.shortener.user.dto.UserWithLinkDTO;
 import ua.shortener.user.service.UserService;
@@ -71,6 +72,12 @@ public class UserRestController {
     public ResponseEntity<UserWithLinkDTO> getUserDetails(@PathVariable long id) {
         UserWithLinkDTO userWithLinkDTO = userService.getUserDetailsById(id);
         return ResponseEntity.ok(userWithLinkDTO);
+    }
+
+    @GetMapping("/{id}/user_info")
+    public ResponseEntity<UserDTO> getUserInfo(@PathVariable long id) {
+        UserDTO userDTO = userService.getUserInfoById(id);
+        return ResponseEntity.ok(userDTO);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
