@@ -1,5 +1,6 @@
 package ua.shortener.link.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -17,7 +18,11 @@ import ua.shortener.link.service.LinkService;
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserRepository;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/link")
@@ -27,19 +32,28 @@ public final class LinkRestController {
     private final LinkService linkService;
     private final UserRepository userRepository;
 
-    @GetMapping("/list")
-    public ResponseEntity<List<DTOLink>> getAllLinks() {
-        List<Link> links = linkService.getAllLinks();
-        List<DTOLink> dtoLinkList = links.stream()
-                .map(Link::toDTO).toList();
-        return ResponseEntity.ok(dtoLinkList);
+    @GetMapping("/list/all")
+    public ResponseEntity<Map<String, List<DTOLink>>> getAllLinks() {
+        return ResponseEntity.ok(linkService.getAllLinksDTO());
     }
 
+    @GetMapping("/list/active")
+    public ResponseEntity< List<DTOLink>> getActiveLinks() {
+        return ResponseEntity.ok(linkService.getActiveLinksDTO());
+    }
+
+    @GetMapping("/list/non-active")
+    public ResponseEntity< List<DTOLink>> getNonActiveLinks() {
+        return ResponseEntity.ok(linkService.getNonActiveLinksDTO());
+    }
+
+    //todo think about response logic
     @GetMapping("/{shortLink}")
-    public ResponseEntity<DTOLink> getLinkByShortLink(final @PathVariable String shortLink) {
-        return linkService.getLinkByShortLink(shortLink)
-                .map(link -> ResponseEntity.ok(link.toDTO()))
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<DTOLink> getLinkByShortLink(final @PathVariable String shortLink) throws IOException {
+        DTOLink redirect = linkService.redirect(shortLink);
+        return redirect == null ?
+                ResponseEntity.notFound().build() :
+                ResponseEntity.ok(redirect);
     }
 
 
@@ -51,6 +65,7 @@ public final class LinkRestController {
         Link link = new Link();
         link.setUrl(dtoLink.getLink());
         link.setUser(existingUser);
+        System.out.println("link = " + link);
 
         linkService.createLink(link);
 

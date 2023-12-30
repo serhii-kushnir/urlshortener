@@ -24,15 +24,6 @@ public class LinkRedirectController {
 
     @GetMapping("/{shortLink}")
     public void redirectLink(final @PathVariable String shortLink, HttpServletResponse response) throws IOException {
-        Optional<Link> link = linkService.getLinkByShortLink(shortLink);
-        if (link.isPresent()) {
-            response.sendRedirect(link.get().getUrl());
-            link.get().setOpenCount(link.get().getOpenCount() + 1);
-            Link link1 = link.get();
-            linkService.editLink(link1);
-
-        } else {
-            response.sendRedirect("/");
-        }
+       linkService.redirect(shortLink,response);
     }
 }

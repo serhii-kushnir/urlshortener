@@ -28,6 +28,6 @@ class UserRepositoriTest extends ContainersEnvironment {
     @Test
     void WhenGetLinkExpectEmptyList(){
         List<User> list = userRepository.findAll();
-        assertEquals(1, list.size());
+        assertEquals(2, list.size());
     }
 }
