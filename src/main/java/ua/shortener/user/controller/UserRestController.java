@@ -1,11 +1,14 @@
 package ua.shortener.user.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
 import ua.shortener.link.Link;
 import ua.shortener.user.User;
 import ua.shortener.user.dto.EditUserDTO;
 import ua.shortener.user.dto.UserEditAdminDTO;
+import ua.shortener.user.dto.UserWithLinkDTO;
 import ua.shortener.user.service.UserService;
 
 import org.springframework.http.ResponseEntity;
@@ -62,5 +65,16 @@ public class UserRestController {
                     return ResponseEntity.ok().build();
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<UserWithLinkDTO> getUserDetails(@PathVariable long id) {
+        UserWithLinkDTO userWithLinkDTO = userService.getUserDetailsById(id);
+        return ResponseEntity.ok(userWithLinkDTO);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

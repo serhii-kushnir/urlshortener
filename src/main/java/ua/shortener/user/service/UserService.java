@@ -1,5 +1,6 @@
 package ua.shortener.user.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -64,5 +65,21 @@ public class UserService implements  UserDetailsService{
 
     public void deleteUser(final long id) {
         userRepository.deleteById(id);
+    }
+
+    public UserWithLinkDTO getUserDetailsById(long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User with ID " + userId + " not found"));
+
+        UserWithLinkDTO userWithLinkDTO = new UserWithLinkDTO();
+        userWithLinkDTO.setName(user.getName());
+
+        List<Link> links = user.getLinks();
+            Link firstLink = links.get(0);
+            userWithLinkDTO.setShortLink(firstLink.getShortLink());
+            userWithLinkDTO.setLink(firstLink.getUrl());
+            userWithLinkDTO.setOpenCount(firstLink.getOpenCount());
+
+        return userWithLinkDTO;
     }
 }
