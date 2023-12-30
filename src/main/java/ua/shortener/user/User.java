@@ -1,11 +1,13 @@
 package ua.shortener.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
 import lombok.Data;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import ua.shortener.link.Link;
 
 import java.time.LocalDateTime;
@@ -37,6 +39,8 @@ public class User {
     @Column(nullable = false)
     private boolean enabled;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
