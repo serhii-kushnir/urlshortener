@@ -1,5 +1,7 @@
 package ua.shortener.user.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import ua.shortener.link.Link;
@@ -17,17 +19,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
+@Tag(name = "User", description = "API для користувачів")
 public class UserRestController {
 
     private final UserService userService;
 
     @GetMapping("/list")
+    @Operation(summary = "Отримати всіх користувачів")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUser();
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Отримати користувача за ID")
     public ResponseEntity<User> getUserById(@PathVariable long id) {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
@@ -35,12 +40,14 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}/links")
+    @Operation(summary = "Отримати посилання користувача за ID")
     public ResponseEntity<List<Link>> getLinksByUserId(@PathVariable Long id) {
         List<Link> links = userService.getLinksByUserId(id);
         return ResponseEntity.ok(links);
     }
 
     @PostMapping("/update/{id}")
+    @Operation(summary = "Оновити користувача")
     public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody EditUserDTO editUserDTO) {
         return userService.getUserById(id)
                 .map(existingUser -> ResponseEntity.ok(userService.editUser(existingUser, editUserDTO)))
@@ -48,6 +55,7 @@ public class UserRestController {
     }
 
     @PostMapping("/update/{id}/admin")
+    @Operation(summary = "Редагувати користувача як адміністратор")
     public ResponseEntity<User> editUserAdmin(@PathVariable long id, @RequestBody UserEditAdminDTO userEditAdminDTO) {
         return userService.getUserById(id)
                 .map(existingUser -> ResponseEntity.ok(userService.editUserAdmin(existingUser, userEditAdminDTO)))
@@ -55,6 +63,7 @@ public class UserRestController {
     }
 
     @PostMapping("/delete/{id}")
+    @Operation(summary = "Видалити користувача")
     public ResponseEntity<Object> deleteUser(@PathVariable long id) {
         return userService.getUserById(id)
                 .map(user -> {
