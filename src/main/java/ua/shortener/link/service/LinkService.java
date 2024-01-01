@@ -9,6 +9,8 @@ import ua.shortener.link.Link;
 import ua.shortener.link.dto.DTOLink;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -26,8 +28,20 @@ public final class LinkService {
         return linkRepository.findById(shortLink);
     }
 
-    public void createLink(final Link link) {
+    public void createLink(Link link) {
+        if (!isUrlAccessible(link.getUrl()).orElse(false)) {
+            throw new IllegalArgumentException("Invalid URL");
+        }
         linkRepository.save(link);
+    }
+
+    private Optional<Boolean> isUrlAccessible(String url) {
+        try {
+            return Optional.of(((HttpURLConnection) new URL(url).openConnection())
+                    .getRequestMethod().equals("HEAD"));
+        } catch (IOException e) {
+            return Optional.empty();
+        }
     }
 
     public void deleteLink(final String shortLink) {
