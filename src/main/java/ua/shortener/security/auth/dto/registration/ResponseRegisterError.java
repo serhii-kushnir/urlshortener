@@ -1,7 +1,9 @@
 package ua.shortener.security.auth.dto.registration;
 
-public enum ResponseRegisterError {
+import lombok.Getter;
 
+@Getter
+public enum ResponseRegisterError {
     OK("Successfully added"),
     BAD_PASSWORD("Password should have 8 or more chars and contains numbers, " +
             "letters in upper case and letters in lower case"),
@@ -10,11 +12,8 @@ public enum ResponseRegisterError {
     BAD_NAME("Input name should have more than 3 symbols and contains more than 1 letter");
 
     private final String message;
-    ResponseRegisterError(String message){
+    ResponseRegisterError(final String message){
         this.message = message;
     }
 
-    public String getMessage(){
-        return message;
-    }
 }

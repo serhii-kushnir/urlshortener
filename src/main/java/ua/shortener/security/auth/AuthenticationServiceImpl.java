@@ -24,7 +24,6 @@ import ua.shortener.user.User;
 import ua.shortener.user.service.UserRepository;
 import ua.shortener.user.service.UserService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -37,23 +36,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     @Override
-    public JwtRegistrationResponse register(RegistrationRequest request) {
+    public JwtRegistrationResponse register(final RegistrationRequest request) {
         return getRegisterResponse(request);
     }
 
     @Override
-    public JwtLoginResponse login(LoginRequest request, HttpServletResponse httpServletResponse) {
+    public JwtLoginResponse login(final LoginRequest request, final HttpServletResponse httpServletResponse) {
         return getLoginResponse(request, httpServletResponse);
     }
 
-    private boolean isPasswordValid(String password){
+    private boolean isPasswordValid(final String password){
         return (password.length() > 7)
                 && (!password.replaceAll("\\d", "").equals(password))
                 &&(!password.toLowerCase().equals(password))
                 &&(!password.toUpperCase().equals(password));
     }
 
-    private JwtLoginResponse getLoginResponse(LoginRequest request, HttpServletResponse httpServletResponse){
+    private JwtLoginResponse getLoginResponse(final LoginRequest request, final HttpServletResponse httpServletResponse){
         JwtLoginResponse response = JwtLoginResponse.builder().errors(new HashMap<>()).build();
         Optional<User> user = userRepository.findUserByEmail(request.getEmail());
 
@@ -74,7 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return response;
     }
 
-    private JwtRegistrationResponse getRegisterResponse(RegistrationRequest request){
+    private JwtRegistrationResponse getRegisterResponse(final RegistrationRequest request){
         String email = request.getEmail();
         String password = request.getPassword();
         String name = request.getName();
@@ -108,10 +107,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             response.getErrorMap().put(ResponseRegisterError.BAD_EMAIL, ResponseRegisterError.BAD_EMAIL.getMessage());
         }
+
         return response;
     }
 
-    private void createUserFromRequest(RegistrationRequest request){
+    private void createUserFromRequest(final RegistrationRequest request){
         User user = new User();
         user.setName(request.getName());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -121,58 +121,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userRepository.save(user);
     }
 
-    private boolean isNameValid(String name){
+    private boolean isNameValid(final String name){
         return !name.isBlank()
                 && name.length() > 2
                 && !name.replaceAll("[A-Za-zа-яА-я]", "").equals(name);
     }
 
-    private static boolean isEmailValid(String email){
+    private static boolean isEmailValid(final String email){
         String pattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         return email.matches(pattern);
     }
-
-
-        //can use for writing tests
-//    public static void main(String[] args) {
-//        String validPassword = "qwerTy12";
-//        String passwordWithoutUpperCase = "qwerty12";
-//        String passwordWithoutLowerCase = "QWERTY12";
-//        String passwordOnlyLetters = "QWERTasdW";
-//        String passwordWithoutLetters = "123456780";
-//        String shortPassword = "qweQ1yu";
-//
-//        System.out.println("validatePassword(validPassword) = " + validatePassword(validPassword));
-//        System.out.println("validatePassword(passwordWithoutUpperCase) = " + validatePassword(passwordWithoutUpperCase));
-//        System.out.println("validatePassword(passwordWithoutLowerCase) = " + validatePassword(passwordWithoutLowerCase));
-//        System.out.println("validatePassword(passwordOnlyLetters) = " + validatePassword(passwordOnlyLetters));
-//        System.out.println("validatePassword(passwordWithoutLetters) = " + validatePassword(passwordWithoutLetters));
-//        System.out.println("validatePassword(shortPassword) = " + validatePassword(shortPassword));
-
-//        String validName = "qwer";
-//        String shortName = "qw";
-//        String numericName = "1234";
-//        String blancName = "        ";
-//        String blancNumericName = "12  3    44";
-//        String notLettersOnly = "___...,,,";
-//        System.out.println("isNameValid(validName) = " + isNameValid(validName));
-//        System.out.println("isNameValid(shortName) = " + isNameValid(shortName));
-//        System.out.println("isNameValid(numericName) = " + isNameValid(numericName));
-//        System.out.println("isNameValid(blancName) = " + isNameValid(blancName));
-//        System.out.println("isNameValid(blancNumericName) = " + isNameValid(blancNumericName));
-//        System.out.println("isNameValid(notLettersOnly) = " + isNameValid(notLettersOnly));
-
-//        String[] emails = {
-//                "test@example.com",
-//                "lugovoj20@gmail.com",
-//                "user@domain.co.in",
-//                "user.name@example.co.uk",
-//                "invalid.email@.com",
-//                "another@.com"
-//        };
-//
-//        for (String email : emails) {
-//            System.out.println(email + " is valid: " + isEmailValid(email));
-//        }
-//    }
 }

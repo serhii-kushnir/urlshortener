@@ -9,14 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.shortener.link.Link;
 import ua.shortener.link.service.LinkService;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/sh")
+@RequestMapping("/sh/")
 @RequiredArgsConstructor
 public class LinkRedirectController {
 

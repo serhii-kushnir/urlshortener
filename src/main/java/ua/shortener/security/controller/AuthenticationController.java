@@ -23,13 +23,12 @@ import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @PostMapping("/register")
-    public ResponseEntity<JwtRegistrationResponse> register(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<JwtRegistrationResponse> register(final @RequestBody RegistrationRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtLoginResponse> login(@RequestBody LoginRequest request, HttpServletResponse servletRequest) {
+    public ResponseEntity<JwtLoginResponse> login(final @RequestBody LoginRequest request, final HttpServletResponse servletRequest) {
         return ResponseEntity.ok(authenticationService.login(request, servletRequest));
-                //ResponseEntity.ok(authenticationService.login(request, servletRequest));
     }
 }

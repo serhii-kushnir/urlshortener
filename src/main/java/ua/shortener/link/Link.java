@@ -16,10 +16,8 @@ import ua.shortener.link.dto.DTOLink;
 import ua.shortener.user.User;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static ua.shortener.link.service.ShortLinkGenerator.generateShortLink;
-
 
 @Entity
 @Data
