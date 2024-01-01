@@ -12,12 +12,14 @@
 <div class="wrapper">
     <nav class="nav">
         <div class="nav-logo">
-            <p>URLSHORT</p>
+            <img src="/static/images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
         </div>
         <div class="nav-menu" id="navMenu">
             <ul>
                 <li><a th:href="@{/shortify/home_guest}" class="link active">Home</a></li>
-                <li><a href="#" class="link">About</a></li>
+                <li><a th:href="@{/shortify/about}" class="link">About</a></li>
+                <li><a th:href="@{/shortify/thanks_to}" class="link">Thanks to</a></li>
+                <li><a href="#" class="link">Swagger</a></li>
             </ul>
         </div>
         <div class="nav-button">

@@ -7,17 +7,53 @@
     font-family: 'Poppins', sans-serif;
 }
 body{
-    background-image: url("../static/images/3.jpg");
+    background-image: url("/static/images/10.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     overflow: hidden;
+}
+a{
+    color: white;
+    font-weight: bold;
 }
 h1 {
     color: white;
 }
 th{
     color: white
+}
+.about-section {
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(248, 248, 248, 0.0);/* Фон з прозорістю */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white; /* Колір тексту */
+}
+.participants-container {
+    max-height: 500px; /* Задайте максимальну висоту контейнера */
+    overflow: auto; /* Додаємо прокрутку, якщо вміст перевищує висоту */
+    margin-top: 50px;
+}
+.participant {
+    display: inline-block;
+    width: 200px;
+    margin: 20px;
+    text-align: center;
+    color: white;
+    vertical-align: top;
+}
+.participant img {
+    width: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+.participant p {
+    margin-bottom: 0; /* Видаляємо зайвий відступ під ім'ям учасника */
 }
 .wrapper{
     display: flex;
@@ -29,11 +65,11 @@ th{
 }
 .nav{
     position: fixed;
+    height: 150px;
     top: 0;
     display: flex;
     justify-content: space-around;
     width: 100%;
-    height: 100px;
     line-height: 100px;
     background: linear-gradient(rgba(39,39,39, 0.6), transparent);
     z-index: 100;

@@ -30,5 +30,16 @@ public class UserController {
         linkService.createLink(link);
         return "HOME";
     }
+    @GetMapping("/about")
+    public ModelAndView showAboutPage(){
+        ModelAndView result = new ModelAndView("/about");
+        return result;
+    }
+
+    @GetMapping("/thanks_to")
+    public ModelAndView showThanksToPage(){
+        ModelAndView result = new ModelAndView("/thanks_to");
+        return result;
+    }
 
 }

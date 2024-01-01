@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+
+    <title>URLshort | About</title>
+</head>
+<body>
+<div class="wrapper">
+    <nav class="nav">
+        <div class="nav-logo">
+            <img src="../static/images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
+        </div>
+        <div class="nav-button">
+            <a class="btn white-btn" id="loginBtn" th:href="@{/shortify/welcome}" >Go back</a>
+        </div>
+    </nav>
+
+    <!----------------------------- Teble container ----------------------------------->
+
+    <div class="about-section">
+        <h1>About Us</h1>
+        <p>Welcome to our service, designed for your convenience and efficiency! We are a team that has created this platform to help you transform long and complex links into short, easy-to-remember URLs.</p>
+        <p>Our tool provides fast and reliable link shortening. You can easily share these shortened URLs with your friends, colleagues, and associates without the hassle of lengthy links.</p>
+        <p>We believe in simplicity, speed, and security. Our service offers dependable link shortening without compromising quality and ensures the confidentiality of your data.</p>
+        <p>Join us today and discover a simple way to make your internet browsing more convenient and effortless!"</p>
+    </div>
+</div>
+
+</body>
+</html>
