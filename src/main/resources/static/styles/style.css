@@ -1,5 +1,4 @@
-/* POPPINS FONT */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');*/
 
 *{
     margin: 0;
@@ -8,7 +7,7 @@
     font-family: 'Poppins', sans-serif;
 }
 body{
-    background: url("images/2.jpg");
+    background-image: url("../static/images/3.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -23,7 +22,7 @@ th{
 .wrapper{
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     min-height: 100vh;
     background: rgba(39, 39, 39, 0.4);
@@ -40,7 +39,6 @@ th{
     z-index: 100;
 }
 .nav-logo p{
-    logo: url("images/LOGO.png");
     color: white;
     font-size: 30px;
     font-weight: 600;
@@ -78,7 +76,7 @@ th{
 #registerBtn{
     margin-left: 15px;
 }
-generateBtn{
+.generateBtn {
     margin-right: 40px;
 }
 .btn.white-btn{

@@ -1,11 +1,11 @@
 package ua.shortener.user.service;
 
 import lombok.RequiredArgsConstructor;
-
+/*
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;*/
 
 import org.springframework.stereotype.Service;
 
@@ -19,10 +19,10 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements  UserDetailsService{
+public class UserService {
     private final UserRepository userRepository;
 
-    @Override
+    /*@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findUserByEmail(username).orElseThrow(() -> new UsernameNotFoundException(
                 String.format("User '%s' not found", username)));
@@ -33,7 +33,7 @@ public class UserService implements  UserDetailsService{
                         .stream()
                         .map(role -> new SimpleGrantedAuthority(role.name()))
                         .toList());
-    }
+    }*/
 
     public Optional<User> findUserByEmail(String email){
         return userRepository.findUserByEmail(email);

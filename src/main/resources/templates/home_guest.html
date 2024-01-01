@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
 
     <title>URLshort | Homepage</title>
 </head>
@@ -16,56 +16,38 @@
 <div class="wrapper">
     <nav class="nav">
         <div class="nav-logo">
-            <img src="images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
+            <img src="../static/images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
         </div>
         <div class="nav-button">
-            <button class="btn white-btn" id="loginBtn" onclick="login()">Sign out</button>
+            <a class="btn white-btn" id="loginBtn" th:href="@{/shortify/welcome}" >Go back</a>
         </div>
     </nav>
-    <!-----------------------------Input Form----------------------------------->
-    <div>
-        <div class="container input-container">
-            <form action="home.html">
-                <div style="margin-bottom: 20px;">
-                    <input type="text" class="input-field" placeholder="put your url here" >
-                </div>
-                <button type="submit" id="generateBtn" class="btn white-btn"
-                        style="font-size:15px;">generate</button>
-            </form>
 
-        </div>
-    </div>
     <!----------------------------- Teble container ----------------------------------->
 
     <div class="container table-container">
         <div th:if="${linkList.size() != 0}">
-            <header>Your URLs</header>
+            <header>All URL's</header>
             <table  class="able table-borderless">
                 <thead>
                 <tr>
                     <th style="padding-right: 40px;"> Original link</th>
                     <th style="padding-left: 40px;">Short link</th>
-                    <th style="padding-left: 40px;">    </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="link : ${linkList}">
                     <td style="padding-right: 40px;">
                         <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                           th:href="${linkList}">
-                            original link
+                           th:href="${link.url}" th:text="${link.url}">
                         </a>
                     </td>
                     <td style="padding-left: 40px;">
                         <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                           th:href="${link.link}">
-                            short link
+                           th:href="${link.url}" th:text="${link.shortLink}">
                         </a>
                     </td>
-                    <td>
-                        <a class="btn" role="button" data-bs-toggle="button" data-bs-toggle="tooltip" title="edit" style="font-size:12px" th:href="@{/note/edit_note/{id}(id=${note.id})}"> ✏️ </a>
-                        <a class="btn" role="button" data-bs-toggle="button" data-bs-toggle="tooltip" title="remove" style="font-size:12px" th:href="@{/note/edit_note/{id}(id=${note.id})}"> 🗑️ </a>
-                    </td>
+
                 </tr>
                 </tbody>
             </table>

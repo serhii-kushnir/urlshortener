@@ -48,6 +48,7 @@ public final class LinkRestController {
         User existingUser = userRepository.findById(1L)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
 
+
         Link link = new Link();
         link.setUrl(dtoLink.getLink());
         link.setUser(existingUser);
