@@ -1,5 +1,8 @@
 package ua.shortener.link.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -22,12 +25,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/link")
 @RequiredArgsConstructor
+@Tag(name = "Link", description = "API для посилань")
 public final class LinkRestController {
 
     private final LinkService linkService;
     private final UserRepository userRepository;
 
     @GetMapping("/list")
+    @Operation(summary = "Отримати всі посилання")
     public ResponseEntity<List<DTOLink>> getAllLinks() {
         List<Link> links = linkService.getAllLinks();
         List<DTOLink> dtoLinkList = links.stream()
@@ -36,7 +41,8 @@ public final class LinkRestController {
     }
 
     @GetMapping("/{shortLink}")
-    public ResponseEntity<DTOLink> getLinkByShortLink(final @PathVariable String shortLink) {
+    @Operation(summary = "Отримати посилання за коротким посиланням")
+    public ResponseEntity<DTOLink> getLinkByShortLink(final @PathVariable @Parameter(description = "Коротке посилання") String shortLink) {
         return linkService.getLinkByShortLink(shortLink)
                 .map(link -> ResponseEntity.ok(link.toDTO()))
                 .orElse(ResponseEntity.notFound().build());
@@ -44,7 +50,9 @@ public final class LinkRestController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<DTOLink> createLink(final @RequestBody DTOLink dtoLink) throws ChangeSetPersister.NotFoundException {
+    @Operation(summary = "Створити нове посилання")
+    public ResponseEntity<DTOLink> createLink(final @RequestBody @Parameter(description = "Дані для створення посилання")
+                                                  DTOLink dtoLink) throws ChangeSetPersister.NotFoundException {
         User existingUser = userRepository.findById(1L)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
 
@@ -59,7 +67,9 @@ public final class LinkRestController {
 
 
     @PostMapping("/edit")
-    public ResponseEntity<DTOLink> editLink(final @RequestBody DTOLink updatedDtoLink) {
+    @Operation(summary = "Редагувати посилання")
+    public ResponseEntity<DTOLink> editLink(final @RequestBody @Parameter(description = "Оновлені дані посилання")
+                                                DTOLink updatedDtoLink) {
         //todo fix user problem
 
         Link link = new Link();
@@ -87,7 +97,9 @@ public final class LinkRestController {
 
 
     @PostMapping("/delete/{shortLink}")
-    public ResponseEntity<Void> deleteLink(final @PathVariable String shortLink) {
+    @Operation(summary = "Видалити посилання")
+    public ResponseEntity<Void> deleteLink(final @PathVariable @Parameter(description = "Коротке посилання")
+                                               String shortLink) {
         linkService.deleteLink(shortLink);
         return ResponseEntity.ok().build();
     }
