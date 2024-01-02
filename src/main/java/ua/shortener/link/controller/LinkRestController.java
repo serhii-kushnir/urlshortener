@@ -57,7 +57,6 @@ public final class LinkRestController {
                 ResponseEntity.ok(redirect);
     }
 
-
     @PostMapping("/create")
     public ResponseEntity<DTOLink> createLink(final @RequestBody DTOLink dtoLink) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -80,7 +79,6 @@ public final class LinkRestController {
         }
     }
 
-
     @PostMapping("/edit")
     public ResponseEntity<DTOLink> editLink(final @RequestBody DTOLink updatedDtoLink) {
         Link link = new Link();
@@ -92,7 +90,6 @@ public final class LinkRestController {
 
         return ResponseEntity.ok(link.toDTO());
     }
-
 
     @PostMapping("/delete/{shortLink}")
     public ResponseEntity<Void> deleteLink(final @PathVariable String shortLink) {
