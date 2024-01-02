@@ -37,8 +37,10 @@ public final class LinkService {
 
     private Optional<Boolean> isUrlAccessible(String url) {
         try {
-            return Optional.of(((HttpURLConnection) new URL(url).openConnection())
-                    .getRequestMethod().equals("HEAD"));
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            return Optional.of(responseCode == HttpURLConnection.HTTP_OK);
         } catch (IOException e) {
             return Optional.empty();
         }
