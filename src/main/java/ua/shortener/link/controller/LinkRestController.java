@@ -84,7 +84,6 @@ public final class LinkRestController {
         Link link = new Link();
         link.setShortLink(updatedDtoLink.getShortLink());
         link.setUrl(updatedDtoLink.getLink());
-        link.setOpenCount(updatedDtoLink.getOpenCount());
         link.setUser(userRepository.findById(1L).orElseThrow());
         linkService.editLink(link);
 

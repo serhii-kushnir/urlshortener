@@ -1,13 +1,12 @@
 package ua.shortener.security.auth;
 
 
-import jakarta.servlet.http.HttpServletResponse;
-
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +40,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public JwtLoginResponse login(final LoginRequest request, final HttpServletResponse httpServletResponse) {
-        return getLoginResponse(request, httpServletResponse);
+    public JwtLoginResponse login(final LoginRequest request) {
+        return getLoginResponse(request);
     }
 
     private boolean isPasswordValid(final String password){
@@ -52,13 +51,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 &&(!password.toUpperCase().equals(password));
     }
 
-    private JwtLoginResponse getLoginResponse(final LoginRequest request, final HttpServletResponse httpServletResponse){
+    private JwtLoginResponse getLoginResponse(final LoginRequest request){
         JwtLoginResponse response = JwtLoginResponse.builder().errors(new HashMap<>()).build();
         Optional<User> user = userRepository.findUserByEmail(request.getEmail());
 
         try {
-            authenticationManager.authenticate(
+            Authentication authenticate = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+            System.out.println("authenticate.getPrincipal() = " + authenticate.getPrincipal());
         }catch (Exception e){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             response.getErrors().put(ResponseLoginError.BAD_PASSWORD_OR_LOGIN, ResponseLoginError.BAD_PASSWORD_OR_LOGIN.getMessage());
@@ -66,7 +66,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         String jwt = jwtService.generateToken(userService.loadUserByUsername(request.getEmail()));
-        httpServletResponse.addHeader("Authorization", "Bearer " + jwt);
         response.setStatus(HttpStatus.OK.value());
         response.getErrors().put(ResponseLoginError.OK, ResponseLoginError.OK.getMessage());
         response.getErrors().put(ResponseLoginError.JWT, jwt);
@@ -100,12 +99,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         if (!isEmailValid(email)){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-            response.getErrorMap().put(ResponseRegisterError.INCORRECT_EMAIL, ResponseRegisterError.INCORRECT_EMAIL.getMessage());
+            response.getErrorMap().put(ResponseRegisterError.BAD_EMAIL, ResponseRegisterError.BAD_EMAIL.getMessage());
         }
 
         if (user.isPresent()){
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-            response.getErrorMap().put(ResponseRegisterError.BAD_EMAIL, ResponseRegisterError.BAD_EMAIL.getMessage());
+            response.getErrorMap().put(ResponseRegisterError.EXISTING_EMAIL, ResponseRegisterError.EXISTING_EMAIL.getMessage());
         }
 
         return response;
