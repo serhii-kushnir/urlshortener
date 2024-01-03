@@ -38,8 +38,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
     public GroupedOpenApi customApi() {
         return GroupedOpenApi.builder()
                 .group("shortUrl")
-                .packagesToScan("ua.patronum.quicklink.restapi.auth")
-                .pathsToMatch("/api/v1/**")
+                .packagesToScan("ua.shortener")
+                .pathsToMatch("/api/v1/**", "/sh/**")
                 .build();
     }
 }
