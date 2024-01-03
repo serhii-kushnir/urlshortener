@@ -30,6 +30,8 @@ dependencies {
 
     runtimeOnly 'com.h2database:h2'
 
+    implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.1.0-M1'
+
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.12.3'
 
     implementation 'org.flywaydb:flyway-core'

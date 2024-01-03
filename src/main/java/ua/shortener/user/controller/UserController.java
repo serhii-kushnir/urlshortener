@@ -1,17 +1,17 @@
 package ua.shortener.user.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.shortener.link.Link;
 import ua.shortener.link.service.LinkService;
+import ua.shortener.security.auth.dto.SignUpRequest;
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserService;
+import org.springframework.validation.BindingResult;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +28,7 @@ public class UserController {
         link.setUrl(url);
         link.setUser(existingUser);
         linkService.createLink(link);
-        return "HOME";
+        return "/home/generate";
     }
     @GetMapping("/about")
     public ModelAndView showAboutPage(){
@@ -40,6 +40,18 @@ public class UserController {
     public ModelAndView showThanksToPage(){
         ModelAndView result = new ModelAndView("/thanks_to");
         return result;
+    }
+    @PostMapping("/signup")
+    public ModelAndView saveUser(@Valid @ModelAttribute("signUpRequest") SignUpRequest signUpRequest,
+                            BindingResult bindingResult, ModelAndView modelAndView){
+        if(bindingResult.hasErrors()){
+            modelAndView.setViewName("/login_register");
+            return modelAndView;
+        }else {
+            userService.saveUser(signUpRequest);
+            modelAndView.setViewName("/success");
+           return modelAndView;
+        }
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.shortener.link.Link;
 import ua.shortener.link.service.LinkService;
+import ua.shortener.security.auth.dto.SignUpRequest;
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserRepository;
 
@@ -25,7 +26,9 @@ public class LinkConteroller {
     }
     @GetMapping("/welcome")
     public ModelAndView showWelcomePage(){
+        SignUpRequest signUpRequest = new SignUpRequest();
         ModelAndView result = new ModelAndView("/login_register");
+        result.addObject("signUpRequest", signUpRequest);
         return result;
     }
 

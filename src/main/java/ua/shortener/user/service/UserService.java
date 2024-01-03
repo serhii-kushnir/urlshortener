@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;*
 import org.springframework.stereotype.Service;
 
 import ua.shortener.link.Link;
+import ua.shortener.security.auth.dto.SignUpRequest;
+import ua.shortener.user.Role;
 import ua.shortener.user.User;
 import ua.shortener.user.dto.*;
 
@@ -35,6 +37,15 @@ public class UserService {
                         .toList());
     }*/
 
+    public void saveUser(SignUpRequest signUpRequest){
+        User user = new User();
+        user.setName(signUpRequest.getUsername());
+        user.setEmail(signUpRequest.getEmail());
+        user.setPassword(signUpRequest.getPassword());
+        user.setRole(Role.USER);
+        user.setEnabled(true);
+        userRepository.saveAndFlush(user);
+    }
     public Optional<User> findUserByEmail(String email){
         return userRepository.findUserByEmail(email);
     }
