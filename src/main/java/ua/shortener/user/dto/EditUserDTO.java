@@ -9,7 +9,7 @@ public class EditUserDTO {
     private String password;
     private String email;
 
-    public void editUser(User user) {
+    public void editUser(final User user) {
         user.setName(this.name);
         user.setPassword(this.password);
         user.setEmail(this.email);

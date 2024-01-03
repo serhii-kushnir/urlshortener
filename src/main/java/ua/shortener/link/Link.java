@@ -1,5 +1,6 @@
 package ua.shortener.link;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
@@ -10,13 +11,13 @@ import jakarta.persistence.FetchType;
 
 import lombok.Data;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import ua.shortener.link.dto.DTOLink;
 import ua.shortener.user.User;
 
 import java.time.LocalDateTime;
 
 import static ua.shortener.link.service.ShortLinkGenerator.generateShortLink;
-
 
 @Entity
 @Data
@@ -33,16 +34,24 @@ public class Link {
     @Column(name = "open_count", nullable = false)
     private Integer openCount;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "valid_until", nullable = false)
+    private LocalDateTime validUntil;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Link() {
+        LocalDateTime createdDate = LocalDateTime.now();
+        LocalDateTime validUntil = createdDate.plusDays(1);
         this.shortLink = generateShortLink();
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = createdDate;
+        this.validUntil = validUntil;
         this.openCount = 0;
     }
 
@@ -53,5 +62,16 @@ public class Link {
         dtoLink.setOpenCount(this.getOpenCount());
 
         return dtoLink;
+    }
+
+    @Override
+    public String toString() {
+        return "Link{" +
+                "shortLink='" + shortLink + '\'' +
+                ", url='" + url + '\'' +
+                ", openCount=" + openCount +
+                ", createdAt=" + createdAt +
+                ", user=" + user.getName()+
+                '}';
     }
 }

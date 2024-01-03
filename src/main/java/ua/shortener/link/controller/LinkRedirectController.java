@@ -9,14 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.shortener.link.Link;
 import ua.shortener.link.service.LinkService;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/sh/")
 @RequiredArgsConstructor
 public class LinkRedirectController {
 
@@ -24,12 +22,6 @@ public class LinkRedirectController {
 
     @GetMapping("/{shortLink}")
     public void redirectLink(final @PathVariable String shortLink, HttpServletResponse response) throws IOException {
-        Optional<Link> link = linkService.getLinkByShortLink(shortLink);
-        if (link.isPresent()) {
-            response.sendRedirect(link.get().getUrl());
-            link.get().setOpenCount(link.get().getOpenCount() + 1);
-        } else {
-            response.sendRedirect("/");
-        }
+       linkService.redirect(shortLink,response);
     }
 }
