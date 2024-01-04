@@ -75,10 +75,10 @@ public class UserService implements  UserDetailsService{
         userWithLinkDTO.setName(user.getName());
 
         List<Link> links = user.getLinks();
-            Link firstLink = links.get(0);
-            userWithLinkDTO.setShortLink(firstLink.getShortLink());
-            userWithLinkDTO.setLink(firstLink.getUrl());
-            userWithLinkDTO.setOpenCount(firstLink.getOpenCount());
+        Link firstLink = links.get(0);
+        userWithLinkDTO.setShortLink(firstLink.getShortLink());
+        userWithLinkDTO.setLink(firstLink.getUrl());
+        userWithLinkDTO.setOpenCount(firstLink.getOpenCount());
 
         return userWithLinkDTO;
     }

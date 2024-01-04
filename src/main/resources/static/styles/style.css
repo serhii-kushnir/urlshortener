@@ -23,6 +23,9 @@ h1 {
 th{
     color: white
 }
+.error{
+    color: red;
+}
 .about-section {
     width: 70%;
     margin: 0 auto;
@@ -130,7 +133,7 @@ th{
     align-items: center;
     justify-content: center;
     width: 512px;
-    height: 420px;
+    height: 512px;
     overflow: hidden;
     z-index: 2;
 }

@@ -1,4 +1,4 @@
-package ua.shortener.config;
+package ua.shortener.MVC.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
