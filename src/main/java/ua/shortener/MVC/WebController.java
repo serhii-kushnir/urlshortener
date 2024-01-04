@@ -22,20 +22,13 @@ public class WebController {
     private final UserService userService;
     private final AuthenticationServiceImpl authenticationService;
 
-    @GetMapping("/home_guest")
-    public ModelAndView getAllLinks(){
-        ModelAndView result = new ModelAndView("/home_guest");
-        result.addObject("linkList", linkService.getAllLinks());
-        return result;
-    }
-
     @GetMapping("/welcome")
     public ModelAndView showWelcomePage(@ModelAttribute("registrationRequest") RegistrationRequest registrationRequest){
         return new ModelAndView("/login_register");
     }
 
     @PostMapping("/signup")
-    public String saveUser(@Valid RegistrationRequest registrationRequest, BindingResult bindingResult){
+    public String registerUser(@Valid RegistrationRequest registrationRequest, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "login_register";
         }else {
@@ -53,6 +46,13 @@ public class WebController {
         link.setUser(existingUser);
         linkService.createLink(link);
         return "home_user";
+    }
+
+    @GetMapping("/home_guest")
+    public ModelAndView getAllLinks(){
+        ModelAndView result = new ModelAndView("/home_guest");
+        result.addObject("linkList", linkService.getAllLinks());
+        return result;
     }
 
     @GetMapping("/about")
