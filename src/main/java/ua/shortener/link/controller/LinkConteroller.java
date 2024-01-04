@@ -25,10 +25,8 @@ public class LinkConteroller {
         return result;
     }
     @GetMapping("/welcome")
-    public ModelAndView showWelcomePage(){
-        SignUpRequest signUpRequest = new SignUpRequest();
+    public ModelAndView showWelcomePage(@ModelAttribute("signUpRequest") SignUpRequest signUpRequest){
         ModelAndView result = new ModelAndView("/login_register");
-        result.addObject("signUpRequest", signUpRequest);
         return result;
     }
 

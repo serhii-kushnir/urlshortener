@@ -42,15 +42,12 @@ public class UserController {
         return result;
     }
     @PostMapping("/signup")
-    public ModelAndView saveUser(@Valid @ModelAttribute("signUpRequest") SignUpRequest signUpRequest,
-                            BindingResult bindingResult, ModelAndView modelAndView){
+    public String saveUser(@Valid SignUpRequest signUpRequest, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            modelAndView.setViewName("/login_register");
-            return modelAndView;
+            return "login_register";
         }else {
             userService.saveUser(signUpRequest);
-            modelAndView.setViewName("/success");
-           return modelAndView;
+           return "success";
         }
     }
 
