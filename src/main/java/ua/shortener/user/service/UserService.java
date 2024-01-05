@@ -24,7 +24,7 @@ public class UserService implements  UserDetailsService{
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         User user = findUserByEmail(username).orElseThrow(() -> new UsernameNotFoundException(
                 String.format("User '%s' not found", username)));
         return new org.springframework.security.core.userdetails.User(
@@ -36,11 +36,11 @@ public class UserService implements  UserDetailsService{
                         .toList());
     }
 
-    public Optional<User> findUserByEmail(String email){
+    public Optional<User> findUserByEmail(final String email){
         return userRepository.findUserByEmail(email);
     }
 
-    public List<Link> getLinksByUserId(Long userId) {
+    public List<Link> getLinksByUserId(final Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         return userOptional.map(User::getLinks).orElse(Collections.emptyList());
     }
@@ -49,7 +49,7 @@ public class UserService implements  UserDetailsService{
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(long id) {
+    public Optional<User> getUserById(final long id) {
         return userRepository.findById(id);
     }
 
@@ -67,7 +67,7 @@ public class UserService implements  UserDetailsService{
         userRepository.deleteById(id);
     }
 
-    public UserWithLinkDTO getUserDetailsById(long userId) {
+    public UserWithLinkDTO getUserDetailsById(final long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User with ID " + userId + " not found"));
 
@@ -83,7 +83,7 @@ public class UserService implements  UserDetailsService{
         return userWithLinkDTO;
     }
 
-    public UserDTO getUserInfoById(long userId) {
+    public UserDTO getUserInfoById(final long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User with ID " + userId + " not found"));
 

@@ -6,7 +6,7 @@ public enum ResponseLoginError {
     JWT("");
 
     private final String message;
-    ResponseLoginError(String message){
+    ResponseLoginError(final String message){
         this.message = message;
     }
 

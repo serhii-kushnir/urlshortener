@@ -1,5 +1,8 @@
 package ua.shortener.link.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -9,21 +12,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.shortener.link.Link;
 import ua.shortener.link.service.LinkService;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/sh")
+@RequestMapping("/sh/")
 @RequiredArgsConstructor
+@Tag(name = "Link Redirect", description = "API для перенаправлення посилань")
 public class LinkRedirectController {
 
     private final LinkService linkService;
 
     @GetMapping("/{shortLink}")
-    public void redirectLink(final @PathVariable String shortLink, HttpServletResponse response) throws IOException {
+    @Operation(summary = "Перенаправити коротке посилання")
+    public void redirectLink(final @PathVariable @Parameter(description = "Коротке посилання") String shortLink, HttpServletResponse response) throws IOException {
        linkService.redirect(shortLink,response);
     }
 }

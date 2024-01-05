@@ -9,10 +9,13 @@ import ua.shortener.link.Link;
 import ua.shortener.link.dto.DTOLink;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.time.LocalDateTime;
-import java.util.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Map;
+import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -28,10 +31,7 @@ public final class LinkService {
         return linkRepository.findById(shortLink);
     }
 
-    public void createLink(Link link) {
-        if (!isUrlAccessible(link.getUrl()).orElse(false)) {
-            throw new IllegalArgumentException("Invalid URL");
-        }
+    public void createLink(final Link link) {
         linkRepository.save(link);
     }
 
@@ -50,15 +50,10 @@ public final class LinkService {
         linkRepository.deleteById(shortLink);
     }
 
-    public Link editLink(Link existingLink) {
+    public Link editLink(final Link existingLink) {
         if(linkRepository.findById(existingLink.getShortLink()).isEmpty()){
-            System.out.println("Such link not exist");
             return null;
         }
-
-        //        if (!existingLink.getUrl().equals(updatedDtoLink.getLink())) {
-//            existingLink.setUrl(updatedDtoLink.getLink());
-//        }
 
         return linkRepository.save(existingLink);
     }
@@ -94,7 +89,7 @@ public final class LinkService {
         return getAllLinksDTO().get("Not active");
     }
 
-    public void redirect(String shortLink, HttpServletResponse response) throws IOException {
+    public void redirect(final String shortLink, HttpServletResponse response) throws IOException {
         Optional<Link> searchedLink = getLinkByShortLink(shortLink);
         if (searchedLink.isPresent()) {
             response.sendRedirect(searchedLink.get().getUrl());
@@ -106,7 +101,7 @@ public final class LinkService {
         }
     }
 
-    public DTOLink redirect(String shortLink) {
+    public DTOLink redirect(final String shortLink) {
         Optional<Link> searchedLink = getLinkByShortLink(shortLink);
         if (searchedLink.isPresent()) {
             Link link = searchedLink.get();
