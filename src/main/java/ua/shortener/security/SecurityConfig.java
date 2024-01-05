@@ -51,8 +51,8 @@ public class SecurityConfig {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/styles/**"))
                         .permitAll()
                         .anyRequest().authenticated()).formLogin(l -> l.loginPage("/shortify/welcome")
-                                                                        .loginProcessingUrl("/shortify/welcome")
-                                                                        .failureUrl("/shortify/welcome"));
+                                                                        .usernameParameter("email")
+                                                                        .loginProcessingUrl("/shortify/signin"));
 
         return http.build();
     }

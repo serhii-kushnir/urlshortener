@@ -2,7 +2,11 @@ package ua.shortener.MVC;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+//import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +40,20 @@ public class WebController {
             return "success";
         }
     }
+    @GetMapping("/signin")
+    public String loginUserPage(){
+
+            return "login_register";
+
+    }
+    @PostMapping("/signin")
+    public String loginUser(){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if(authentication == null || authentication instanceof AnonymousAuthenticationToken){
+//            return "login_register";
+//        }
+        return "/home_user";
+    }
 
     @PostMapping("/home/generate")
     public String generateLink(@RequestParam("url") String url ) throws ChangeSetPersister.NotFoundException {
@@ -51,6 +69,13 @@ public class WebController {
     @GetMapping("/home_guest")
     public ModelAndView getAllLinks(){
         ModelAndView result = new ModelAndView("/home_guest");
+        result.addObject("linkList", linkService.getAllLinks());
+        return result;
+    }
+
+    @GetMapping("/home_user")
+    public ModelAndView showHomeUserPage(){
+        ModelAndView result = new ModelAndView("/home_user");
         result.addObject("linkList", linkService.getAllLinks());
         return result;
     }
