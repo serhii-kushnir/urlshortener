@@ -58,8 +58,9 @@ class AuthenticationServiceImplTest {
 
         //THEN
         JwtRegistrationResponse response = authenticationService.register(registrationRequest);
-        String expectedRespMessage = response.getErrorMap().get(ResponseRegisterError.OK);
-        Assertions.assertEquals(expectedRespMessage, ResponseRegisterError.OK.getMessage());
+        String actualRespMessage = response.getErrorMap().get(ResponseRegisterError.OK);
+        String expectedRespMessage = ResponseRegisterError.OK.getMessage();
+        Assertions.assertEquals(expectedRespMessage, actualRespMessage);
 
     }
 
