@@ -35,6 +35,17 @@ public final class LinkService {
         linkRepository.save(link);
     }
 
+    private Optional<Boolean> isUrlAccessible(String url) {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            return Optional.of(responseCode == HttpURLConnection.HTTP_OK);
+        } catch (IOException e) {
+            return Optional.empty();
+        }
+    }
+
     public void deleteLink(final String shortLink) {
         linkRepository.deleteById(shortLink);
     }
