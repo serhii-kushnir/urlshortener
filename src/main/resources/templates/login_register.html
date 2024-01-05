@@ -75,7 +75,7 @@
                 <div class="input-box">
                     <input th:field="*{name}" type="text" class="input-field" placeholder="Username">
                     <i class="bx bx-user"></i>
-                    <p th:if="${#fields.hasErrors('name')}" style="color: red" th:errors="*{name}"></p>
+                    <p th:if="${#fields.hasErrors('name')}" style="color: red" th:errors="*{name}" th:action="/shortify/signup"></p>
                 </div>
                 <div class="input-box">
                     <input th:field="*{email}" type="email" class="input-field" placeholder="Email">

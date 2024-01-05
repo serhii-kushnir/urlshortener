@@ -42,7 +42,15 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/sh/**"))
                         .permitAll()
-                        .anyRequest().authenticated());
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/**"))
+                        .permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/static/**"))
+                        .permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/static/images/**"))
+                        .permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/styles/**"))
+                        .permitAll()
+                        .anyRequest().authenticated()).formLogin(l -> l.loginPage("/shortify/welcome").loginProcessingUrl("/shortify/welcome"));
         return http.build();
     }
 
