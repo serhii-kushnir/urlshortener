@@ -29,6 +29,6 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtLoginResponse> login(final @RequestBody LoginRequest request, final HttpServletResponse servletRequest) {
-        return ResponseEntity.ok(authenticationService.login(request, servletRequest));
+        return ResponseEntity.ok(authenticationService.login(request));
     }
 }
