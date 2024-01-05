@@ -27,3 +27,46 @@ spring:
 # Server port
 server:
   port: 9999
+
+
+
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    path: /swagger-ui.html
+
+#  api-docs:
+#    path: /api-docs
+#  use-management-port: true
+
+#springdoc:
+#  swagger-ui:
+#    disable-swagger-default-url: true
+#    path: /swagger-ui.html
+
+
+#springdoc:
+#  swagger-ui:
+#    path: /swagger-ui.html
+#  api-docs:
+#    path: /api-docs
+#  use-management-port: true
+
+
+
+
+
+#    path: /swagger/doc
+
+
+
+#springdoc:
+#  swagger-ui:
+#    disable-swagger-default-url: true
+#    path: /swagger/doc
+#  group-configs:
+#    - group: user
+#      paths-to-match: /api/v1/**
+#    - group: admin
+#      paths-to-match: /api/v2/**

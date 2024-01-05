@@ -20,7 +20,7 @@ import java.util.Map;
 public class JwtServiceImpl implements JwtService{
 
     private final static String JWT_SECRET_KEY = "QweGFDNHGFYrgbUhgGFcghgey134e589RDkbjYRSxcBBVHHGfHCHCGhcBVB";
-    private final static int JWT_LIFETIME = 3_600_000;
+    private final static int JWT_LIFETIME = 3_600_00000;
     @Override
     public String extractUserName(String token) {
         return extractAllClaims(token).getSubject();

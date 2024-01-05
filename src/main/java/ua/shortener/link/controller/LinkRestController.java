@@ -1,5 +1,8 @@
 package ua.shortener.link.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -29,12 +32,14 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/link")
 @RequiredArgsConstructor
+@Tag(name = "Link", description = "API для посилань")
 public final class LinkRestController {
 
     private final LinkService linkService;
     private final UserRepository userRepository;
 
     @GetMapping("/list/all")
+    @Operation(summary = "Отримати всі посилання")
     public ResponseEntity<Map<String, List<DTOLink>>> getAllLinks() {
         return ResponseEntity.ok(linkService.getAllLinksDTO());
     }
@@ -50,17 +55,21 @@ public final class LinkRestController {
     }
 
     @GetMapping("/{shortLink}")
-    public ResponseEntity<DTOLink> getLinkByShortLink(final @PathVariable String shortLink) {
+    @Operation(summary = "Отримати посилання за коротким посиланням")
+    public ResponseEntity<DTOLink> getLinkByShortLink(final @PathVariable @Parameter(description = "Коротке посилання") String shortLink) {
         DTOLink redirect = linkService.redirect(shortLink);
         return redirect == null ?
                 ResponseEntity.notFound().build() :
                 ResponseEntity.ok(redirect);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<DTOLink> createLink(final @RequestBody DTOLink dtoLink) {
+   @PostMapping("/create")
+   @Operation(summary = "Створити нове посилання")
+    public ResponseEntity<DTOLink> createLink(final @RequestBody @Parameter(description = "Дані для створення посилання") 
+                                              DTOLink dtoLink) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userEmail = authentication.getName();
+
 
         Optional<User> optionalUser = userRepository.findUserByEmail(userEmail);
 
@@ -80,7 +89,10 @@ public final class LinkRestController {
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<DTOLink> editLink(final @RequestBody DTOLink updatedDtoLink) {
+
+    @Operation(summary = "Редагувати посилання")
+    public ResponseEntity<DTOLink> editLink(final @RequestBody @Parameter(description = "Оновлені дані посилання")
+                                            DTOLink updatedDtoLink) {
         Link link = new Link();
         link.setShortLink(updatedDtoLink.getShortLink());
         link.setUrl(updatedDtoLink.getLink());
@@ -91,7 +103,9 @@ public final class LinkRestController {
     }
 
     @PostMapping("/delete/{shortLink}")
-    public ResponseEntity<Void> deleteLink(final @PathVariable String shortLink) {
+    @Operation(summary = "Видалити посилання")
+    public ResponseEntity<Void> deleteLink(final @PathVariable @Parameter(description = "Коротке посилання")
+                                               String shortLink) {
         linkService.deleteLink(shortLink);
         return ResponseEntity.ok().build();
     }

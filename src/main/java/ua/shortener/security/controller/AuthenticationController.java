@@ -1,6 +1,9 @@
 package ua.shortener.security.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -20,15 +23,22 @@ import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication", description = "API для аутентифікації")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+    
     @PostMapping("/register")
-    public ResponseEntity<JwtRegistrationResponse> register(final @RequestBody RegistrationRequest request) {
+    @Operation(summary = "Реєстрація нового користувача")
+    public ResponseEntity<JwtRegistrationResponse> register(final @RequestBody @Parameter(description = "Дані для реєстрації")
+                                                            RegistrationRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtLoginResponse> login(final @RequestBody LoginRequest request, final HttpServletResponse servletRequest) {
+
+    @Operation(summary = "Вхід в систему")
+    public ResponseEntity<JwtLoginResponse> login(final @RequestBody @Parameter(description = "Дані для входу")
+                                                  LoginRequest request, final HttpServletResponse servletRequest) {
         return ResponseEntity.ok(authenticationService.login(request));
     }
 }
