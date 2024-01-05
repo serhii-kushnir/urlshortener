@@ -5,22 +5,29 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import ua.shortener.link.Link;
 import ua.shortener.link.dto.DTOLink;
 import ua.shortener.link.service.LinkService;
+
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserRepository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/link")
@@ -31,70 +38,69 @@ public final class LinkRestController {
     private final LinkService linkService;
     private final UserRepository userRepository;
 
-    @GetMapping("/list")
+    @GetMapping("/list/all")
     @Operation(summary = "Отримати всі посилання")
-    public ResponseEntity<List<DTOLink>> getAllLinks() {
-        List<Link> links = linkService.getAllLinks();
-        List<DTOLink> dtoLinkList = links.stream()
-                .map(Link::toDTO).toList();
-        return ResponseEntity.ok(dtoLinkList);
+    public ResponseEntity<Map<String, List<DTOLink>>> getAllLinks() {
+        return ResponseEntity.ok(linkService.getAllLinksDTO());
+    }
+
+    @GetMapping("/list/active")
+    public ResponseEntity< List<DTOLink>> getActiveLinks() {
+        return ResponseEntity.ok(linkService.getActiveLinksDTO());
+    }
+
+    @GetMapping("/list/non-active")
+    public ResponseEntity< List<DTOLink>> getNonActiveLinks() {
+        return ResponseEntity.ok(linkService.getNonActiveLinksDTO());
     }
 
     @GetMapping("/{shortLink}")
     @Operation(summary = "Отримати посилання за коротким посиланням")
     public ResponseEntity<DTOLink> getLinkByShortLink(final @PathVariable @Parameter(description = "Коротке посилання") String shortLink) {
-        return linkService.getLinkByShortLink(shortLink)
-                .map(link -> ResponseEntity.ok(link.toDTO()))
-                .orElse(ResponseEntity.notFound().build());
+        DTOLink redirect = linkService.redirect(shortLink);
+        return redirect == null ?
+                ResponseEntity.notFound().build() :
+                ResponseEntity.ok(redirect);
     }
 
+   @PostMapping("/create")
+   @Operation(summary = "Створити нове посилання")
+    public ResponseEntity<DTOLink> createLink(final @RequestBody @Parameter(description = "Дані для створення посилання") 
+                                              DTOLink dtoLink) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
 
-    @PostMapping("/create")
-    @Operation(summary = "Створити нове посилання")
-    public ResponseEntity<DTOLink> createLink(final @RequestBody @Parameter(description = "Дані для створення посилання")
-                                                  DTOLink dtoLink) throws ChangeSetPersister.NotFoundException {
-        User existingUser = userRepository.findById(1L)
-                .orElseThrow(ChangeSetPersister.NotFoundException::new);
 
-        Link link = new Link();
-        link.setUrl(dtoLink.getLink());
-        link.setUser(existingUser);
+        Optional<User> optionalUser = userRepository.findUserByEmail(userEmail);
 
-        linkService.createLink(link);
+        if (optionalUser.isPresent()) {
+            User existingUser = optionalUser.get();
 
-        return ResponseEntity.ok(link.toDTO());
+            Link link = new Link();
+            link.setUrl(dtoLink.getLink());
+            link.setUser(existingUser);
+
+            linkService.createLink(link);
+
+            return ResponseEntity.ok(link.toDTO());
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
-
 
     @PostMapping("/edit")
+
     @Operation(summary = "Редагувати посилання")
     public ResponseEntity<DTOLink> editLink(final @RequestBody @Parameter(description = "Оновлені дані посилання")
-                                                DTOLink updatedDtoLink) {
-        //todo fix user problem
-
+                                            DTOLink updatedDtoLink) {
         Link link = new Link();
         link.setShortLink(updatedDtoLink.getShortLink());
         link.setUrl(updatedDtoLink.getLink());
-        link.setOpenCount(updatedDtoLink.getOpenCount());
         link.setUser(userRepository.findById(1L).orElseThrow());
         linkService.editLink(link);
 
         return ResponseEntity.ok(link.toDTO());
-
-//        linkService.getLinkByShortLink(shortLink)
-//                .map(existingLink -> {
-//                    Link editedLink = linkService.editLink(existingLink);
-//
-//                    // Зберегти оригінальний shortLink
-//                    String originalShortLink = existingLink.getShortLink();
-//                    editedLink.setShortLink(originalShortLink);
-//
-//                    return ResponseEntity.ok(editedLink.toDTO());
-//                })
-//                .orElse(ResponseEntity.notFound().build());
     }
-
-
 
     @PostMapping("/delete/{shortLink}")
     @Operation(summary = "Видалити посилання")
@@ -102,5 +108,10 @@ public final class LinkRestController {
                                                String shortLink) {
         linkService.deleteLink(shortLink);
         return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

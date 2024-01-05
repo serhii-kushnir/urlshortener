@@ -26,18 +26,19 @@ import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 @Tag(name = "Authentication", description = "API для аутентифікації")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+    
     @PostMapping("/register")
     @Operation(summary = "Реєстрація нового користувача")
-    public ResponseEntity<JwtRegistrationResponse> register(@RequestBody @Parameter(description = "Дані для реєстрації")
-                                                                RegistrationRequest request) {
+    public ResponseEntity<JwtRegistrationResponse> register(final @RequestBody @Parameter(description = "Дані для реєстрації")
+                                                            RegistrationRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/login")
+
     @Operation(summary = "Вхід в систему")
-    public ResponseEntity<JwtLoginResponse> login(@RequestBody @Parameter(description = "Дані для входу")
-                                                      LoginRequest request, HttpServletResponse servletRequest) {
-        return ResponseEntity.ok(authenticationService.login(request, servletRequest));
-                //ResponseEntity.ok(authenticationService.login(request, servletRequest));
+    public ResponseEntity<JwtLoginResponse> login(final @RequestBody @Parameter(description = "Дані для входу")
+                                                  LoginRequest request, final HttpServletResponse servletRequest) {
+        return ResponseEntity.ok(authenticationService.login(request));
     }
 }

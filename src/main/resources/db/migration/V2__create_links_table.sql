@@ -3,6 +3,7 @@ CREATE TABLE links (
                        url VARCHAR(100) NOT NULL,
                        open_count INT NOT NULL,
                        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       valid_until TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                        user_id INT NOT NULL,
                        CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id)
 );

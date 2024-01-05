@@ -42,7 +42,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@EnableSwagger2
 public class UrlShortenerApplication {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(UrlShortenerApplication.class, args);
     }
 //    @Bean

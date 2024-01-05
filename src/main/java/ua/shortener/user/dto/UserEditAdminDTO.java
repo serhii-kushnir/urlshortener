@@ -9,7 +9,7 @@ public class UserEditAdminDTO {
     private Role role;
     private boolean enabled;
 
-    public void editUserAdmin(User user) {
+    public void editUserAdmin(final User user) {
         user.setRole(this.role);
         user.setEnabled(this.enabled);
     }

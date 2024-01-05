@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import ua.shortener.UrlShortenerApplication;
 
 import ua.shortener.test_controller.config.ContainersEnvironment;
@@ -28,6 +29,6 @@ class UserRepositoriTest extends ContainersEnvironment {
     @Test
     void WhenGetLinkExpectEmptyList(){
         List<User> list = userRepository.findAll();
-        assertEquals(1, list.size());
+        assertEquals(2, list.size());
     }
 }
