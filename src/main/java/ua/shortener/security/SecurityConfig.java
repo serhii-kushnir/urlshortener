@@ -50,7 +50,10 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/styles/**"))
                         .permitAll()
-                        .anyRequest().authenticated()).formLogin(l -> l.loginPage("/shortify/welcome").loginProcessingUrl("/shortify/welcome"));
+                        .anyRequest().authenticated()).formLogin(l -> l.loginPage("/shortify/welcome")
+                                                                        .loginProcessingUrl("/shortify/welcome")
+                                                                        .failureUrl("/shortify/welcome"));
+
         return http.build();
     }
 
