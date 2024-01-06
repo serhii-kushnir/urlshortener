@@ -6,6 +6,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 //import org.springframework.security.authentication.AnonymousAuthenticationToken;
 //import org.springframework.security.core.context.SecurityContextHolder;
 //import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import ua.shortener.user.User;
 import ua.shortener.user.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class WebController {
     private final LinkService linkService;
     private final UserService userService;
     private final AuthenticationServiceImpl authenticationService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/welcome")
     public ModelAndView showWelcomePage(@ModelAttribute("registrationRequest") RegistrationRequest registrationRequest){
@@ -43,15 +46,30 @@ public class WebController {
             return "success";
         }
     }
-    @GetMapping("/signin")
-    public String loginUserPage(){
-        return "/home_user";
+//    @GetMapping("/signin")
+//    public String loginUserPage(){
+//        return "/home_user";
+//
+//    }
+//    @PostMapping("/signin")
+//    public String loginUser(){
+//        return "redirect:/shortify/home_user";
+//    }
+@PostMapping("/signin")
+public String loginUser(@RequestParam("email") String email,
+                        @RequestParam("password") String password,
+                        Model model) {
+        Optional<User> user = userService.findUserByEmail(email);
 
+    if (user.isPresent()) {
+        User foundUser = user.get();
+        if (passwordEncoder.matches(password, foundUser.getPassword())) {
+            return "redirect:/shortify/home_user";
+        }
     }
-    @PostMapping("/signin")
-    public String loginUser(){
-        return "/home_user";
-    }
+    model.addAttribute("error", true);
+    return "redirect:/shortify/welcome";
+}
 
     @PostMapping("/home_user/generate")
     public String generateLink(@RequestParam("url") String url, RedirectAttributes redirectAttributes ) throws ChangeSetPersister.NotFoundException {

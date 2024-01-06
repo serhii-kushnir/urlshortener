@@ -25,14 +25,17 @@
                 <li><a th:href="@{/swagger}" class="link">Swagger</a></li>
             </ul>
         </div>
-        <div class="nav-button">
-            <button class="btn white-btn" id="loginBtn">Sign out</button>
-        </div>
+        <form th:action="@{/logout}" method="post" class="nav-button">
+            <input class="btn white-btn" id="loginBtn" type="submit" value="Sign out"/>
+        </form>
+<!--        <div class="nav-button">-->
+<!--            <button  class="btn white-btn" id="loginBtn">Sign out</button>-->
+<!--        </div>-->
     </nav>
     <!-----------------------------Input Form----------------------------------->
     <div>
         <div class="container input-container">
-            <form th:action="@{/shortify/home_user/generate}" method="POST">
+            <form th:action="@{/shortify/home_user/generate}" method="POST" class="nav-button">
                 <div style="margin-bottom: 20px;">
                     <input th:name="url" type="text" class="input-field" placeholder="put your url here" >
                 </div>
