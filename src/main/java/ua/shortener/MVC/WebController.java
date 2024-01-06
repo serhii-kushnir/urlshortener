@@ -2,7 +2,6 @@ package ua.shortener.MVC;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-//import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,20 +41,15 @@ public class WebController {
     }
     @GetMapping("/signin")
     public String loginUserPage(){
-
-            return "login_register";
+        return "home_user";
 
     }
     @PostMapping("/signin")
     public String loginUser(){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if(authentication == null || authentication instanceof AnonymousAuthenticationToken){
-//            return "login_register";
-//        }
-        return "/home_user";
+        return "home_user";
     }
 
-    @PostMapping("/home/generate")
+    @PostMapping("/home_user/generate")
     public String generateLink(@RequestParam("url") String url ) throws ChangeSetPersister.NotFoundException {
         User existingUser = userService.getUserById(1L)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
