@@ -2,6 +2,7 @@ package ua.shortener.user.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,8 @@ public class UserRestController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Отримати користувача за ID")
-    public ResponseEntity<User> getUserById(final @PathVariable long id) {
+    public ResponseEntity<User> getUserById(final @PathVariable
+                                                @Parameter(description = "ID користувача") long id) {
         return userService.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -55,7 +57,8 @@ public class UserRestController {
     @GetMapping("/{id}/links")
 
     @Operation(summary = "Отримати посилання користувача за ID")
-    public ResponseEntity<List<Link>> getLinksByUserId(final @PathVariable Long id) {
+    public ResponseEntity<List<Link>> getLinksByUserId(final @PathVariable
+                                                           @Parameter(description = "ID користувача") Long id) {
         List<Link> links = userService.getLinksByUserId(id);
         return ResponseEntity.ok(links);
     }
@@ -63,7 +66,9 @@ public class UserRestController {
     @PostMapping("/update/{id}")
 
     @Operation(summary = "Оновити користувача")
-    public ResponseEntity<User> updateUser(final @PathVariable long id, final @RequestBody EditUserDTO editUserDTO) {
+    public ResponseEntity<User> updateUser(final @PathVariable @Parameter(description = "ID користувача") long id,
+                                           final @RequestBody @Parameter(description = "Дані для оновлення користувача")
+                                           EditUserDTO editUserDTO) {
         return userService.getUserById(id)
                 .map(existingUser -> ResponseEntity.ok(userService.editUser(existingUser, editUserDTO)))
                 .orElse(ResponseEntity.notFound().build());
@@ -71,7 +76,10 @@ public class UserRestController {
 
     @PostMapping("/update/{id}/admin")
     @Operation(summary = "Редагувати користувача як адміністратор")
-    public ResponseEntity<User> editUserAdmin(final @PathVariable long id, final @RequestBody UserEditAdminDTO userEditAdminDTO) {
+    public ResponseEntity<User> editUserAdmin(final @PathVariable @Parameter(description = "ID користувача") long id,
+                                              final @RequestBody
+                                              @Parameter(description = "Дані для редагування користувача адміністратором")
+                                              UserEditAdminDTO userEditAdminDTO) {
         return userService.getUserById(id)
                 .map(existingUser -> ResponseEntity.ok(userService.editUserAdmin(existingUser, userEditAdminDTO)))
                 .orElse(ResponseEntity.notFound().build());
@@ -80,7 +88,7 @@ public class UserRestController {
     @PostMapping("/delete/{id}")
 
     @Operation(summary = "Видалити користувача")
-    public ResponseEntity<Object> deleteUser(final @PathVariable long id) {
+    public ResponseEntity<Object> deleteUser(final @PathVariable @Parameter(description = "ID користувача") long id) {
         return userService.getUserById(id)
                 .map(user -> {
                     userService.deleteUser(id);
@@ -90,18 +98,24 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}/details")
-    public ResponseEntity<UserWithLinkDTO> getUserDetails(final @PathVariable long id) {
+    @Operation(summary = "Отримати деталі користувача")
+    public ResponseEntity<UserWithLinkDTO> getUserDetails(final @PathVariable
+                                                              @Parameter(description = "ID користувача") long id) {
         UserWithLinkDTO userWithLinkDTO = userService.getUserDetailsById(id);
         return ResponseEntity.ok(userWithLinkDTO);
     }
 
     @GetMapping("/{id}/user_info")
-    public ResponseEntity<UserDTO> getUserInfo(final @PathVariable long id) {
+    @Operation(summary = "Отримати інформацію про користувача")
+    public ResponseEntity<UserDTO> getUserInfo(final @PathVariable
+                                                   @Parameter(description = "ID користувача") long id) {
         UserDTO userDTO = userService.getUserInfoById(id);
         return ResponseEntity.ok(userDTO);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
+    @Operation(summary = "Обробник винятків для EntityNotFoundException", description =
+            "Повертає повідомлення про помилку та статус 404, коли виникає EntityNotFoundException")
     public ResponseEntity<String> handleEntityNotFoundException(final EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }

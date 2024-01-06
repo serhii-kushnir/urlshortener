@@ -35,7 +35,6 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-
     @Operation(summary = "Вхід в систему")
     public ResponseEntity<JwtLoginResponse> login(final @RequestBody @Parameter(description = "Дані для входу")
                                                   LoginRequest request, final HttpServletResponse servletRequest) {
