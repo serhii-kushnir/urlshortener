@@ -3,10 +3,11 @@ package ua.shortener.MVC;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.Authentication;
+//import org.springframework.security.authentication.AnonymousAuthenticationToken;
+//import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +17,8 @@ import ua.shortener.security.auth.AuthenticationServiceImpl;
 import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserService;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,13 +53,15 @@ public class WebController {
     }
 
     @PostMapping("/home_user/generate")
-    public String generateLink(@RequestParam("url") String url ) throws ChangeSetPersister.NotFoundException {
+    public String generateLink(@RequestParam("url") String url, Model model ) throws ChangeSetPersister.NotFoundException {
         User existingUser = userService.getUserById(1L)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
         Link link = new Link();
         link.setUrl(url);
         link.setUser(existingUser);
         linkService.createLink(link);
+        List<Link> updatedLinkList = userService.getLinksByUserId(1L);
+        model.addAttribute("linkList", updatedLinkList);
         return "home_user";
     }
 

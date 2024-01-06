@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:flex-direction="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,10 +10,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link th:href="@{/styles/style.css}" rel="stylesheet" />
 
-    <title>URLshort | Homepage</title>
+    <title>Shortify | Homepage</title>
 </head>
 <body>
-<div class="wrapper">
+<div class="wrapper" style="flex-direction: column">
     <nav class="nav">
         <div class="nav-logo">
             <img src="/static/images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
@@ -25,9 +25,9 @@
     <!-----------------------------Input Form----------------------------------->
     <div>
         <div class="container input-container">
-            <form th:action="/welcome/home_user/generate">
+            <form th:action="@{/shortify/home_user/generate}" method="POST">
                 <div style="margin-bottom: 20px;">
-                    <input type="text" class="input-field" placeholder="put your url here" >
+                    <input th:name="url" type="text" class="input-field" placeholder="put your url here" >
                 </div>
                 <button type="submit" id="generateBtn" class="btn white-btn"
                         style="font-size:15px;">generate</button>
@@ -39,13 +39,12 @@
 
     <div class="container table-container">
         <div th:if="${linkList.size() != 0}">
-            <header>Your URLs</header>
+            <header>All URL's</header>
             <table  class="able table-borderless">
                 <thead>
                 <tr>
                     <th style="padding-right: 40px;"> Original link</th>
                     <th style="padding-left: 40px;">Short link</th>
-                    <th style="padding-left: 40px;">    </th>
                 </tr>
                 </thead>
                 <tbody>
