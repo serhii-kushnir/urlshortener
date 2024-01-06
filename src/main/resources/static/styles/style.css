@@ -41,14 +41,20 @@ th{
     max-height: 500px; /* Задайте максимальну висоту контейнера */
     overflow: auto; /* Додаємо прокрутку, якщо вміст перевищує висоту */
     margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
+
 .participant {
-    display: inline-block;
-    width: 200px;
+    width: calc(25% - 40px); /* 25% ширина в container з margin 20px */
     margin: 20px;
     text-align: center;
     color: white;
     vertical-align: top;
+    box-sizing: border-box;
+    border: none; /* Видалення рамок */
+    padding: 10px;
 }
 .participant img {
     width: 150px;
