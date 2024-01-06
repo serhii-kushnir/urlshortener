@@ -1,4 +1,4 @@
-package ua.shortener.test_controller;
+package ua.shortener.test_container;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import ua.shortener.UrlShortenerApplication;
-import ua.shortener.link.Link;
-import ua.shortener.link.controller.LinkRedirectController;
-import ua.shortener.link.service.LinkRepository;
-import ua.shortener.test_controller.config.ContainersEnvironment;
+
+import ua.shortener.test_container.config.ContainersEnvironment;
+import ua.shortener.user.User;
+import ua.shortener.user.service.UserRepository;
 
 import java.util.List;
 
@@ -22,16 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = UrlShortenerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
-class LinkRepositoryTest extends ContainersEnvironment {
-
+class UserRepositoriTest extends ContainersEnvironment {
     @Autowired
-    public LinkRepository linkRepository;
-    @Autowired
-    public LinkRedirectController linkRestController;
+    public UserRepository userRepository;
 
     @Test
     void WhenGetLinkExpectEmptyList(){
-        List<Link> list = linkRepository.findAll();
+        List<User> list = userRepository.findAll();
         assertEquals(1, list.size());
     }
 }

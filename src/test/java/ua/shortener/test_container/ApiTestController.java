@@ -1,4 +1,4 @@
-package ua.shortener.test_controller;
+package ua.shortener.test_container;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import ua.shortener.UrlShortenerApplication;
 import ua.shortener.link.Link;
 import ua.shortener.link.controller.LinkRedirectController;
 import ua.shortener.link.service.LinkRepository;
-import ua.shortener.test_controller.config.ContainersEnvironment;
+import ua.shortener.test_container.config.ContainersEnvironment;
 
 import java.io.IOException;
 import java.util.Optional;

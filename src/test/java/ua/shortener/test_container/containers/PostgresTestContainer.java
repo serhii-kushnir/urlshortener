@@ -1,4 +1,4 @@
-package ua.shortener.test_controller.containers;
+package ua.shortener.test_container.containers;
 
 import org.testcontainers.containers.PostgreSQLContainer;
 
