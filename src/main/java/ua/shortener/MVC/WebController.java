@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.shortener.link.Link;
 import ua.shortener.link.service.LinkService;
 import ua.shortener.security.auth.AuthenticationServiceImpl;
@@ -44,25 +45,24 @@ public class WebController {
     }
     @GetMapping("/signin")
     public String loginUserPage(){
-        return "home_user";
+        return "/home_user";
 
     }
     @PostMapping("/signin")
     public String loginUser(){
-        return "home_user";
+        return "/home_user";
     }
 
     @PostMapping("/home_user/generate")
-    public String generateLink(@RequestParam("url") String url, Model model ) throws ChangeSetPersister.NotFoundException {
+    public String generateLink(@RequestParam("url") String url, RedirectAttributes redirectAttributes ) throws ChangeSetPersister.NotFoundException {
         User existingUser = userService.getUserById(1L)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
         Link link = new Link();
         link.setUrl(url);
         link.setUser(existingUser);
         linkService.createLink(link);
-        List<Link> updatedLinkList = userService.getLinksByUserId(1L);
-        model.addAttribute("linkList", updatedLinkList);
-        return "home_user";
+        redirectAttributes.addFlashAttribute("message", "Link created successfully");
+        return "redirect:/shortify/home_user";
     }
 
     @GetMapping("/home_guest")
@@ -75,7 +75,8 @@ public class WebController {
     @GetMapping("/home_user")
     public ModelAndView showHomeUserPage(){
         ModelAndView result = new ModelAndView("/home_user");
-        result.addObject("linkList", linkService.getAllLinks());
+        List<Link> linkList = linkService.getAllLinks();
+        result.addObject("linkList", linkList);
         return result;
     }
 

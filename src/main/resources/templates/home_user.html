@@ -18,8 +18,15 @@
         <div class="nav-logo">
             <img src="/static/images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
         </div>
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a th:href="@{/shortify/about}" class="link">About</a></li>
+                <li><a th:href="@{/shortify/thanks_to}" class="link">Thanks to</a></li>
+                <li><a th:href="@{/swagger}" class="link">Swagger</a></li>
+            </ul>
+        </div>
         <div class="nav-button">
-            <button class="btn white-btn" id="loginBtn" onclick="login()">Sign out</button>
+            <button class="btn white-btn" id="loginBtn">Sign out</button>
         </div>
     </nav>
     <!-----------------------------Input Form----------------------------------->
@@ -29,8 +36,8 @@
                 <div style="margin-bottom: 20px;">
                     <input th:name="url" type="text" class="input-field" placeholder="put your url here" >
                 </div>
-                <button type="submit" id="generateBtn" class="btn white-btn"
-                        style="font-size:15px;">generate</button>
+                <button type="submit" id="generateBtn" class="btn white-btn" style="font-size:15px;">generate</button>
+
             </form>
 
         </div>
@@ -40,6 +47,9 @@
     <div class="container table-container">
         <div th:if="${linkList.size() != 0}">
             <header>All URL's</header>
+            <div th:if="${message}">
+                <p th:text="${message}" style="color: green;"></p>
+            </div>
             <table  class="able table-borderless">
                 <thead>
                 <tr>
