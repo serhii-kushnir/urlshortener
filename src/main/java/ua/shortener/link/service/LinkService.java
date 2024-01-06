@@ -10,6 +10,8 @@ import ua.shortener.link.dto.DTOLink;
 
 import java.io.IOException;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDateTime;
 
 import java.util.List;

@@ -27,7 +27,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
-public class    SecurityConfig {
+public class SecurityConfig {
     private final UserService userService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -53,7 +53,11 @@ public class    SecurityConfig {
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swaggerresources/**",
+                                "/webjars/**").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**"))
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/sh/**"))
@@ -63,12 +67,12 @@ public class    SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userService);
         authProvider.setPasswordEncoder(passwordEncoder());

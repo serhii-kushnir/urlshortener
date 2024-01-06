@@ -45,11 +45,13 @@ public final class LinkRestController {
     }
 
     @GetMapping("/list/active")
+    @Operation(summary = "Отримати активні посилання")
     public ResponseEntity< List<DTOLink>> getActiveLinks() {
         return ResponseEntity.ok(linkService.getActiveLinksDTO());
     }
 
     @GetMapping("/list/non-active")
+    @Operation(summary = "Отримати неактивні посилання")
     public ResponseEntity< List<DTOLink>> getNonActiveLinks() {
         return ResponseEntity.ok(linkService.getNonActiveLinksDTO());
     }
@@ -89,7 +91,6 @@ public final class LinkRestController {
     }
 
     @PostMapping("/edit")
-
     @Operation(summary = "Редагувати посилання")
     public ResponseEntity<DTOLink> editLink(final @RequestBody @Parameter(description = "Оновлені дані посилання")
                                             DTOLink updatedDtoLink) {
@@ -111,6 +112,8 @@ public final class LinkRestController {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
+    @Operation(summary = "Обробник винятків для IllegalArgumentException", description =
+            "Повертає повідомлення про помилку та статус 400, коли виникає IllegalArgumentException")
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
