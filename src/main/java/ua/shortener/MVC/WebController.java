@@ -58,7 +58,7 @@ public class WebController {
 @PostMapping("/signin")
 public String loginUser(@RequestParam("email") String email,
                         @RequestParam("password") String password,
-                        Model model) {
+                        RedirectAttributes redirectAttributes) {
         Optional<User> user = userService.findUserByEmail(email);
 
     if (user.isPresent()) {
@@ -67,7 +67,7 @@ public String loginUser(@RequestParam("email") String email,
             return "redirect:/shortify/home_user";
         }
     }
-    model.addAttribute("error", true);
+    redirectAttributes.addFlashAttribute("error", "Invalid email or password");
     return "redirect:/shortify/welcome";
 }
 

@@ -49,10 +49,11 @@ public class SecurityConfig {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/static/images/**"))
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/styles/**"))
-                        .permitAll()
-                        .anyRequest().authenticated()).formLogin(l -> l.loginPage("/shortify/welcome")
-                                                                        .usernameParameter("email")
-                                                                        .loginProcessingUrl("/shortify/signin"));
+                        .permitAll())
+//                        .anyRequest().authenticated()).formLogin(l -> l.loginPage("/shortify/welcome")
+//                                                                        .usernameParameter("email")
+//                                                                        .loginProcessingUrl("/shortify/signin"))
+        ;
 
         return http.build();
     }

@@ -43,6 +43,9 @@
                 <div class="top">
                     <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
                     <header>Login</header>
+                    <div th:if="${error}">
+                        <p th:text="${error}" style="color: indianred;"></p>
+                    </div>
                     <div th:if="${param.error}">
                         <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
                     </div>
