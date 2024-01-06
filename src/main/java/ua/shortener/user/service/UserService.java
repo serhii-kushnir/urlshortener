@@ -14,7 +14,6 @@ import ua.shortener.link.Link;
 import ua.shortener.user.User;
 import ua.shortener.user.dto.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
