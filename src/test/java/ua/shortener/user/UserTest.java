@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 class UserTest {
@@ -185,10 +187,5 @@ class UserTest {
         user2.setId(1L);
 
         assertTrue(user1.canEqual(user2));
-    }
-
-    @Test
-    void testHashCode() {
-
     }
 }
