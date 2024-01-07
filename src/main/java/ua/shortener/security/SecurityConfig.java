@@ -28,23 +28,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
+
     private final UserService userService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.csrf(AbstractHttpConfigurer::disable)
-//                .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-//                .authenticationProvider(authenticationProvider()).addFilterBefore(
-//                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .authorizeHttpRequests(request -> request
-//                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**"))
-//                        .permitAll()
-//                        .requestMatchers(AntPathRequestMatcher.antMatcher("/sh/**"))
-//                        .permitAll()
-//                        .anyRequest().authenticated());
-//        return http.build();
-//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {

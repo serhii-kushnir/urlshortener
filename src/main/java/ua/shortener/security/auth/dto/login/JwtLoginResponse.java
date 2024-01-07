@@ -8,6 +8,7 @@ import java.util.Map;
 @Builder
 @Data
 public class JwtLoginResponse {
+
     private int status;
     private Map<ResponseLoginError, String> errors;
 

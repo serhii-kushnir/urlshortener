@@ -1,6 +1,7 @@
 package ua.shortener.link.service;
 
 import jakarta.servlet.http.HttpServletResponse;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public final class LinkService {
         linkRepository.save(link);
     }
 
-    private Optional<Boolean> isUrlAccessible(String url) {
+    private Optional<Boolean> isUrlAccessible(final String url) {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("HEAD");
@@ -91,7 +92,7 @@ public final class LinkService {
         return getAllLinksDTO().get("Not active");
     }
 
-    public void redirect(final String shortLink, HttpServletResponse response) throws IOException {
+    public void redirect(final String shortLink, final HttpServletResponse response) throws IOException {
         Optional<Link> searchedLink = getLinkByShortLink(shortLink);
         if (searchedLink.isPresent()) {
             response.sendRedirect(searchedLink.get().getUrl());

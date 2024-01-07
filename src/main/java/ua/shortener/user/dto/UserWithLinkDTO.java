@@ -9,5 +9,4 @@ public class UserWithLinkDTO {
     private String shortLink;
     private String link;
     private Integer openCount;
-
 }

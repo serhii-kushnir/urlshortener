@@ -25,8 +25,10 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtServiceImpl jwtService;
     private final UserService userService;
+
     @Override
     protected void doFilterInternal(final @NonNull HttpServletRequest request,
                                     final @NonNull HttpServletResponse response,
