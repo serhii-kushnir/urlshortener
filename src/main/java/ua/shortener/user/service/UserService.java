@@ -59,30 +59,10 @@ public class UserService implements  UserDetailsService{
         return userRepository.save(user);
     }
 
-    public User editUserAdmin(final User user, final UserEditAdminDTO userEditAdminDTO) {
-        userEditAdminDTO.editUserAdmin(user);
-        return userRepository.save(user);
-    }
-
     public void deleteUser(final long id) {
         userRepository.deleteById(id);
     }
 
-    public UserWithLinkDTO getUserDetailsById(final long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User with ID " + userId + " not found"));
-
-        UserWithLinkDTO userWithLinkDTO = new UserWithLinkDTO();
-        userWithLinkDTO.setName(user.getName());
-
-        List<Link> links = user.getLinks();
-            Link firstLink = links.get(0);
-            userWithLinkDTO.setShortLink(firstLink.getShortLink());
-            userWithLinkDTO.setLink(firstLink.getUrl());
-            userWithLinkDTO.setOpenCount(firstLink.getOpenCount());
-
-        return userWithLinkDTO;
-    }
 
     public UserDTO getUserInfoById(final long userId) {
         User user = userRepository.findById(userId)

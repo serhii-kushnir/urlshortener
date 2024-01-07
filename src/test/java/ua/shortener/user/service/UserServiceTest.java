@@ -3,16 +3,18 @@ package ua.shortener.user.service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.springframework.security.core.userdetails.UserDetails;
+
 import ua.shortener.link.Link;
 import ua.shortener.user.Role;
 import ua.shortener.user.User;
 import ua.shortener.user.dto.EditUserDTO;
-import ua.shortener.user.dto.UserEditAdminDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,27 +149,6 @@ class UserServiceTest {
         // THEN
         User editedUser = userService.editUser(existingUser, editUserDTO);
         assertEquals("EditedUser", editedUser.getName());
-    }
-
-    @Test
-    void editUserAdmin() {
-        //GIVEN
-        User existingUser = new User();
-        existingUser.setId(1L);
-        existingUser.setName("ExistingUser");
-
-        UserEditAdminDTO userEditAdminDTO = new UserEditAdminDTO();
-        userEditAdminDTO.setRole(Role.ADMIN);
-        userEditAdminDTO.setEnabled(true);
-
-        //WHEN
-        Mockito.when(userRepository.save(existingUser)).thenReturn(existingUser);
-
-        UserService userService = new UserService(userRepository);
-        // THEN
-        User editedUser = userService.editUserAdmin(existingUser, userEditAdminDTO);
-        assertEquals(Role.ADMIN, editedUser.getRole());
-        assertEquals(true, editedUser.isEnabled());
     }
 
     @Test

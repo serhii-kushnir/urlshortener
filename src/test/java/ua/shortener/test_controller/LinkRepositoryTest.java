@@ -17,7 +17,6 @@ import ua.shortener.test_controller.config.ContainersEnvironment;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
@@ -35,8 +34,6 @@ class LinkRepositoryTest extends ContainersEnvironment {
         List<Link> list = linkRepository.findAll();
         String shortLink = list.get(0).getShortLink();
         String expectedShortLink = "testlink";
-
-//        String actualUrl =
 
         assertEquals(expectedShortLink, shortLink);
     }

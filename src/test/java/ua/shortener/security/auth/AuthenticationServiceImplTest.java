@@ -3,16 +3,19 @@ package ua.shortener.security.auth;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import ua.shortener.security.auth.dto.login.JwtLoginResponse;
 import ua.shortener.security.auth.dto.login.LoginRequest;
 import ua.shortener.security.auth.dto.login.ResponseLoginError;
@@ -25,8 +28,6 @@ import ua.shortener.user.User;
 import ua.shortener.user.service.UserRepository;
 import ua.shortener.user.service.UserService;
 
-
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -99,7 +100,6 @@ class AuthenticationServiceImplTest {
         String email = "valid@gmail.com";
         RegistrationRequest registrationRequest = createRegRequest("Sergiy", email, "Password123");
 
-
         //WHEN
         Mockito.when(userRepository.findUserByEmail(email)).thenReturn(Optional.of(new User()));
 
@@ -140,7 +140,6 @@ class AuthenticationServiceImplTest {
                         .toList());
 
         //WHEN
-//        Mockito.when(passwordEncoder.encode(password)).thenReturn(new BCryptPasswordEncoder().encode(password));
         Mockito.when(userService.loadUserByUsername(email)).thenReturn(user);
         Mockito.when(authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())))
@@ -165,7 +164,6 @@ class AuthenticationServiceImplTest {
         String expectedJwt = ResponseLoginError.JWT.getMessage();
         Assertions.assertEquals(expectedOkMessage, actualOkMessage);
         Assertions.assertEquals(expectedJwt, actualJwt);
-
     }
 
     @Test

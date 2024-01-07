@@ -1,10 +1,13 @@
 package ua.shortener.user;
 
 import org.junit.jupiter.api.Test;
+
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
 import ua.shortener.link.Link;
 
 import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 

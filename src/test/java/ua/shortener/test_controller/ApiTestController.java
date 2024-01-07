@@ -3,26 +3,30 @@ package ua.shortener.test_controller;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import ua.shortener.UrlShortenerApplication;
 import ua.shortener.link.Link;
 import ua.shortener.link.controller.LinkRedirectController;
 import ua.shortener.link.service.LinkRepository;
 
 import java.io.IOException;
-import java.util.Optional;
 
+import java.util.Optional;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = UrlShortenerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApiTestController {
+class ApiTestController {
+
     @Autowired
     public LinkRepository linkRepository;
+
     @Autowired
     public LinkRedirectController linkRestController;
 

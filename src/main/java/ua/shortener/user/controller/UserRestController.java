@@ -15,8 +15,6 @@ import ua.shortener.user.User;
 
 import ua.shortener.user.dto.EditUserDTO;
 import ua.shortener.user.dto.UserDTO;
-import ua.shortener.user.dto.UserEditAdminDTO;
-import ua.shortener.user.dto.UserWithLinkDTO;
 import ua.shortener.user.service.UserService;
 
 import org.springframework.http.ResponseEntity;
@@ -75,17 +73,6 @@ public class UserRestController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/update/{id}/admin")
-    @Operation(summary = "Редагувати користувача як адміністратор")
-    public ResponseEntity<User> editUserAdmin(final @PathVariable @Parameter(description = "ID користувача") long id,
-                                              final @RequestBody
-                                              @Parameter(description = "Дані для редагування користувача адміністратором")
-                                              UserEditAdminDTO userEditAdminDTO) {
-        return userService.getUserById(id)
-                .map(existingUser -> ResponseEntity.ok(userService.editUserAdmin(existingUser, userEditAdminDTO)))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PostMapping("/delete/{id}")
 
     @Operation(summary = "Видалити користувача")
@@ -96,14 +83,6 @@ public class UserRestController {
                     return ResponseEntity.ok().build();
                 })
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/{id}/details")
-    @Operation(summary = "Отримати деталі користувача")
-    public ResponseEntity<UserWithLinkDTO> getUserDetails(final @PathVariable
-                                                              @Parameter(description = "ID користувача") long id) {
-        UserWithLinkDTO userWithLinkDTO = userService.getUserDetailsById(id);
-        return ResponseEntity.ok(userWithLinkDTO);
     }
 
     @GetMapping("/{id}/user_info")
