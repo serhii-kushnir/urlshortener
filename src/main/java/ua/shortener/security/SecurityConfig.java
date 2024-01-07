@@ -42,19 +42,20 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/sh/**"))
                         .permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/**"))
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/hello"))
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/static/**"))
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/static/images/**"))
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/styles/**"))
-                        .permitAll())
-//                        .anyRequest().authenticated()).formLogin(l -> l.loginPage("/shortify/welcome")
-//                                                                        .usernameParameter("email")
-//                                                                        .loginProcessingUrl("/shortify/signin"))
+                        .permitAll()
+                        .anyRequest().authenticated()).formLogin(l -> l.loginPage("/shortify/hello")
+                                                                        .usernameParameter("email")
+                                                                        .defaultSuccessUrl("/shortify/home_user")
+                                                                        .failureUrl("/shortify/signin?error=true")
+                                                                        .loginProcessingUrl("/shortify/signin"))
         ;
-
         return http.build();
     }
 

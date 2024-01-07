@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,12 +25,9 @@
             </ul>
         </div>
         <div class="nav-button">
-            <button class="btn white-btn" id="loginBtn" onclick="login()">Sign In</button>
-            <button class="btn" id="registerBtn" onclick="register()">Sign Up</button>
+            <a class="btn white-btn" id="loginBtn" th:href="@{/shortify/register}" >Sign in</a>
         </div>
-        <div class="nav-menu-btn">
-            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
-        </div>
+
     </nav>
 
     <!----------------------------- Form box ----------------------------------->
@@ -41,7 +38,7 @@
         <div class="login-container" id="login">
             <form th:action="@{/shortify/signin}" method="POST">
                 <div class="top">
-                    <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                    <span>Don't have an account? <a th:href="@{/shortify/signup}">Sign Up</a></span>
                     <header>Login</header>
                     <div th:if="${error}">
                         <p th:text="${error}" style="color: indianred;"></p>
@@ -61,47 +58,38 @@
                 <div class="input-box">
                     <input type="submit" class="submit" value="Sign In">
                 </div>
-                <div class="two-col">
-                    <div class="one">
-                        <input type="checkbox" id="login-check">
-                        <label for="login-check"> Remember Me</label>
-                    </div>
-                    <div class="two">
-                        <label><a href="#">Forgot password?</a></label>
-                    </div>
-                </div>
             </form>
         </div>
 
         <!------------------- registration form -------------------------->
-        <div class="register-container" id="register" style="margin-top: 15px">
-            <form th:action="@{/shortify/signup}" th:object="${registrationRequest}" method="POST">
-                <div class="top">
-                    <span>Have an account? <a href="#" onclick="login()">Login</a></span>
-                    <header>Sign Up</header>
-                </div>
-                <div class="input-box">
-                    <input th:field="*{name}" type="text" class="input-field" placeholder="Username">
-                    <i class="bx bx-user"></i>
-                    <p th:if="${#fields.hasErrors('name')}" style="color: red" th:errors="*{name}" th:action="/shortify/signup"></p>
-                </div>
-                <div class="input-box">
-                    <input th:field="*{email}" type="email" class="input-field" placeholder="Email">
-                    <i class="bx bx-envelope"></i>
-                    <p th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">>
-                    </p>
-                </div>
-                <div class="input-box">
-                    <input th:field="*{password}" type="password" class="input-field" placeholder="Password">
-                    <i class="bx bx-lock-alt"></i>
-                    <p th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}">>
-                    </p>
-                </div>
-                <div class="input-box">
-                    <input type="submit" class="submit" value="Register">
-                </div>
-            </form>
-        </div>
+<!--        <div class="register-container" id="register" style="margin-top: 15px">-->
+<!--            <form th:action="@{/shortify/signup}" th:object="${registrationRequest}" method="POST">-->
+<!--                <div class="top">-->
+<!--                    <span>Have an account? <a href="#" onclick="login()">Login</a></span>-->
+<!--                    <header>Sign Up</header>-->
+<!--                </div>-->
+<!--                <div class="input-box">-->
+<!--                    <input th:field="*{name}" type="text" class="input-field" placeholder="Username">-->
+<!--                    <i class="bx bx-user"></i>-->
+<!--                    <p th:if="${#fields.hasErrors('name')}" style="color: indianred" th:errors="*{name}" th:action="/shortify/signup"></p>-->
+<!--                </div>-->
+<!--                <div class="input-box">-->
+<!--                    <input th:field="*{email}" type="email" class="input-field" placeholder="Email">-->
+<!--                    <i class="bx bx-envelope"></i>-->
+<!--                    <p th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="input-box">-->
+<!--                    <input th:field="*{password}" type="password" class="input-field" placeholder="Password">-->
+<!--                    <i class="bx bx-lock-alt"></i>-->
+<!--                    <p th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}">>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="input-box">-->
+<!--                    <input type="submit" class="submit" value="Register">-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
     </div>
 </div>
 
@@ -147,19 +135,19 @@
     }
 
 </script>
-<script>
-    // JavaScript для додаткової валідації (необов'язково)
-    function validateForm() {
-        var password = document.getElementById("password").value;
-        var confirmPassword = document.getElementById("confirmPassword").value;
+<!--<script>-->
+<!--    // JavaScript для додаткової валідації (необов'язково)-->
+<!--    function validateForm() {-->
+<!--        var password = document.getElementById("password").value;-->
+<!--        var confirmPassword = document.getElementById("confirmPassword").value;-->
 
-        if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return false;
-        }
-        return true;
-    }
-</script>
+<!--        if (password !== confirmPassword) {-->
+<!--            alert("Passwords do not match");-->
+<!--            return false;-->
+<!--        }-->
+<!--        return true;-->
+<!--    }-->
+<!--</script>-->
 
 </body>
 </html>

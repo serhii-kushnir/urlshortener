@@ -64,7 +64,27 @@ public class JwtServiceImpl implements JwtService{
                 .getPayload();
     }
 
+
+
     public List<String> getRole(String token){
         return extractAllClaims(token).get("roles", List.class);
+    }
+
+    public String generateTokenInvalidToken(String token) {
+        Map<String, Object> claims = new HashMap<>();
+        List<String> role = getRole(token);
+        String username = extractUserName(token);
+
+        claims.put("roles", role);
+
+        Date issueDate = new Date();
+
+        return Jwts
+                .builder()
+                .subject(username)
+                .issuedAt(issueDate)
+                .expiration(issueDate)
+                .signWith(SignatureAlgorithm.HS256, JWT_SECRET_KEY)
+                .compact();
     }
 }
