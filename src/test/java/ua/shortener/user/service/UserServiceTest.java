@@ -15,12 +15,15 @@ import ua.shortener.link.Link;
 import ua.shortener.user.Role;
 import ua.shortener.user.User;
 import ua.shortener.user.dto.EditUserDTO;
+import ua.shortener.user.dto.UserDTO;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 
 
@@ -160,5 +163,29 @@ class UserServiceTest {
         userService.deleteUser(id);
         //THEN
         verify(userRepository).deleteById(id);
+    }
+    @Test
+    void getUserInfoById(){
+        //GIVEN
+        Long id = 1l;
+        User user = new User();
+        user.setId(1L);
+        user.setName("User1");
+        user.setEmail("User1@gmail");
+        LocalDateTime testDateTime = LocalDateTime.of(2024, 1, 9, 12, 0, 0);
+        user.setCreatedAt(testDateTime);
+
+        UserService userService = new UserService(userRepository);
+
+        //WHEN
+        Mockito.when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        UserDTO userDTO = userService.getUserInfoById(id);
+
+        assertEquals(user.getId(), userDTO.getId());
+        assertEquals(user.getName(), userDTO.getName());
+        assertEquals(user.getEmail(), userDTO.getEmail());
+        assertEquals(user.getCreatedAt(), userDTO.getCreatedAt());
+
+
     }
 }
