@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Генератор QR-кода</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h1>Генератор QR-кода</h1>
+    <p>Введите ссылку и нажмите кнопку, чтобы получить QR-код.</p>
+    <form>
+        <div class="form-group">
+            <label for="link">Ссылка:</label>
+            <input type="text" class="form-control" id="link" placeholder="Введите ссылку">
+        </div>
+        <div class="form-group">
+            <label for="utm_source">utm_source:</label>
+            <input type="text" class="form-control" id="utm_source" placeholder="Введите utm_source">
+        </div>
+        <div class="form-group">
+            <label for="utm_medium">utm_medium:</label>
+            <input type="text" class="form-control" id="utm_medium" placeholder="Введите utm_medium">
+        </div>
+        <div class="form-group">
+            <label for="utm_campaign">utm_campaign:</label>
+            <input type="text" class="form-control" id="utm_campaign" placeholder="Введите utm_campaign">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="generateQR()">Получить QR-код</button>
+    </form>
+    <div id="qr-code"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+    function generateQR() {
+// Получаем значение поля ввода ссылки
+        var link = document.getElementById("link").value;
+
+// Получаем значения полей ввода utm меток
+        var utm_source = document.getElementById("utm_source").value;
+        var utm_medium = document.getElementById("utm_medium").value;
+        var utm_campaign = document.getElementById("utm_campaign").value;
+
+// Формируем utm метки в одну строку
+        var utm = "";
+        if (utm_source !== "") {
+            utm += "?utm_source=" + encodeURIComponent(utm_source);
+            if (utm_medium !== "") {
+                utm += "&utm_medium=" + encodeURIComponent(utm_medium);
+            }
+            if (utm_campaign !== "") {
+                utm += "&utm_campaign=" + encodeURIComponent(utm_campaign);
+            }
+        }
+
+// Генерируем QR-код на основе полученной ссылки и utm меток
+        var qr = qrcode(0, 'L');
+        qr.addData(link + utm);
+        qr.make();
+        var qrCode = document.getElementById("qr-code");
+        qrCode.innerHTML = qr.createImgTag();
+    }
+</script>
+
+</body>
+</html>

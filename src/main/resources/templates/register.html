@@ -37,7 +37,7 @@
 
         <!----------------- registration form ------------------------>
         <div class="register-container" id="register" style="margin-top: 15px; right: 5px; opacity: 1;">
-            <form th:action="@{/shortify/signup}" th:object="${registrationRequest}" method="POST">
+            <form th:action="@{/shortify/register}" th:object="${registrationRequest}" method="POST">
                 <div class="top">
                     <span>Have an account? <a th:href="@{/shortify/hello}">Login</a></span>
                     <header>Sign Up</header>
@@ -45,7 +45,7 @@
                 <div class="input-box">
                     <input th:field="*{name}" type="text" class="input-field" placeholder="Username">
                     <i class="bx bx-user"></i>
-                    <p th:if="${#fields.hasErrors('name')}" style="color: indianred" th:errors="*{name}" th:action="/shortify/signup"></p>
+                    <p th:if="${#fields.hasErrors('name')}" style="color: indianred" th:errors="*{name}"></p>
                 </div>
                 <div class="input-box">
                     <input th:field="*{email}" type="email" class="input-field" placeholder="Email">
