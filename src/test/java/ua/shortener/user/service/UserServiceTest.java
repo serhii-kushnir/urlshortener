@@ -110,7 +110,8 @@ class UserServiceTest {
         user2.setId(2L);
         user2.setName("User2");
         //When
-        Mockito.when(userRepository.findAll()).thenReturn(List.of(user1, user2));
+        Mockito.when(userRepository.findAll())
+                .thenReturn(List.of(user1, user2));
         //Then
         List<User> allUsers = userService.getAllUser();
         assertEquals(2, allUsers.size());
