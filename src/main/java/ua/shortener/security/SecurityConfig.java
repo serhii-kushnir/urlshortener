@@ -42,16 +42,8 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/sh/**"))
                         .permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/home_guest"))
-                        .permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/thanks_to"))
-                        .permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/about"))
-                        .permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/register"))
-                        .permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/success"))
-                        .permitAll()
+//                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/**"))
+//                        .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/static/**"))
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/static/images/**"))
@@ -63,8 +55,7 @@ public class SecurityConfig {
 //                                                                        .usernameParameter("email")
                                                                         .defaultSuccessUrl("/shortify/home_user",true))
 //                                                                        .loginProcessingUrl("/shortify/login"))
-                .logout(logout -> logout.logoutUrl("/logout"))
-        ;
+                .logout(logout -> logout.logoutUrl("/logout"));
         return http.build();
     }
 

@@ -45,11 +45,20 @@ public class WebController {
             return "success";
         }
     }
-//    @PostMapping("/login")
-//    public String loginUser(){
-//        return "redirect:/shortify/home_user";
-//    }
+    @PostMapping("/login")
+    public String loginUser(){
+        return "redirect:/shortify/home_user";
+    }
+    @PostMapping("/delete")
+    public String deleteLink(@RequestParam(name = "shortLink") String shortLink){
+        linkService.deleteLink(shortLink);
+        return "redirect:/shortify/home_user";
+    }
 
+    @GetMapping("/home_user/example")
+    public String showQRcodePage(){
+        return "example_video";
+    }
     @PostMapping("/home_user/generate")
     public String generateLink(@RequestParam("url") String url, RedirectAttributes redirectAttributes ) throws ChangeSetPersister.NotFoundException {
         User existingUser = userService.getUserById(1L)

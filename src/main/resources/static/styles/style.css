@@ -5,6 +5,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    font-size: 15px;
 }
 body{
     background-image: url("/static/images/10.jpg");
@@ -26,11 +27,15 @@ th{
 .error{
     color: red;
 }
+.showQR{
+    margin-left: 20px;
+
+}
 .about-section {
     width: 70%;
     margin: 0 auto;
     padding: 20px;
-    background-color: rgba(248, 248, 248, 0.0);/* Фон з прозорістю */
+    background-color: rgba(248, 248, 248, 0.0);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
@@ -130,6 +135,7 @@ th{
 .btn.btn.white-btn:hover{
     background: rgba(255, 255, 255, 0.5);
 }
+
 .nav-menu-btn{
     display: none;
 }
@@ -151,6 +157,7 @@ th{
     margin-top: 40px;
 }
 .table-container {
+
     max-height: 300px;
     overflow-y: auto;
 }
