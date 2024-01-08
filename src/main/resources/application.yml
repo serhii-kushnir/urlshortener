@@ -5,13 +5,15 @@ spring:
   profiles:
     active: prod
   datasource:
-    url: jdbc:h2:mem:shortenerdb
+#    added for comfort testing
+    url: jdbc:h2:./shortenerdb
     username: sa
     password:
 
   # flyway settings for H2
   flyway:
-    url: jdbc:h2:mem:shortener
+    #    added for comfort testing
+    url: jdbc:h2:./shortenerdb
     user: sa
     password:
 

@@ -1,5 +1,9 @@
 /* POPPINS FONT */
+<<<<<<< HEAD
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+=======
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+>>>>>>> GoIt
 
 *{
     margin: 0;
@@ -15,7 +19,11 @@ body{
     overflow: hidden;
 }
 h1 {
+<<<<<<< HEAD
             color: white;
+=======
+    color: white;
+>>>>>>> GoIt
 }
 th{
     color: white
@@ -77,7 +85,11 @@ th{
     margin-left: 15px;
 }
 generateBtn{
+<<<<<<< HEAD
 margin-right: 40px;
+=======
+    margin-right: 40px;
+>>>>>>> GoIt
 }
 .btn.white-btn{
     background: rgba(255, 255, 255, 0.7);
