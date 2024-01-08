@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ua.shortener.UrlShortenerApplication;
+
 import ua.shortener.link.Link;
 import ua.shortener.link.controller.LinkRedirectController;
 import ua.shortener.link.service.LinkRepository;

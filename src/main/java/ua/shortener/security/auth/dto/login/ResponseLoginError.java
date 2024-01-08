@@ -1,5 +1,9 @@
 package ua.shortener.security.auth.dto.login;
 
+import lombok.Getter;
+
+
+@Getter
 public enum ResponseLoginError {
 
     OK("Successfully"),
@@ -7,11 +11,8 @@ public enum ResponseLoginError {
     JWT("");
 
     private final String message;
-    ResponseLoginError(final String message){
-        this.message = message;
+    ResponseLoginError(final String msg) {
+        this.message = msg;
     }
 
-    public String getMessage(){
-        return message;
-    }
 }

@@ -17,18 +17,18 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class JwtServiceImpl implements JwtService{
+public final class JwtServiceImpl implements JwtService {
 
     private final static String JWT_SECRET_KEY = "QweGFDNHGFYrgbUhgGFcghgey134e589RDkbjYRSxcBBVHHGfHCHCGhcBVB";
     private final static int JWT_LIFETIME = 3_600_00000;
 
     @Override
-    public String extractUserName(String token) {
+    public String extractUserName(final String token) {
         return extractAllClaims(token).getSubject();
     }
 
     @Override
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(final UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         List<String> role = userDetails.getAuthorities()
                 .stream()
@@ -50,13 +50,13 @@ public class JwtServiceImpl implements JwtService{
     }
 
     @Override
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(final String token, final UserDetails userDetails) {
         String username = extractUserName(token);
         Date expirationDate = extractAllClaims(token).getExpiration();
         return (username.equals(userDetails.getUsername())) && (new Date().before(expirationDate));
     }
 
-    private Claims extractAllClaims(String token){
+    private Claims extractAllClaims(final String token) {
         return Jwts.
                 parser()
                 .setSigningKey(JWT_SECRET_KEY)
@@ -67,11 +67,11 @@ public class JwtServiceImpl implements JwtService{
 
 
 
-    public List<String> getRole(String token){
+    public List<String> getRole(final String token) {
         return extractAllClaims(token).get("roles", List.class);
     }
 
-    public String generateTokenInvalidToken(String token) {
+    public String generateTokenInvalidToken(final String token) {
         Map<String, Object> claims = new HashMap<>();
         List<String> role = getRole(token);
         String username = extractUserName(token);

@@ -48,13 +48,13 @@ public final class LinkRestController {
 
     @GetMapping("/list/active")
     @Operation(summary = "Отримати активні посилання")
-    public ResponseEntity< List<DTOLink>> getActiveLinks() {
+    public ResponseEntity<List<DTOLink>> getActiveLinks() {
         return ResponseEntity.ok(linkService.getActiveLinksDTO());
     }
 
     @GetMapping("/list/non-active")
     @Operation(summary = "Отримати неактивні посилання")
-    public ResponseEntity< List<DTOLink>> getNonActiveLinks() {
+    public ResponseEntity<List<DTOLink>> getNonActiveLinks() {
         return ResponseEntity.ok(linkService.getNonActiveLinksDTO());
     }
 
@@ -62,9 +62,7 @@ public final class LinkRestController {
     @Operation(summary = "Отримати посилання за коротким посиланням")
     public ResponseEntity<DTOLink> getLinkByShortLink(final @PathVariable @Parameter(description = "Коротке посилання") String shortLink) {
         DTOLink redirect = linkService.redirect(shortLink);
-        return redirect == null ?
-                ResponseEntity.notFound().build() :
-                ResponseEntity.ok(redirect);
+        return redirect == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(redirect);
     }
 
    @PostMapping("/create")

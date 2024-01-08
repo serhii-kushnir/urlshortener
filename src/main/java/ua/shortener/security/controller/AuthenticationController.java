@@ -1,11 +1,8 @@
 package ua.shortener.security.controller;
 
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +22,7 @@ import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 @Tag(name = "Authentication", description = "API для аутентифікації")
-public class AuthenticationController {
+public final class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     
@@ -39,7 +36,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     @Operation(summary = "Вхід в систему")
     public ResponseEntity<JwtLoginResponse> login(final @RequestBody @Parameter(description = "Дані для входу")
-                                                  LoginRequest request, final HttpServletResponse servletRequest) {
+                                                  LoginRequest request) {
         return ResponseEntity.ok(authenticationService.login(request));
     }
 }

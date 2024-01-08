@@ -1,7 +1,15 @@
 package ua.shortener.link;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.CascadeType;
 
 import lombok.Data;
 
@@ -16,7 +24,7 @@ import static ua.shortener.link.service.ShortLinkGenerator.generateShortLink;
 @Entity
 @Data
 @Table(name = "links")
-public class Link {
+public final class Link {
 
     @Id
     @Column(name = "short_link", length = 8)
@@ -42,10 +50,10 @@ public class Link {
 
     public Link() {
         LocalDateTime createdDate = LocalDateTime.now();
-        LocalDateTime validUntil = createdDate.plusDays(1);
+        LocalDateTime plussedDays = createdDate.plusDays(1);
         this.shortLink = generateShortLink();
         this.createdAt = createdDate;
-        this.validUntil = validUntil;
+        this.validUntil = plussedDays;
         this.openCount = 0;
     }
 

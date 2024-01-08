@@ -31,7 +31,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/shortify")
-public class WebController {
+public final class WebController {
 
     private final LinkService linkService;
     private final UserService userService;
@@ -39,43 +39,43 @@ public class WebController {
     private static final String REDIRECT_SHORTIFY_HOME_USER = "redirect:/shortify/home_user";
 
     @GetMapping("/register")
-    public ModelAndView showRegistrationPage(final @ModelAttribute("registrationRequest") RegistrationRequest registrationRequest){
+    public ModelAndView showRegistrationPage(final @ModelAttribute("registrationRequest") RegistrationRequest registrationRequest) {
         return new ModelAndView("/register");
     }
 
     @GetMapping("/login")
-    public ModelAndView showLoginPage(){
+    public ModelAndView showLoginPage() {
         return new ModelAndView("login_page");
     }
 
     @PostMapping("/register")
-    public String registerUser(final @Valid RegistrationRequest registrationRequest, final BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+    public String registerUser(final @Valid RegistrationRequest registrationRequest, final BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "register";
-        }else {
+        } else {
             authenticationService.createUserFromRequest(registrationRequest);
             return "success";
         }
     }
 
     @PostMapping("/login")
-    public String loginUser(){
+    public String loginUser() {
         return REDIRECT_SHORTIFY_HOME_USER;
     }
 
     @PostMapping("/delete")
-    public String deleteLink(@RequestParam(name = "shortLink") String shortLink){
+    public String deleteLink(final @RequestParam(name = "shortLink") String shortLink) {
         linkService.deleteLink(shortLink);
         return REDIRECT_SHORTIFY_HOME_USER;
     }
 
     @GetMapping("/home_user/example")
-    public String showQRcodePage(){
+    public String showQRcodePage() {
         return "example_video";
     }
 
     @PostMapping("/home_user/generate")
-    public String generateLink(final @RequestParam("url") String url, final RedirectAttributes redirectAttributes ) throws ChangeSetPersister.NotFoundException {
+    public String generateLink(final @RequestParam("url") String url, final RedirectAttributes redirectAttributes) throws ChangeSetPersister.NotFoundException {
         User existingUser = userService.getUserById(1L)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
         Link link = new Link();
@@ -87,14 +87,14 @@ public class WebController {
     }
 
     @GetMapping("/home_guest")
-    public ModelAndView getAllLinks(){
+    public ModelAndView getAllLinks() {
         ModelAndView result = new ModelAndView("/home_guest");
         result.addObject("linkList", linkService.getAllLinks());
         return result;
     }
 
     @GetMapping("/home_user")
-    public ModelAndView showHomeUserPage(){
+    public ModelAndView showHomeUserPage() {
         ModelAndView result = new ModelAndView("/home_user");
         List<Link> linkList = linkService.getAllLinks();
         result.addObject("linkList", linkList);
@@ -102,12 +102,12 @@ public class WebController {
     }
 
     @GetMapping("/about")
-    public ModelAndView showAboutPage(){
+    public ModelAndView showAboutPage() {
         return new ModelAndView("/about");
     }
 
     @GetMapping("/thanks_to")
-    public ModelAndView showThanksToPage(){
+    public ModelAndView showThanksToPage() {
         return new ModelAndView("/thanks_to");
     }
 }

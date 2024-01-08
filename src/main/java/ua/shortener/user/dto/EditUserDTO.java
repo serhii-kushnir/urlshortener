@@ -5,7 +5,7 @@ import ua.shortener.user.User;
 import lombok.Data;
 
 @Data
-public class EditUserDTO {
+public final class EditUserDTO {
 
     private String name;
     private String password;

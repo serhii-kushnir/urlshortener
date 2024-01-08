@@ -1,6 +1,7 @@
 package ua.shortener.security.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -14,17 +15,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+
 import org.springframework.stereotype.Component;
+
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import ua.shortener.user.service.UserService;
 
 import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -32,7 +35,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public final class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtServiceImpl jwtService;
     private final UserService userService;
@@ -75,11 +78,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         Cookie[] cookies = request.getCookies();
-        if (cookies != null){
+        if (cookies != null) {
             Optional<Cookie> jwtTokenCookie = Arrays.stream(cookies)
                     .filter(cookie -> cookie.getName().equals("jwtToken"))
                     .findFirst();
-            if(parameterMap.keySet().contains("logout")){
+            if (parameterMap.keySet().contains("logout")) {
                 log.info("DO LOGOUT COOKIE WILL BE CHANGE TO DEPRECATE ONE");
                 String oldToken = jwtTokenCookie.get().getValue();
                 String invalidToken = jwtService.generateTokenInvalidToken(oldToken);
@@ -95,7 +98,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String username;
                 try {
                     username = jwtService.extractUserName(jwtFromCookie);
-                }catch (ExpiredJwtException e){
+                } catch (ExpiredJwtException e) {
                     log.info("JWT TOKEN IS DEPRECATED");
                     filterChain.doFilter(request, response);
                     return;

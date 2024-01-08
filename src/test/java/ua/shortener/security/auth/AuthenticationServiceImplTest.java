@@ -23,6 +23,7 @@ import ua.shortener.security.auth.dto.registration.JwtRegistrationResponse;
 import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 import ua.shortener.security.auth.dto.registration.ResponseRegisterError;
 import ua.shortener.security.jwt.JwtService;
+
 import ua.shortener.user.Role;
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserRepository;

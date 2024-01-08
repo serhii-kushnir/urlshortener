@@ -13,8 +13,7 @@ public enum ResponseRegisterError {
     BAD_NAME("Input name should have more than 3 symbols and contains more than 1 letter");
 
     private final String message;
-    ResponseRegisterError(final String message){
-        this.message = message;
+    ResponseRegisterError(final String msg) {
+        this.message = msg;
     }
-
 }
