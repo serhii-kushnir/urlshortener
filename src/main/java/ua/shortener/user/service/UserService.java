@@ -62,7 +62,7 @@ public class UserService implements  UserDetailsService{
     public void deleteUser(final long id) {
         userRepository.deleteById(id);
     }
-
+    
 
     public UserDTO getUserInfoById(final long userId) {
         User user = userRepository.findById(userId)

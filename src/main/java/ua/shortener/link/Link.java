@@ -1,13 +1,7 @@
 package ua.shortener.link;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.*;
 
 import lombok.Data;
 
@@ -42,7 +36,7 @@ public class Link {
     @Column(name = "valid_until", nullable = false)
     private LocalDateTime validUntil;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

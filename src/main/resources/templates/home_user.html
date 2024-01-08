@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+
+    <title>Shortify | Homepage</title>
+</head>
+<body>
+<div class="wrapper" style="flex-direction: column">
+    <nav class="nav">
+        <div class="nav-logo">
+            <img src="/static/images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
+        </div>
+        <form th:action="@{/logout}" method="GET" class="nav-button">
+            <input class="btn white-btn" style="font-size: 15px;" id="loginBtn"  type="submit" value="Sign out"/>
+        </form>
+
+    </nav>
+    <!-----------------------------Input Form----------------------------------->
+    <div>
+        <div class="container input-container" style="display: flex; justify-content: space-between;">
+            <form th:action="@{/shortify/home_user/generate}" method="POST" class="nav-button">
+                <div style="margin-bottom: 20px;">
+                    <input th:name="url" type="text" id="link" class="input-field" placeholder="put your url here">
+                </div>
+                <button type="submit" id="generateBtn" class="btn white-btn" style="font-size: 15px;">generate</button>
+                <button type="button" style="font-size: 15px;" class="btn white-btn" onclick="generateQR()">generate QR</button>
+            </form>
+            <div class="showQR" id="qr-code"></div>
+        </div>
+    </div>
+    <!----------------------------- Teble container ----------------------------------->
+    <div class="container table-container">
+        <div th:if="${linkList.size() != 0}">
+            <header>All URL's</header>
+            <div th:if="${message}">
+                <p th:text="${message}" style="color: green;"></p>
+            </div>
+            <table  class="able table-borderless">
+                <thead>
+                <tr>
+                    <th style="padding-right: 40px;"> Original link</th>
+                    <th style="padding-left: 40px;">Short link</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="link : ${linkList}">
+                    <td style="padding-right: 40px;">
+                        <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                           th:href="${link.url}" th:text="${link.url}">
+                        </a>
+                    </td>
+                    <td style="padding-left: 40px;">
+                        <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                           th:href="${link.url}" th:text="${link.shortLink}">
+                        </a>
+                    </td>
+                    <td>
+                        <form th:action="@{/shortify/delete}" method="post" class="d-inline">
+                            <input type="hidden" name="shortLink" th:value="${link.shortLink}"/>
+                            <button type="submit" class="btn btn-outline-success ms-auto">Remove 🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+    function generateQR() {
+// Получаем значение поля ввода ссылки
+        var link = document.getElementById("link").value;
+
+// Генерируем QR-код на основе полученной ссылки и utm меток
+        var qr = qrcode(0, 'L');
+        qr.addData(link);
+        qr.make();
+        var qrCode = document.getElementById("qr-code");
+        qrCode.innerHTML = qr.createImgTag();
+    }
+</script>
+
+
+</body>
+</html>

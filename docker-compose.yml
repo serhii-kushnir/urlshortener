@@ -20,7 +20,7 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/shortener
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5433/shortener
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_DATABASE: POSTGRESQL

@@ -3,11 +3,13 @@ package ua.shortener.link.service;
 import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 
 import ua.shortener.link.Link;
 import ua.shortener.link.dto.DTOLink;
+import ua.shortener.user.User;
 
 import java.io.IOException;
 
@@ -20,8 +22,10 @@ import java.util.Optional;
 import java.util.Map;
 import java.util.HashMap;
 
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public final class LinkService {
 
     private final LinkRepository linkRepository;
@@ -50,7 +54,19 @@ public final class LinkService {
     }
 
     public void deleteLink(final String shortLink) {
-        linkRepository.deleteById(shortLink);
+        if(!linkRepository.existsById(shortLink)){
+            throw new IllegalArgumentException("Link with id " + shortLink + " not found");
+        }else{
+            Optional<Link> userById = linkRepository.findById(shortLink);
+            if(userById.isPresent()){
+                Link linkToDelete = userById.get();
+                User user = linkToDelete.getUser();
+                user.getLinks().remove(linkToDelete);
+            }
+            linkRepository.deleteById(shortLink);
+            log.info("Note by " + shortLink + " was deleted");
+        }
+
     }
 
     public Link editLink(final Link existingLink) {

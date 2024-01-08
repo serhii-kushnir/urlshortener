@@ -111,7 +111,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return response;
     }
 
-    private void createUserFromRequest(final RegistrationRequest request){
+    public void createUserFromRequest(final RegistrationRequest request){
         User user = new User();
         user.setName(request.getName());
         user.setPassword(passwordEncoder.encode(request.getPassword()));

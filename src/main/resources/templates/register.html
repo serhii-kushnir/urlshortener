@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <title>Shortify | Registration</title>
+    <style>
+        /* Ваші стилі тут */
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <nav class="nav">
+        <div class="nav-logo">
+            <img src="/static/images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a th:href="@{/shortify/home_guest}" class="link active">Home</a></li>
+                <li><a th:href="@{/shortify/about}" class="link">About</a></li>
+                <li><a th:href="@{/shortify/thanks_to}" class="link">Thanks to</a></li>
+                <li><a th:href="@{/swagger}" class="link">Swagger</a></li>
+            </ul>
+        </div>
+        <div class="nav-button">
+            <a class="btn white-btn" id="loginBtn" th:href="@{/shortify/hello}" >Sign in</a>
+        </div>
+    </nav>
+
+    <!----------------------------- Form box ----------------------------------->
+    <div class="form-box">
+
+        <!----------------- registration form ------------------------>
+        <div class="register-container" id="register" style="margin-top: 15px; right: 5px; opacity: 1;">
+            <form th:action="@{/shortify/register}" th:object="${registrationRequest}" method="POST">
+                <div class="top">
+                    <span>Have an account? <a th:href="@{/shortify/hello}">Login</a></span>
+                    <header>Sign Up</header>
+                </div>
+                <div class="input-box">
+                    <input th:field="*{name}" type="text" class="input-field" placeholder="Username">
+                    <i class="bx bx-user"></i>
+                    <p th:if="${#fields.hasErrors('name')}" style="color: indianred" th:errors="*{name}"></p>
+                </div>
+                <div class="input-box">
+                    <input th:field="*{email}" type="email" class="input-field" placeholder="Email">
+                    <i class="bx bx-envelope"></i>
+                    <p th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">></p>
+                </div>
+                <div class="input-box">
+                    <input th:field="*{password}" type="password" class="input-field" placeholder="Password">
+                    <i class="bx bx-lock-alt"></i>
+                    <p th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}">></p>
+                </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" value="Register">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
