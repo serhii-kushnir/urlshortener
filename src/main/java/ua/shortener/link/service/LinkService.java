@@ -43,9 +43,11 @@ public final class LinkService {
 
     public void createLink(final Link link) {
         String url = link.getUrl();
-        if (!url.startsWith("https://") || !url.startsWith("http://")){
+
+        if (!url.startsWith("https://") || !url.startsWith("http://")) {
             link.setUrl("https://" + url);
         }
+
         linkRepository.save(link);
     }
 

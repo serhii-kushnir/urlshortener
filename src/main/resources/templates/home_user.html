@@ -46,9 +46,11 @@
             </div>
             <table  class="able table-borderless">
                 <thead>
-                <tr>
+                <tr >
                     <th style="padding-right: 40px;"> Original link</th>
                     <th style="padding-left: 40px;">Short link</th>
+                    <th style="padding-left: 40px;">Open count</th>
+                    <th style="padding-left: 40px;">Active</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,7 +65,11 @@
                            th:href="@{/shortify/redirect/{shortLink}(shortLink=${link.shortLink})}" th:text="${link.shortLink}">
                         </a>
                     </td>
-                    <td>
+                    <td style="padding-left: 40px;">
+                        <spam class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" th:text="${link.openCount}">
+                        </spam>
+                    </td>
+                    <td style="padding-left: 40px;">
                         <form th:action="@{/shortify/delete}" method="post" class="d-inline">
                             <input type="hidden" name="shortLink" th:value="${link.shortLink}"/>
                             <button type="submit" class="btn btn-outline-success ms-auto">Remove 🗑️</button>
