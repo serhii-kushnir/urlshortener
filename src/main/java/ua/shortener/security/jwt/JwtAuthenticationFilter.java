@@ -1,6 +1,7 @@
 package ua.shortener.security.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -19,7 +20,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+
 import org.springframework.stereotype.Component;
+
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import ua.shortener.user.service.UserService;
@@ -27,10 +30,15 @@ import ua.shortener.user.service.UserService;
 import java.io.IOException;
 
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public final class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtServiceImpl jwtService;
     private final UserService userService;
@@ -45,7 +53,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
-
 
         if ((authHeader == null || !authHeader.startsWith("Bearer "))) {
             log.info("authHeader == null || !authHeader.startsWith( \"Bearer \")");

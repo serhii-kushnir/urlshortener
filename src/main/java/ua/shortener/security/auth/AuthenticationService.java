@@ -7,7 +7,7 @@ import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 
 public interface AuthenticationService {
 
-    JwtRegistrationResponse register(final RegistrationRequest request);
+    JwtRegistrationResponse register(RegistrationRequest request);
 
-    JwtLoginResponse login(final LoginRequest request);
+    JwtLoginResponse login(LoginRequest request);
 }

@@ -13,15 +13,17 @@ import org.springframework.stereotype.Service;
 
 import ua.shortener.link.Link;
 import ua.shortener.user.User;
-import ua.shortener.user.dto.*;
+import ua.shortener.user.dto.EditUserDTO;
+import ua.shortener.user.dto.UserDTO;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements  UserDetailsService{
+public final class UserService implements  UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
@@ -31,13 +33,12 @@ public class UserService implements  UserDetailsService{
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                List.of(user.getRole())
-                        .stream()
+                Stream.of(user.getRole())
                         .map(role -> new SimpleGrantedAuthority(role.name()))
                         .toList());
     }
 
-    public Optional<User> findUserByEmail(final String email){
+    public Optional<User> findUserByEmail(final String email) {
         return userRepository.findUserByEmail(email);
     }
 

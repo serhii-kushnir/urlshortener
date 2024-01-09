@@ -32,8 +32,6 @@ spring:
 server:
   port: 9999
 
-
-
 #Swagger
 springdoc:
   swagger-ui:

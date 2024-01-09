@@ -33,7 +33,7 @@ import java.util.List;
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 @Tag(name = "User", description = "API для користувачів")
-public class UserRestController {
+public final class UserRestController {
 
     private final UserService userService;
 

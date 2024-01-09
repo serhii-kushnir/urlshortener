@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/resource")
 @RequiredArgsConstructor
 @Tag(name = "Resource", description = "API для ресурсів")
-public class AuthorizationController {
+public final class AuthorizationController {
 
     @GetMapping
     @Operation(summary = "Отримати ресурс")

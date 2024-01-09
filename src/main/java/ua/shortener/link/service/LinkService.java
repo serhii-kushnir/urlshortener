@@ -3,6 +3,7 @@ package ua.shortener.link.service;
 import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Map;
 import java.util.HashMap;
-
 
 @Service
 @RequiredArgsConstructor
@@ -54,11 +54,11 @@ public final class LinkService {
     }
 
     public void deleteLink(final String shortLink) {
-        if(!linkRepository.existsById(shortLink)){
+        if (!linkRepository.existsById(shortLink)) {
             throw new IllegalArgumentException("Link with id " + shortLink + " not found");
-        }else{
+        } else {
             Optional<Link> userById = linkRepository.findById(shortLink);
-            if(userById.isPresent()){
+            if (userById.isPresent()) {
                 Link linkToDelete = userById.get();
                 User user = linkToDelete.getUser();
                 user.getLinks().remove(linkToDelete);
@@ -66,18 +66,17 @@ public final class LinkService {
             linkRepository.deleteById(shortLink);
             log.info("Note by " + shortLink + " was deleted");
         }
-
     }
 
     public Link editLink(final Link existingLink) {
-        if(linkRepository.findById(existingLink.getShortLink()).isEmpty()){
+        if (linkRepository.findById(existingLink.getShortLink()).isEmpty()) {
             return null;
         }
 
         return linkRepository.save(existingLink);
     }
 
-    public Map<String, List<DTOLink>> getAllLinksDTO(){
+    public Map<String, List<DTOLink>> getAllLinksDTO() {
         List<Link> links = getAllLinks();
         LocalDateTime dateTime = LocalDateTime.now();
         Map<String, List<DTOLink>> result = new HashMap<>();
@@ -100,11 +99,11 @@ public final class LinkService {
         return result;
     }
 
-    public List<DTOLink> getActiveLinksDTO(){
+    public List<DTOLink> getActiveLinksDTO() {
         return getAllLinksDTO().get("Active");
     }
 
-    public List<DTOLink> getNonActiveLinksDTO(){
+    public List<DTOLink> getNonActiveLinksDTO() {
         return getAllLinksDTO().get("Not active");
     }
 
