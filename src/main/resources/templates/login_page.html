@@ -37,23 +37,25 @@
         <!------------------- login form -------------------------->
 
         <div class="login-container" id="login">
-            <form th:action="@{/shortify/login}" method="POST">
+            <form th:action="@{/shortify/login}"    method="POST">
                 <div class="top">
                     <span>Don't have an account? <a th:href="@{/shortify/register}">Sign Up</a></span>
                     <header>Login</header>
-                    <div th:if="${error}">
-                        <p th:text="${error}" style="color: indianred;"></p>
-                    </div>
+<!--                    <div th:if="${error}">-->
+<!--                        <p th:text="${error}" style="color: indianred;"></p>-->
+<!--                    </div>-->
                     <div th:if="${param.error}">
                         <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
                     </div>
                 </div>
                 <div class="input-box">
-                    <input type="email" name="email" class="input-field" placeholder="Email">
+                    <label for="email" class="form-label visually-hidden">Username</label>
+                    <input id="email" name="email"  class="input-field" placeholder="Email">
                     <i class="bx bx-user"></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" name="password" class="input-field" placeholder="Password">
+                    <label for="password" class="form-label visually-hidden">Password</label>
+                    <input type="password" id="password" name="password"  class="input-field" placeholder="Password">
                     <i class="bx bx-lock-alt"></i>
                 </div>
                 <div class="input-box">
@@ -124,3 +126,4 @@
 
 </body>
 </html>
+
