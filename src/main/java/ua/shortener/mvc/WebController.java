@@ -1,11 +1,14 @@
 package ua.shortener.mvc;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,16 +24,22 @@ import ua.shortener.link.Link;
 import ua.shortener.link.service.LinkService;
 
 import ua.shortener.security.auth.AuthenticationServiceImpl;
+import ua.shortener.security.auth.dto.login.LoginRequest;
 import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserService;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/shortify")
+@Slf4j
+
 public final class WebController {
 
     private final LinkService linkService;
@@ -44,23 +53,19 @@ public final class WebController {
     }
 
     @GetMapping("/login")
-    public ModelAndView showLoginPage() {
-        return new ModelAndView("login_page");
+    public String showLoginPage() {
+        return "login_page";
     }
 
     @PostMapping("/register")
-    public String registerUser(final @Valid RegistrationRequest registrationRequest, final BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+    public String registerUser(RegistrationRequest registrationRequest, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+
             return "register";
         } else {
             authenticationService.createUserFromRequest(registrationRequest);
             return "success";
         }
-    }
-
-    @PostMapping("/login")
-    public String loginUser() {
-        return REDIRECT_SHORTIFY_HOME_USER;
     }
 
     @PostMapping("/delete")
@@ -111,3 +116,13 @@ public final class WebController {
         return new ModelAndView("/thanks_to");
     }
 }
+
+//if(parameterMap.keySet().contains("logout")){
+//        log.info("DO LOGOUT COOKIE WILL BE CHANGE TO DEPRECATE ONE");
+//        String oldToken = jwtTokenCookie.get().getValue();
+//        String invalidToken = jwtService.generateTokenInvalidToken(oldToken);
+//        Cookie cookie = new Cookie("jwtToken", invalidToken);
+//        response.addCookie(cookie);
+//        filterChain.doFilter(request, response);
+//        return;
+//        }

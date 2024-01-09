@@ -23,6 +23,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import ua.shortener.security.jwt.JwtAuthenticationFilter;
 
+import ua.shortener.security.jwt.JwtCookieAuthenticationFilter;
 import ua.shortener.user.service.UserService;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -34,13 +35,16 @@ public class SecurityConfig {
 
     private final UserService userService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtCookieAuthenticationFilter jwtCookieAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
-                .authenticationProvider(authenticationProvider()).addFilterBefore(
-                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtCookieAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/swagger/**",
                                 "/swagger-ui/**",
@@ -51,8 +55,8 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/sh/**"))
                         .permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/**"))
-                        .permitAll()
+//                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/**"))
+//                        .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/static/**"))
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/static/images/**"))
@@ -61,10 +65,15 @@ public class SecurityConfig {
                         .permitAll()
                         .anyRequest().authenticated()).formLogin(l -> l
                                                                         .loginPage("/shortify/login")
-                                                                        .usernameParameter("email")
+                                                                        .permitAll()
+//                                                                        .usernameParameter("email")
                                                                         .defaultSuccessUrl("/shortify/home_user",true)
-                                                                        .loginProcessingUrl("/shortify/login"))
-                .logout(logout -> logout.logoutUrl("/logout"));
+//                                                                        .loginProcessingUrl("/shortify/login")
+                                                                        .usernameParameter("email")
+                                                                        .passwordParameter("password"))
+                .logout(logout -> logout
+                        .deleteCookies("jwtToken")
+                        .logoutUrl("/logout"));
         return http.build();
     }
 
