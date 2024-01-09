@@ -11,11 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,6 +26,8 @@ import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserService;
 
+import java.io.IOException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -80,8 +78,12 @@ public final class WebController {
     }
 
     @PostMapping("/home_user/generate")
-    public String generateLink(final @RequestParam("url") String url, final RedirectAttributes redirectAttributes) throws ChangeSetPersister.NotFoundException {
-        User existingUser = userService.getUserById(1L)
+    public String generateLink(final @RequestParam("url") String url,
+                               final RedirectAttributes redirectAttributes,
+                               Principal principal) throws ChangeSetPersister.NotFoundException {
+        log.info("IN generateLink PRINCIPAL = " + principal.getName());
+
+        User existingUser = userService.findUserByEmail(principal.getName())
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
         Link link = new Link();
         link.setUrl(url);
@@ -99,9 +101,11 @@ public final class WebController {
     }
 
     @GetMapping("/home_user")
-    public ModelAndView showHomeUserPage() {
+    public ModelAndView showHomeUserPage(Principal principal) {
+        log.info("IN showHomeUserPage. PRINCIPAL = " + principal.getName());
+        User user = userService.findUserByEmail(principal.getName()).orElseThrow();
         ModelAndView result = new ModelAndView("/home_user");
-        List<Link> linkList = linkService.getAllLinks();
+        List<Link> linkList = user.getLinks();
         result.addObject("linkList", linkList);
         return result;
     }
@@ -115,14 +119,9 @@ public final class WebController {
     public ModelAndView showThanksToPage() {
         return new ModelAndView("/thanks_to");
     }
-}
 
-//if(parameterMap.keySet().contains("logout")){
-//        log.info("DO LOGOUT COOKIE WILL BE CHANGE TO DEPRECATE ONE");
-//        String oldToken = jwtTokenCookie.get().getValue();
-//        String invalidToken = jwtService.generateTokenInvalidToken(oldToken);
-//        Cookie cookie = new Cookie("jwtToken", invalidToken);
-//        response.addCookie(cookie);
-//        filterChain.doFilter(request, response);
-//        return;
-//        }
+    @GetMapping("/redirect/{shortLink}")
+    public void redirect(@PathVariable(name = "shortLink") String shortLink, HttpServletResponse response) throws IOException {
+        linkService.redirect(shortLink, response);
+    }
+}

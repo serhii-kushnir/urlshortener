@@ -39,6 +39,10 @@ public final class LinkService {
     }
 
     public void createLink(final Link link) {
+        String url = link.getUrl();
+        if (!url.startsWith("https://") || !url.startsWith("http://")){
+            link.setUrl("https://" + url);
+        }
         linkRepository.save(link);
     }
 
@@ -68,7 +72,7 @@ public final class LinkService {
         }
     }
 
-    public Link editLink(final Link existingLink) {
+    public Link editLink(Link existingLink) {
         if (linkRepository.findById(existingLink.getShortLink()).isEmpty()) {
             return null;
         }
