@@ -29,8 +29,10 @@ import ua.shortener.user.service.UserService;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -68,6 +70,22 @@ public final class WebController {
     @PostMapping("/delete")
     public String deleteLink(final @RequestParam(name = "shortLink") String shortLink) {
         linkService.deleteLink(shortLink);
+        return REDIRECT_SHORTIFY_HOME_USER;
+    }
+
+    @PostMapping("/update")
+    public String update(final @RequestParam(name = "shortLink") String shortLink) {
+        LocalDateTime createdDate = LocalDateTime.now();
+        LocalDateTime plussedDays = createdDate.plusMinutes(1);
+
+        Optional<Link> linkByShortLink = linkService.getLinkByShortLink(shortLink);
+
+        Link link = linkByShortLink.get();
+        link.setCreatedAt(createdDate);
+        link.setValidUntil(plussedDays);
+
+        linkService.editLink(link);
+
         return REDIRECT_SHORTIFY_HOME_USER;
     }
 
