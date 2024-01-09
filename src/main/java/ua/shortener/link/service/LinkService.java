@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 import ua.shortener.link.Link;
 import ua.shortener.link.dto.DTOLink;
 import ua.shortener.user.User;
+import ua.shortener.user.service.UserService;
 
 import java.io.IOException;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 import java.util.List;
@@ -32,6 +34,8 @@ public final class LinkService {
     private final LinkRepository linkRepository;
     @Getter
     private final Map<String, Link> cache = new HashMap<>();
+    private final UserService userService;
+
 
     public List<Link> getAllLinks() {
         return linkRepository.findAll();
@@ -144,5 +148,29 @@ public final class LinkService {
             return link.toDTO();
         }
         return null;
+    }
+
+    public Map<String, List<Link>> getAllUsersLinksDTO(Principal principal) {
+        String username = principal.getName();
+       User userByEmail = userService.findUserByEmail(username).orElseThrow();
+        LocalDateTime dateTime = LocalDateTime.now();
+        List<Link> links =userByEmail.getLinks();
+
+        Map<String, List<Link>> result = new HashMap<>();
+
+        List<Link> notActiveLinks = links
+                .stream()
+                .filter(link -> link.getValidUntil().isBefore(dateTime))
+                .toList();
+
+        List<Link> activeLinks = links
+                .stream()
+                .filter(link -> link.getValidUntil().isAfter(dateTime))
+                .toList();
+
+        result.put("Active", activeLinks);
+        result.put("Not active", notActiveLinks);
+
+        return result;
     }
 }

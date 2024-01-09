@@ -62,7 +62,7 @@
                     </td>
                     <td style="padding-left: 40px;">
                         <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                           th:href="@{/shortify/redirect/{shortLink}(shortLink=${link.shortLink})}" th:text="${link.shortLink}">
+                           th:href="@{/shortify/redirect/{shortLink}(shortLink=${link.shortLink})}" th:text="${link.shortLink +' redirect count ' + link.getOpenCount()}">
                         </a>
                     </td>
                     <td style="padding-left: 40px;">

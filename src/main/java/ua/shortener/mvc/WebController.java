@@ -30,6 +30,7 @@ import ua.shortener.user.service.UserService;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -111,10 +112,14 @@ public final class WebController {
     @GetMapping("/home_user")
     public ModelAndView showHomeUserPage(Principal principal) {
         log.info("IN showHomeUserPage. PRINCIPAL = " + principal.getName());
-        User user = userService.findUserByEmail(principal.getName()).orElseThrow();
+//        User user = userService.findUserByEmail(principal.getName()).orElseThrow();
         ModelAndView result = new ModelAndView("/home_user");
-        List<Link> linkList = user.getLinks();
-        result.addObject("linkList", linkList);
+        Map<String, List<Link>> allUsersLinks = linkService.getAllUsersLinksDTO(principal);
+        List<Link> activeLinks = allUsersLinks.get("Active");
+        List<Link> notActiveLinks = allUsersLinks.get("Not active");
+//        List<Link> linkList = user.getLinks();
+        result.addObject("linkList", activeLinks);
+        result.addObject("notActiveLinkList", notActiveLinks);
         return result;
     }
 
