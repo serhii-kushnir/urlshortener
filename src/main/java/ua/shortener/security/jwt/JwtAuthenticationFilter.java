@@ -1,10 +1,7 @@
 package ua.shortener.security.jwt;
 
-import io.jsonwebtoken.ExpiredJwtException;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -28,12 +25,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import ua.shortener.user.service.UserService;
 
 import java.io.IOException;
-
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
-
 
 @Component
 @RequiredArgsConstructor
@@ -85,6 +76,3 @@ public final class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
 }
-
-
-

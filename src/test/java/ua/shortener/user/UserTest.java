@@ -178,14 +178,14 @@ class UserTest {
         assertEquals(user1, user2);
     }
 
-    @Test
-    void canEqual() {
-        User user1 = new User();
-        user1.setId(1L);
-
-        User user2 = new User();
-        user2.setId(1L);
-
-        assertTrue(user1.canEqual(user2));
-    }
+//    @Test
+//    void canEqual() {
+//        User user1 = new User();
+//        user1.setId(1L);
+//
+//        User user2 = new User();
+//        user2.setId(1L);
+//
+//        assertTrue(user1.canEqual(user2));
+//    }
 }

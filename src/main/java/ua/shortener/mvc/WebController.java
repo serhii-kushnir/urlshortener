@@ -1,14 +1,11 @@
 package ua.shortener.mvc;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,16 +21,12 @@ import ua.shortener.link.Link;
 import ua.shortener.link.service.LinkService;
 
 import ua.shortener.security.auth.AuthenticationServiceImpl;
-import ua.shortener.security.auth.dto.login.LoginRequest;
 import ua.shortener.security.auth.dto.registration.RegistrationRequest;
 
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserService;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -58,8 +51,8 @@ public final class WebController {
     }
 
     @PostMapping("/register")
-    public String registerUser(RegistrationRequest registrationRequest, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+    public String registerUser(RegistrationRequest registrationRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
 
             return "register";
         } else {

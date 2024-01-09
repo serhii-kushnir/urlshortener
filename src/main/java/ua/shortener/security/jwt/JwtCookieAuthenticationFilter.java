@@ -1,32 +1,35 @@
 package ua.shortener.security.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Lazy;
+
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import ua.shortener.user.service.UserService;
 
 import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -35,7 +38,7 @@ import java.util.Set;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
+public final class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
     private final JwtServiceImpl jwtService;
     private final UserService userService;
     @Lazy
@@ -43,7 +46,7 @@ public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
     private  AuthenticationManager authenticationManager;
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(final @NonNull HttpServletRequest request, final @NonNull HttpServletResponse response, final @NonNull FilterChain filterChain) throws ServletException, IOException {
         log.info("In jwt cookie auth filter");
         Map<String, String[]> parameterMap = request.getParameterMap();
         Set<String> paramKeys = parameterMap.keySet();
@@ -54,7 +57,7 @@ public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
         String password = request.getParameter("password");
         String jwtFromCookie;
 
-        if ((username != null && password != null) && !parameterMap.containsKey("name")){
+        if ((username != null && password != null) && !parameterMap.containsKey("name")) {
             try {
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(username, password));
@@ -69,15 +72,14 @@ public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 filterChain.doFilter(request, response);
                 return;
             }
         }
 
-
         Cookie[] cookies = request.getCookies();
-        if (cookies != null){
+        if (cookies != null) {
             Optional<Cookie> jwtTokenCookie = Arrays.stream(cookies)
                     .filter(cookie -> cookie.getName().equals("jwtToken"))
                     .findFirst();
@@ -89,7 +91,7 @@ public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
                 String extractUsername;
                 try {
                     extractUsername = jwtService.extractUserName(jwtFromCookie);
-                }catch (ExpiredJwtException e){
+                } catch (ExpiredJwtException e) {
                     log.info("JWT TOKEN IS DEPRECATED");
                     filterChain.doFilter(request, response);
                     return;
@@ -111,5 +113,4 @@ public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-
 }
