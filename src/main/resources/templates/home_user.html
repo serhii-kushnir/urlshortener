@@ -40,7 +40,7 @@
     <!----------------------------- Teble container ----------------------------------->
     <div class="container table-container">
         <div th:if="${linkList.size() != 0}">
-            <header>All URL</header>
+            <header>Active</header>
             <div th:if="${message}">
                 <p th:text="${message}" style="color: snow;"></p>
             </div>
@@ -72,6 +72,45 @@
                     <td style="padding-left: 40px;">
                         <form th:action="@{/shortify/delete}" method="post" class="d-inline">
                             <input type="hidden" name="shortLink" th:value="${link.shortLink}"/>
+                            <button type="submit" class="btn btn-outline-success ms-auto">Remove 🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container table-container">
+        <div th:if="${notActiveLinkList.size() != 0}">
+            <header>Not Active</header>
+            <table  class="able table-borderless">
+                <thead>
+                <tr >
+                    <th style="padding-right: 40px;"> Original link</th>
+                    <th style="padding-left: 40px;">Short link</th>
+                    <th style="padding-left: 40px;">Open count</th>
+                    <th style="padding-left: 40px;">Active</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="notActiveLinkList : ${notActiveLinkList}">
+                    <td style="padding-right: 40px;">
+                        <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                           th:href="${notActiveLinkList.url}" th:text="${notActiveLinkList.url}">
+                        </a>
+                    </td>
+                    <td style="padding-left: 40px;">
+                        <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                           th:href="@{/shortify/redirect/{shortLink}(shortLink=${notActiveLinkList.shortLink})}" th:text="${notActiveLinkList.shortLink +' redirect count ' + notActiveLinkList.getOpenCount()}">
+                        </a>
+                    </td>
+                    <td style="padding-left: 40px;">
+                        <spam class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" th:text="${notActiveLinkList.openCount}"></spam>
+                    </td>
+                    <td style="padding-left: 40px;">
+                        <form th:action="@{/shortify/delete}" method="post" class="d-inline">
+                            <input type="hidden" name="shortLink" th:value="${notActiveLinkList.shortLink}"/>
                             <button type="submit" class="btn btn-outline-success ms-auto">Remove 🗑️</button>
                         </form>
                     </td>
