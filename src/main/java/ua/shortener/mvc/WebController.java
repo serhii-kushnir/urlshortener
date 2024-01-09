@@ -70,7 +70,7 @@ public final class WebController {
         return REDIRECT_SHORTIFY_HOME_USER;
     }
 
-    @GetMapping("/home_user/example")
+    @GetMapping("/example")
     public String showQRcodePage() {
         return "example_video";
     }
@@ -80,7 +80,10 @@ public final class WebController {
                                final RedirectAttributes redirectAttributes,
                                Principal principal) throws ChangeSetPersister.NotFoundException {
         log.info("IN generateLink PRINCIPAL = " + principal.getName());
-
+        if(url.isEmpty()){
+            redirectAttributes.addFlashAttribute("message", "Link field is empty");
+            return REDIRECT_SHORTIFY_HOME_USER;
+        }
         User existingUser = userService.findUserByEmail(principal.getName())
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
         Link link = new Link();

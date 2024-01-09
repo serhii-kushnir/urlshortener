@@ -17,9 +17,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                title = "ShortURL",
+                title = "Shortify",
                 version = "1.0",
-                description = "API documentation for ShortUrl application",
+                description = "API documentation for Shortify application",
                 contact = @Contact(
                         name = "ua.patronum"
                 )
@@ -40,7 +40,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public GroupedOpenApi customApi() {
         return GroupedOpenApi.builder()
-                .group("shortUrl")
+                .group("shortify")
                 .packagesToScan("ua.shortener")
                 .pathsToMatch("/api/v1/**", "/sh/**")
                 .build();

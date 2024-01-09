@@ -3,8 +3,9 @@
 # Data source settings
 spring:
   datasource:
+    url: jdbc:postgresql://localhost:5433/shortener
 
-    url: jdbc:postgresql://localhost:5434/shortener
+    url: jdbc:postgresql://localhost:5433/shortener
 
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
@@ -12,8 +13,9 @@ spring:
 
   # flyway settings
   flyway:
+    url: jdbc:postgresql://localhost:5433/shortener
 
-    url: jdbc:postgresql://localhost:5434/shortener
+    url: jdbc:postgresql://localhost:5433/shortener
 
     user: ${DB_USERNAME}
     password: ${DB_PASSWORD}
