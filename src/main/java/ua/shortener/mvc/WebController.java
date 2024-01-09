@@ -80,7 +80,7 @@ public final class WebController {
 
         Optional<Link> linkByShortLink = linkService.getLinkByShortLink(shortLink);
 
-        Link link = linkByShortLink.get();
+        Link link = linkByShortLink.orElseThrow();
         link.setCreatedAt(createdDate);
         link.setValidUntil(plussedDays);
 

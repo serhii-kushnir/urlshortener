@@ -28,6 +28,7 @@ import ua.shortener.link.service.LinkService;
 import ua.shortener.user.User;
 import ua.shortener.user.service.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -95,10 +96,16 @@ public final class LinkRestController {
     @Operation(summary = "Редагувати посилання")
     public ResponseEntity<DTOLink> editLink(final @RequestBody @Parameter(description = "Оновлені дані посилання")
                                             DTOLink updatedDtoLink) {
-        Link link = new Link();
-        link.setShortLink(updatedDtoLink.getShortLink());
+        LocalDateTime createdDate = LocalDateTime.now();
+        LocalDateTime plussedDays = createdDate.plusMinutes(1);
+
+        Optional<Link> linkByShortLink = linkService.getLinkByShortLink(updatedDtoLink.getShortLink());
+
+        Link link = linkByShortLink.orElseThrow();
         link.setUrl(updatedDtoLink.getLink());
-        link.setUser(userRepository.findById(1L).orElseThrow());
+        link.setCreatedAt(createdDate);
+        link.setValidUntil(plussedDays);
+
         linkService.editLink(link);
 
         return ResponseEntity.ok(link.toDTO());
