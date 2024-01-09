@@ -41,13 +41,20 @@ public final class LinkService {
         return linkRepository.findById(shortLink);
     }
 
-    public void createLink(final Link link) {
-        String url = link.getUrl();
+//    public void createLink(final Link link) {
+//        String url = link.getUrl();
+//
+//        if (!url.startsWith("https://") && !url.startsWith("http://")) {
+//            link.setUrl("https://" + url);
+//        }
+//
+//        linkRepository.save(link);
+//    }
 
-        if (!url.startsWith("https://") || !url.startsWith("http://")) {
-            link.setUrl("https://" + url);
+    public void createLink(Link link) {
+        if (!isUrlAccessible(link.getUrl()).orElse(false)) {
+            throw new IllegalArgumentException("Invalid URL");
         }
-
         linkRepository.save(link);
     }
 

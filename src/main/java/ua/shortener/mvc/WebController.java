@@ -89,7 +89,14 @@ public final class WebController {
         Link link = new Link();
         link.setUrl(url);
         link.setUser(existingUser);
-        linkService.createLink(link);
+
+        try {
+            linkService.createLink(link);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Invalid URL");
+            return REDIRECT_SHORTIFY_HOME_USER;
+        }
+
         redirectAttributes.addFlashAttribute("message", "Link created successfully");
         return REDIRECT_SHORTIFY_HOME_USER;
     }
