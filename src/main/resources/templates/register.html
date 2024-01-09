@@ -50,12 +50,12 @@
                 <div class="input-box">
                     <input th:field="*{email}" type="email" class="input-field" placeholder="Email">
                     <i class="bx bx-envelope"></i>
-                    <p th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">></p>
+                    <p th:if="${#fields.hasErrors('email')}" style="color: indianred" th:errors="*{email}">></p>
                 </div>
                 <div class="input-box">
                     <input th:field="*{password}" type="password" class="input-field" placeholder="Password">
                     <i class="bx bx-lock-alt"></i>
-                    <p th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}">></p>
+                    <p th:if="${#fields.hasErrors('password')}" style="color: indianred" th:errors="*{password}">></p>
                 </div>
                 <div class="input-box">
                     <input type="submit" class="submit" value="Register">
