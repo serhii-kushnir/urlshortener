@@ -41,16 +41,6 @@ public final class LinkService {
         return linkRepository.findById(shortLink);
     }
 
-//    public void createLink(final Link link) {
-//        String url = link.getUrl();
-//
-//        if (!url.startsWith("https://") && !url.startsWith("http://")) {
-//            link.setUrl("https://" + url);
-//        }
-//
-//        linkRepository.save(link);
-//    }
-
     public void createLink(Link link) {
         if (!isUrlAccessible(link.getUrl()).orElse(false)) {
             throw new IllegalArgumentException("Invalid URL");
