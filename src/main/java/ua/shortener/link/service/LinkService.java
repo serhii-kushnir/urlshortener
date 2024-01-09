@@ -2,6 +2,7 @@ package ua.shortener.link.service;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,8 @@ import java.util.HashMap;
 public final class LinkService {
 
     private final LinkRepository linkRepository;
+    @Getter
+    private final Map<String, Link> cache = new HashMap<>();
 
     public List<Link> getAllLinks() {
         return linkRepository.findAll();
@@ -39,6 +42,10 @@ public final class LinkService {
     }
 
     public void createLink(final Link link) {
+        String url = link.getUrl();
+        if (!url.startsWith("https://") || !url.startsWith("http://")){
+            link.setUrl("https://" + url);
+        }
         linkRepository.save(link);
     }
 
@@ -68,7 +75,7 @@ public final class LinkService {
         }
     }
 
-    public Link editLink(final Link existingLink) {
+    public Link editLink(Link existingLink) {
         if (linkRepository.findById(existingLink.getShortLink()).isEmpty()) {
             return null;
         }
@@ -108,12 +115,22 @@ public final class LinkService {
     }
 
     public void redirect(final String shortLink, final HttpServletResponse response) throws IOException {
-        Optional<Link> searchedLink = getLinkByShortLink(shortLink);
-        if (searchedLink.isPresent()) {
-            response.sendRedirect(searchedLink.get().getUrl());
-            Link link = searchedLink.get();
+        if (cache.containsKey(shortLink)){
+            Link cacheLink = cache.get(shortLink);
+            String url = cacheLink.getUrl();
+            response.sendRedirect(url);
+            cacheLink.setOpenCount(cacheLink.getOpenCount() + 1);
+            return;
+        }
+
+        Optional<Link> optionalSearchedLink = getLinkByShortLink(shortLink);
+        if (optionalSearchedLink.isPresent()) {
+            Link searchedLink = optionalSearchedLink.get();
+            response.sendRedirect(optionalSearchedLink.get().getUrl());
+            Link link = optionalSearchedLink.get();
             link.setOpenCount(link.getOpenCount() + 1);
             editLink(link);
+            cache.put(searchedLink.getShortLink(), searchedLink);
         } else {
             response.sendRedirect("/");
         }
