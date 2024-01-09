@@ -13,7 +13,7 @@ import java.util.Map;
 @Slf4j
 public class CacheSaver {
     private final LinkService linkService;
-    @Scheduled(fixedRate = 600000)
+    @Scheduled(fixedRate = 10000)
     public void saveLinksFromCacheToDatabase() {
         Map<String, Link> cache = linkService.getCache();
         cache.keySet()
