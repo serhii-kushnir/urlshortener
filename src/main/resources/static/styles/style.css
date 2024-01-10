@@ -92,7 +92,7 @@ th{
     transition: .5s ease-in-out;
 }
 .participants-container {
-    max-height: 500px;
+    max-height: 900px;
     overflow: auto;
     margin-top: 50px;
     display: flex;
