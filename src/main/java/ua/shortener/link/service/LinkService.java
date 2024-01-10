@@ -154,12 +154,11 @@ public final class LinkService {
         return null;
     }
 
-    public Map<String, List<Link>> getAllUsersLinksDTO(Principal principal) {
-        String username = principal.getName();
-        User userByEmail = userService.findUserByEmail(username).orElseThrow();
+    public Map<String, List<Link>> getAllUsersLinks(String email) {
+        User userByEmail = userService.findUserByEmail(email).orElseThrow();
         LocalDateTime now = LocalDateTime.now();
         Map<String, List<Link>> linksMap = new HashMap<>();
-        Long userId = userByEmail.getId();
+        long userId = userByEmail.getId();
         cache
                 .keySet()
                 .stream()
@@ -178,5 +177,22 @@ public final class LinkService {
         linksMap.put("activeLinks", active);
         linksMap.put("notActiveLinks", notActive);
         return linksMap;
+    }
+
+    public Map<String, List<DTOLink>> getAllUsersDTOLinks(String email){
+        return transformToDTOLink(getAllUsersLinks(email));
+    }
+
+    private Map<String, List<DTOLink>> transformToDTOLink(Map<String, List<Link>> mapUsersLink){
+        Map<String, List<DTOLink>> result = new HashMap<>();
+        List<DTOLink> activeLinks = mapUsersLink.get("activeLinks").stream()
+                .map(Link::toDTO)
+                .toList();
+        List<DTOLink> notActiveLinks = mapUsersLink.get("notActiveLinks").stream()
+                .map(Link::toDTO)
+                .toList();
+        result.put("activeLinks", activeLinks);
+        result.put("notActiveLinks", notActiveLinks);
+        return result;
     }
 }
