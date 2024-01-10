@@ -16,9 +16,7 @@ import ua.shortener.user.User;
 import ua.shortener.user.dto.EditUserDTO;
 import ua.shortener.user.dto.UserDTO;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Service
