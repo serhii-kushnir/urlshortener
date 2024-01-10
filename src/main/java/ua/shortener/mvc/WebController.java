@@ -2,6 +2,7 @@ package ua.shortener.mvc;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -57,7 +58,7 @@ public final class WebController {
     }
 
     @PostMapping("/register")
-    public String registerUser(RegistrationRequest registrationRequest, BindingResult bindingResult){
+    public String registerUser(@Valid RegistrationRequest registrationRequest, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
 
             return "register";
