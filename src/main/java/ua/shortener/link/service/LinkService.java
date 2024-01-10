@@ -46,9 +46,14 @@ public final class LinkService {
     }
 
     public void createLink(Link link) {
-        if (!isUrlAccessible(link.getUrl()).orElse(false)) {
+        String url = link.getUrl();
+        if (!url.startsWith("https://") && !url.startsWith("http://")){
+            url = "https://" + url;
+        }
+        if (!isUrlAccessible(url).orElse(false)) {
             throw new IllegalArgumentException("Invalid URL");
         }
+        link.setUrl(url);
         linkRepository.save(link);
     }
 
@@ -82,7 +87,6 @@ public final class LinkService {
         if (linkRepository.findById(existingLink.getShortLink()).isEmpty()) {
             return null;
         }
-
         return linkRepository.save(existingLink);
     }
 
