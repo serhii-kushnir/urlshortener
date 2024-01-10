@@ -119,6 +119,12 @@ public final class LinkRestController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/{userEmail}/list/all")
+    public ResponseEntity<Map<String, List<DTOLink>>> getAllUsersLinks(@PathVariable String userEmail){
+        System.out.println(linkService.getAllUsersDTOLinks(userEmail));
+        return ResponseEntity.ok(linkService.getAllUsersDTOLinks(userEmail));
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     @Operation(summary = "Обробник винятків для IllegalArgumentException", description =
             "Повертає повідомлення про помилку та статус 400, коли виникає IllegalArgumentException")
