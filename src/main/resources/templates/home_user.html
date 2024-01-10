@@ -33,8 +33,9 @@
         </form>
     </nav>
     <!-----------------------------Input Form----------------------------------->
-    <div>
-        <div class="container input-container" style="display: flex; justify-content: space-between;">
+
+    <div style="max-width: 100%; overflow: auto;">
+        <div class="container input-container" >
             <form th:action="@{/shortify/home_user/generate}" method="POST" class="nav-button">
                 <div style="margin-bottom: 20px;">
                     <input th:name="url" type="text" id="link" class="input-field" placeholder="put your url here">
