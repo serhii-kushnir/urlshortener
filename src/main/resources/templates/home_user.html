@@ -19,10 +19,18 @@
         <div class="nav-logo">
             <img src="/static/images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
         </div>
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a></a></li>
+                <li><a></a></li>
+                <li><a></a></li>
+                <li><a></a></li>
+                <li><a></a></li>
+            </ul>
+        </div>
         <form th:action="@{/logout}" method="GET" class="nav-button">
             <input class="btn white-btn" style="font-size: 15px;" id="loginBtn"  type="submit" value="Sign out"/>
         </form>
-
     </nav>
     <!-----------------------------Input Form----------------------------------->
     <div>
@@ -65,8 +73,8 @@
                         </a>
                     </td>
                     <td style="padding-left: 40px;">
-                        <spam class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" th:text="${link.openCount}">
-                        </spam>
+                        <span class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" th:text="${link.openCount}">
+                        </span>
                     </td>
                     <td style="padding-left: 40px;">
                         <form th:action="@{/shortify/delete}" method="post" class="d-inline">
@@ -104,7 +112,7 @@
                         </a>
                     </td>
                     <td style="padding-left: 40px;">
-                        <spam class="link-light link-offset-2 link-offset-3-hover  link-underline-opacity-0" th:text="${notActiveLinkList.openCount}"></spam>
+                        <span class="link-light link-offset-2 link-offset-3-hover  link-underline-opacity-0" th:text="${notActiveLinkList.openCount}"></span>
                     </td>
                     <td style="padding-left: 40px;">
                         <form th:action="@{/shortify/update}" method="post" class="d-inline">
@@ -129,7 +137,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script>
     function generateQR() {
-// Получаем значение поля ввода ссылки
         var link = document.getElementById("link").value;
 
 // Генерируем QR-код на основе полученной ссылки и utm меток
@@ -140,7 +147,12 @@
         qrCode.innerHTML = qr.createImgTag();
     }
 </script>
-
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
 
 </body>
 </html>
