@@ -156,25 +156,27 @@ public final class LinkService {
 
     public Map<String, List<Link>> getAllUsersLinksDTO(Principal principal) {
         String username = principal.getName();
-       User userByEmail = userService.findUserByEmail(username).orElseThrow();
-        LocalDateTime dateTime = LocalDateTime.now();
-        List<Link> links =userByEmail.getLinks();
-
-        Map<String, List<Link>> result = new HashMap<>();
-
-        List<Link> notActiveLinks = links
+        User userByEmail = userService.findUserByEmail(username).orElseThrow();
+        LocalDateTime now = LocalDateTime.now();
+        Map<String, List<Link>> linksMap = new HashMap<>();
+        Long userId = userByEmail.getId();
+        cache
+                .keySet()
                 .stream()
-                .filter(link -> link.getValidUntil().isBefore(dateTime))
+                .filter(shortUrl -> cache.get(shortUrl).getUser().getId() == userId)
+                .map(cache::get)
+                .forEach(this::editLink);
+        List<Link> links = userByEmail.getLinks();
+        List<Link> active = links.stream()
+                .filter(link -> link.getValidUntil().isAfter(now))
                 .toList();
 
-        List<Link> activeLinks = links
-                .stream()
-                .filter(link -> link.getValidUntil().isAfter(dateTime))
+        List<Link> notActive = links.stream()
+                .filter(link -> link.getValidUntil().isBefore(now))
                 .toList();
 
-        result.put("Active", activeLinks);
-        result.put("Not active", notActiveLinks);
-
-        return result;
+        linksMap.put("activeLinks", active);
+        linksMap.put("notActiveLinks", notActive);
+        return linksMap;
     }
 }

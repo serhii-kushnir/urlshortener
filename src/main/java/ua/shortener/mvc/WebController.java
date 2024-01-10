@@ -133,8 +133,8 @@ public final class WebController {
         log.info("IN showHomeUserPage. PRINCIPAL = " + principal.getName());
         ModelAndView result = new ModelAndView("/home_user");
         Map<String, List<Link>> allUsersLinks = linkService.getAllUsersLinksDTO(principal);
-        List<Link> activeLinks = allUsersLinks.get("Active");
-        List<Link> notActiveLinks = allUsersLinks.get("Not active");
+        List<Link> activeLinks = allUsersLinks.get("activeLinks");
+        List<Link> notActiveLinks = allUsersLinks.get("notActiveLinks");
         result.addObject("linkList", activeLinks);
         result.addObject("notActiveLinkList", notActiveLinks);
         return result;
