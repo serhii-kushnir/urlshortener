@@ -18,15 +18,21 @@
         </div>
         <div class="nav-menu" id="navMenu">
             <ul>
-                <li><a th:href="@{/shortify/home_guest}" class="link active">Home</a></li>
-                <li><a th:href="@{/shortify/about}" class="link">About</a></li>
-                <li><a th:href="@{/shortify/thanks_to}" class="link">Thanks to</a></li>
-                <li><a th:href="@{/swagger-ui/index.html}" class="link">Swagger</a></li>
-                <li><a th:href="@{/shortify/example}" class="link">Video guide</a></li>
+                <li><a th:href="@{/shortify/home_guest}" class="link active"
+                       data-bs-toggle="tooltip" title="links for unregistered user">Home</a></li>
+                <li><a th:href="@{/shortify/about}" class="link"
+                       data-bs-toggle="tooltip" title="read information about Service">About</a></li>
+                <li><a th:href="@{/shortify/thanks_to}" class="link"
+                       data-bs-toggle="tooltip" title="read information about Us">Thanks to</a></li>
+                <li><a th:href="@{/swagger-ui/index.html}" class="link"
+                       data-bs-toggle="tooltip" title="documentation for Api">Swagger</a></li>
+                <li><a th:href="@{/shortify/example}" class="link"
+                       data-bs-toggle="tooltip" title="watch the video tutorial">Video guide</a></li>
             </ul>
         </div>
         <div class="nav-button">
-            <a class="btn white-btn" id="loginBtn" th:href="@{/shortify/register}" >register</a>
+            <a class="btn white-btn" id="loginBtn"  th:href="@{/shortify/register}"
+               data-bs-toggle="tooltip" title="press for registration">register</a>
         </div>
 
     </nav>

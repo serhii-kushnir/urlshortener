@@ -17,7 +17,7 @@
 <div class="wrapper" style="flex-direction: column">
     <nav class="nav">
         <div class="nav-logo">
-            <img src="/static/images/LOGO.png" alt="LOGO" style="width: 150px; height: auto;">
+            <img src="/static/images/LOGO.png" alt="LOGO" data-bs-toggle="tooltip" title="the best logo you ever seen" style="width: 150px; height: auto;">
         </div>
         <div class="nav-menu" id="navMenu">
             <ul>
@@ -29,7 +29,8 @@
             </ul>
         </div>
         <form th:action="@{/logout}" method="GET" class="nav-button">
-            <input class="btn white-btn" style="font-size: 15px;" id="loginBtn"  type="submit" value="Sign out"/>
+            <input class="btn white-btn" style="font-size: 15px;" id="loginBtn"  type="submit"
+                   data-bs-toggle="tooltip" title="No No No don't do that!!!" value="Sign out"/>
         </form>
     </nav>
     <!-----------------------------Input Form----------------------------------->
@@ -38,21 +39,27 @@
         <div class="container input-container" >
             <form th:action="@{/shortify/home_user/generate}" method="POST" class="nav-button">
                 <div style="margin-bottom: 20px;">
-                    <input th:name="url" type="text" id="link" class="input-field" placeholder="put your url here">
+                    <input th:name="url" type="text" id="link" class="input-field" style="font-size: 20px;" placeholder="put your url here">
                 </div>
-                <button type="submit" id="generateBtn" class="btn white-btn" style="font-size: 15px;">generate</button>
-                <button type="button" style="font-size: 15px;" class="btn white-btn" onclick="generateQR()">generate QR</button>
+                <button type="submit" id="generateBtn" class="btn white-btn"
+                        data-bs-toggle="tooltip" title="Here you can generate short URL">generate</button>
+                <button type="button" class="btn white-btn"
+                        data-bs-toggle="tooltip" title="Here you can generate QR code" onclick="generateQR()">generate QR</button>
+
+                <div th:if="${message}">
+                    <br>
+                    <p th:text="${message}" style="color: snow;"></p>
+                </div>
             </form>
             <div class="showQR" id="qr-code"></div>
         </div>
     </div>
     <!----------------------------- Teble container ----------------------------------->
+    <div class="links table">
+        <header style="" data-bs-toggle="tooltip" title="Here you can see active links">Active</header>
+    </div>
     <div class="container table-container">
         <div th:if="${linkList.size() != 0}">
-            <header>Active</header>
-            <div th:if="${message}">
-                <p th:text="${message}" style="color: snow;"></p>
-            </div>
             <table  class="able table-borderless">
                 <thead>
                 <tr >
@@ -65,22 +72,24 @@
                 <tr th:each="link : ${linkList}">
                     <td style="padding-right: 40px;">
                         <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                           th:href="${link.url}" th:text="${link.url}">
+                           th:href="${link.url}" th:text="${link.url}" data-bs-toggle="tooltip" title="original url">
                         </a>
                     </td>
                     <td style="padding-left: 40px;">
                         <a class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                           th:href="@{/shortify/redirect/{shortLink}(shortLink=${link.shortLink})}" th:text="${link.shortLink}">
+                           th:href="@{/shortify/redirect/{shortLink}(shortLink=${link.shortLink})}" th:text="${link.shortLink}" data-bs-toggle="tooltip" title="short url">
                         </a>
                     </td>
                     <td style="padding-left: 40px;">
-                        <span class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" th:text="${link.openCount}">
+                        <span class="link-light link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                              th:text="${link.openCount}" data-bs-toggle="tooltip" title="here you can see how popular the link is">
                         </span>
                     </td>
                     <td style="padding-left: 40px;">
                         <form th:action="@{/shortify/delete}" method="post" class="d-inline">
                             <input type="hidden" name="shortLink" th:value="${link.shortLink}"/>
-                            <button type="submit" class="btn btn-outline-success ms-auto">Remove 🗑️</button>
+                            <button type="submit" class="btn btn-outline-success ms-auto"
+                                    data-bs-toggle="tooltip" title="be careful! clicking on this button will remove this link">Remove 🗑️</button>
                         </form>
                     </td>
                 </tr>
@@ -88,10 +97,12 @@
             </table>
         </div>
     </div>
-
+ <hr style="color: red">
+    <div class="links table">
+        <header style="top: 30px;" data-bs-toggle="tooltip" title="Here you can see deactivated links">Not Active</header>
+    </div>
     <div class="container table-container">
         <div th:if="${notActiveLinkList.size() != 0}">
-            <header>Not Active</header>
             <table  class="able table-borderless">
                 <thead>
                 <tr >
@@ -118,12 +129,14 @@
                     <td style="padding-left: 40px;">
                         <form th:action="@{/shortify/update}" method="post" class="d-inline">
                             <input type="hidden" name="shortLink" th:value="${notActiveLinkList.shortLink}"/>
-                            <button type="submit" class="btn btn-outline-success ms-auto">Update</button>
+                            <button type="submit" class="btn btn-outline-success ms-auto"
+                                    data-bs-toggle="tooltip" title="by clicking on this button you activate the link">Update</button>
                         </form>
 
                         <form th:action="@{/shortify/delete}" method="post" class="d-inline">
                             <input type="hidden" name="shortLink" th:value="${notActiveLinkList.shortLink}"/>
-                            <button type="submit" class="btn btn-outline-success ms-auto">Remove 🗑️</button>
+                            <button type="submit" class="btn btn-outline-success ms-auto"
+                                    data-bs-toggle="tooltip" title="be careful! clicking on this button will remove this link">Remove 🗑️</button>
                         </form>
                     </td>
                 </tr>
@@ -140,19 +153,12 @@
     function generateQR() {
         var link = document.getElementById("link").value;
 
-// Генерируем QR-код на основе полученной ссылки и utm меток
         var qr = qrcode(0, 'L');
         qr.addData(link);
         qr.make();
         var qrCode = document.getElementById("qr-code");
         qrCode.innerHTML = qr.createImgTag();
     }
-</script>
-<script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
 </script>
 
 </body>

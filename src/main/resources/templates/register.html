@@ -21,14 +21,21 @@
         </div>
         <div class="nav-menu" id="navMenu">
             <ul>
-                <li><a th:href="@{/shortify/home_guest}" class="link active">Home</a></li>
-                <li><a th:href="@{/shortify/about}" class="link">About</a></li>
-                <li><a th:href="@{/shortify/thanks_to}" class="link">Thanks to</a></li>
-                <li><a th:href="@{/swagger}" class="link">Swagger</a></li>
+                <li><a th:href="@{/shortify/home_guest}" class="link active"
+                       data-bs-toggle="tooltip" title="links for unregistered user">Home</a></li>
+                <li><a th:href="@{/shortify/about}" class="link"
+                       data-bs-toggle="tooltip" title="read information about Service">About</a></li>
+                <li><a th:href="@{/shortify/thanks_to}" class="link"
+                       data-bs-toggle="tooltip" title="read information about Us">Thanks to</a></li>
+                <li><a th:href="@{/swagger-ui/index.html}" class="link"
+                       data-bs-toggle="tooltip" title="documentation for Api">Swagger</a></li>
+                <li><a th:href="@{/shortify/example}" class="link"
+                       data-bs-toggle="tooltip" title="watch the video tutorial">Video guide</a></li>
             </ul>
         </div>
         <div class="nav-button">
-            <a class="btn white-btn" id="loginBtn" th:href="@{/shortify/hello}" >Sign in</a>
+            <a class="btn white-btn" id="loginBtn"
+               data-bs-toggle="tooltip" title="Login page" th:href="@{/shortify/hello}" >Sign in</a>
         </div>
     </nav>
 
@@ -39,26 +46,30 @@
         <div class="register-container" id="register" style="margin-top: 15px; right: 5px; opacity: 1;">
             <form th:action="@{/shortify/register}" th:object="${registrationRequest}" method="POST">
                 <div class="top">
-                    <span>Have an account? <a th:href="@{/shortify/hello}">Login</a></span>
+                    <span>Have an account? <a data-bs-toggle="tooltip" title="Login page"
+                                              th:href="@{/shortify/hello}">Login</a></span>
                     <header>Sign Up</header>
                 </div>
                 <div class="input-box">
-                    <input th:field="*{name}" type="text" class="input-field" placeholder="Username">
+                    <input th:field="*{name}" type="text" class="input-field"
+                           data-bs-toggle="tooltip" title="Username must be at least 3 characters long" placeholder="Username">
                     <i class="bx bx-user"></i>
                     <p th:if="${#fields.hasErrors('name')}" style="color: indianred" th:errors="*{name}"></p>
                 </div>
                 <div class="input-box">
-                    <input th:field="*{email}" type="email" class="input-field" placeholder="Email">
+                    <input th:field="*{email}" type="email" class="input-field"
+                           data-bs-toggle="tooltip" title="Email should be correct, like: ****@***.***" placeholder="Email">
                     <i class="bx bx-envelope"></i>
                     <p th:if="${#fields.hasErrors('email')}" style="color: indianred" th:errors="*{email}">></p>
                 </div>
                 <div class="input-box">
-                    <input th:field="*{password}" type="password" class="input-field" placeholder="Password">
+                    <input th:field="*{password}" type="password" class="input-field"
+                           data-bs-toggle="tooltip" title="Username must be at least 6 characters long" placeholder="Password">
                     <i class="bx bx-lock-alt"></i>
                     <p th:if="${#fields.hasErrors('password')}" style="color: indianred" th:errors="*{password}">></p>
                 </div>
                 <div class="input-box">
-                    <input type="submit" class="submit" value="Register">
+                    <input type="submit" class="submit" data-bs-toggle="tooltip" title=" If you entered everything correctly, I congratulate you" value="Register">
                 </div>
             </form>
         </div>

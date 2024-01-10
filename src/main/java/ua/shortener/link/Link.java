@@ -50,7 +50,7 @@ public final class Link {
 
     public Link() {
         LocalDateTime createdDate = LocalDateTime.now();
-        LocalDateTime plussedDays = createdDate.plusMinutes(1);
+        LocalDateTime plussedDays = createdDate.plusMinutes(3);
         this.shortLink = generateShortLink();
         this.createdAt = createdDate;
         this.validUntil = plussedDays;
