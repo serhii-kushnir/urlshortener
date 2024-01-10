@@ -41,6 +41,9 @@ th{
     margin-left: 20px;
 
 }
+.link table{
+    padding-top: 20px;
+}
 .about-section {
     width: 70%;
     margin: 0 auto;
@@ -57,7 +60,7 @@ th{
     display: flex;
     justify-content: center;
     text-align: center;
-    margin-top: 100px;
+    margin-top: 50px;
 
 }
 .input-container{
@@ -170,6 +173,7 @@ th{
 }
 .btn.white-btn{
     background: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
 }
 .btn.btn.white-btn:hover{
     background: rgba(255, 255, 255, 0.5);
