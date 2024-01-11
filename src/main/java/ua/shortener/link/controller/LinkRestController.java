@@ -3,7 +3,8 @@ package ua.shortener.link.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +33,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+
+
 
 @RestController
 @RequestMapping("/api/v1/link")
@@ -67,17 +71,17 @@ public final class LinkRestController {
         return redirect == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(redirect);
     }
 
-   @PostMapping("/create")
-   @Operation(summary = "Створити нове посилання")
-    public ResponseEntity<DTOLink> createLink(final @RequestBody @Parameter(description = "Дані для створення посилання") 
-                                              DTOLink dtoLink) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
+    @PostMapping("/create")
+    @Operation(summary = "Створити нове посилання")
+    public ResponseEntity<DTOLink> createLink(final @RequestBody @Parameter(description = "Дані для створення посилання")
+    DTOLink dtoLink) {
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       String userEmail = authentication.getName();
 
 
-        Optional<User> optionalUser = userRepository.findUserByEmail(userEmail);
+       Optional<User> optionalUser = userRepository.findUserByEmail(userEmail);
 
-        if (optionalUser.isPresent()) {
+       if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
 
             Link link = new Link();
@@ -90,12 +94,12 @@ public final class LinkRestController {
         } else {
             return ResponseEntity.badRequest().build();
         }
-    }
+   }
 
     @PostMapping("/edit")
     @Operation(summary = "Редагувати посилання")
     public ResponseEntity<DTOLink> editLink(final @RequestBody @Parameter(description = "Оновлені дані посилання")
-                                            DTOLink updatedDtoLink) {
+    DTOLink updatedDtoLink) {
         LocalDateTime createdDate = LocalDateTime.now();
         LocalDateTime plussedDays = createdDate.plusMinutes(1);
 
@@ -114,13 +118,21 @@ public final class LinkRestController {
     @PostMapping("/delete/{shortLink}")
     @Operation(summary = "Видалити посилання")
     public ResponseEntity<Void> deleteLink(final @PathVariable @Parameter(description = "Коротке посилання")
-                                               String shortLink) {
+    String shortLink) {
         linkService.deleteLink(shortLink);
         return ResponseEntity.ok().build();
     }
 
+
+
     @GetMapping("/{userEmail}/list/all")
-    public ResponseEntity<Map<String, List<DTOLink>>> getAllUsersLinks(@PathVariable String userEmail){
+    @Operation(summary = "Отримати всі посилання користувача", description = "Отримати всі посилання користувача за електронною адресою")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Успішно отримано список посилань"),
+            @ApiResponse(responseCode = "404", description = "Користувач не знайдений")
+    })
+    public ResponseEntity<Map<String, List<DTOLink>>> getAllUsersLinks(@Parameter(description =
+            "Електронна адреса користувача") @PathVariable String userEmail){
         System.out.println(linkService.getAllUsersDTOLinks(userEmail));
         return ResponseEntity.ok(linkService.getAllUsersDTOLinks(userEmail));
     }
