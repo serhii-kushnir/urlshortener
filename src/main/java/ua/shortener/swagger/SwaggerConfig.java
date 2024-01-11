@@ -21,15 +21,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
                 version = "1.0",
                 description = "API documentation for Shortify application",
                 contact = @Contact(
-                        name = "ua.patronum"
+                        name = "MySwagger"
                 )
         ),
         security = {
-                @SecurityRequirement(name = "bearer-key")
+                @SecurityRequirement(name = "MyBearer-key")
         }
 )
 @SecurityScheme(
-        name = "bearer-key",
+        name = "MyBearer-key",
         type = SecuritySchemeType.HTTP,
         scheme = "bearer",
         bearerFormat = "JWT",
