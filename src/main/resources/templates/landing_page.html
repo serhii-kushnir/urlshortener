@@ -308,7 +308,7 @@
     <section class="u-clearfix u-section-6" id="carousel_4d1f">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-custom-font u-font-montserrat u-text u-text-default u-text-1">Short links example </h2>
-        <div class="u-expanded-width u-table u-table-responsive u-table-1">
+        <div th:if="${linkList.size() != 0}" class="u-expanded-width u-table u-table-responsive u-table-1">
           <table class="u-table-entity">
             <colgroup>
               <col width="25%">
@@ -316,38 +316,38 @@
               <col width="25%">
               <col width="25%">
             </colgroup>
-            <tbody class="u-table-alt-palette-1-light-3 u-table-body">
+            <thead class="u-table-alt-palette-1-light-3 u-table-body">
               <tr style="height: 65px;">
                 <td class="u-table-cell">original link </td>
                 <td class="u-table-cell">short link </td>
                 <td class="u-table-cell">created at </td>
                 <td class="u-table-cell">active to </td>
               </tr>
-              <tr style="height: 39px;">
-                <td class="u-table-cell">Row 1</td>
-                <td class="u-table-cell">Description</td>
-                <td class="u-table-cell">Description</td>
-                <td class="u-table-cell">Description</td>
-              </tr>
-              <tr style="height: 65px;">
-                <td class="u-table-cell">Row 2</td>
-                <td class="u-table-cell">Description</td>
-                <td class="u-table-cell">Description</td>
-                <td class="u-table-cell">Description</td>
-              </tr>
-              <tr style="height: 65px;">
-                <td class="u-table-cell">Row 3</td>
-                <td class="u-table-cell">Description</td>
-                <td class="u-table-cell">Description</td>
-                <td class="u-table-cell">Description</td>
-              </tr>
-              <tr style="height: 65px;">
-                <td class="u-table-cell">Row 4</td>
-                <td class="u-table-cell">Description</td>
-                <td class="u-table-cell">Description</td>
-                <td class="u-table-cell">Description</td>
-              </tr>
-            </tbody>
+            </thead>
+            <tbody>
+                <tr th:each="link : ${linkList}">
+                    <td>
+                        <a class="u-table-cell"
+                           th:href="${link.url}" th:text="${link.url}">
+                        </a>
+                    </td>
+                    <td >
+                        <a class="u-table-cell"
+                           th:href="@{/shortify/redirect/{shortLink}(shortLink=${link.shortLink})}" th:text="${link.shortLink}">
+                        </a>
+                    </td>
+                    <td >
+                        <a class="u-table-cell"
+                           th:href="${link.createdAt}" th:text="${link.createdAt}">
+                        </a>
+                    </td>
+                    <td>
+                        <a class="u-table-cell"
+                           th:href="${link.validUntil}" th:text="${link.validUntil}">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
           </table>
         </div>
       </div>

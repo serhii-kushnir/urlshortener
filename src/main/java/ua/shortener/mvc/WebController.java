@@ -54,7 +54,14 @@ public final class WebController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "landing_page";
+        return "login_page";
+    }
+    
+    @GetMapping("/landing")
+    public ModelAndView showLandingPage() {
+    	ModelAndView result = new ModelAndView("/landing_page");
+    	result.addObject("linkList", linkService.getAllLinks());
+        return result;
     }
 
     @PostMapping("/register")
@@ -121,12 +128,6 @@ public final class WebController {
         return REDIRECT_SHORTIFY_HOME_USER;
     }
 
-    @GetMapping("/home_guest")
-    public ModelAndView getAllLinks() {
-        ModelAndView result = new ModelAndView("/home_guest");
-        result.addObject("linkList", linkService.getAllLinks());
-        return result;
-    }
 
     @GetMapping("/home_user")
     public ModelAndView showHomeUserPage(Principal principal) {

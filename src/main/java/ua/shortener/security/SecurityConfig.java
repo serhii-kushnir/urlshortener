@@ -67,6 +67,8 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/example"))
                         .permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/shortify/landing"))
+                        .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/static/**"))
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/static/images/**"))
