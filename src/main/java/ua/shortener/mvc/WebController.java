@@ -54,7 +54,7 @@ public final class WebController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login_page";
+        return "login_new";
     }
     
     @GetMapping("/landing")
