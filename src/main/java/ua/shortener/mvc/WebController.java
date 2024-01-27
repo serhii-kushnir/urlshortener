@@ -45,7 +45,7 @@ public final class WebController {
     private final LinkService linkService;
     private final UserService userService;
     private final AuthenticationServiceImpl authenticationService;
-    private static final String REDIRECT_SHORTIFY_HOME_USER = "redirect:/shortify/home_user";
+    private static final String REDIRECT_SHORTIFY_HOME_USER = "redirect:/shortify/dashboard";
 
     @GetMapping("/register")
     public ModelAndView showRegistrationPage(final @ModelAttribute("registrationRequest") RegistrationRequest registrationRequest) {
@@ -125,10 +125,10 @@ public final class WebController {
     }
 
 
-    @GetMapping("/home_user")
+    @GetMapping("/dashboard")
     public ModelAndView showHomeUserPage(Principal principal) {
         log.info("IN showHomeUserPage. PRINCIPAL = " + principal.getName());
-        ModelAndView result = new ModelAndView("/home_user");
+        ModelAndView result = new ModelAndView("/dashboard");
         Map<String, List<Link>> allUsersLinks = linkService.getAllUsersLinks(principal.getName());
         List<Link> activeLinks = allUsersLinks.get("activeLinks");
         List<Link> notActiveLinks = allUsersLinks.get("notActiveLinks");

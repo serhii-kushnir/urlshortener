@@ -79,7 +79,7 @@ public class SecurityConfig {
                                                                         .loginPage("/shortify/login")
                                                                         .permitAll()
 //                                                                        .usernameParameter("email")
-                                                                        .defaultSuccessUrl("/shortify/home_user", true)
+                                                                        .defaultSuccessUrl("/shortify/dashboard", true)
                                                                         .usernameParameter("email")
                                                                         .passwordParameter("password"))
                 .logout(logout -> logout
