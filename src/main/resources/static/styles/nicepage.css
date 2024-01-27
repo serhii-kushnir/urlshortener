@@ -42371,17 +42371,17 @@ a.u-link.u-text-hover-grey-90:hover {
 }
 
 .u-header .u-image-1 {
-  width: 166px;
-  height: 129px;
-  margin: 10px auto 0 37px;
+  width: 366px;
+  height: 229px;
+  margin: -3px auto 0 -9px;
 }
 
 .u-header .u-btn-1 {
   --radius: 6px;
-  font-weight: 700;
-  font-size: 0.9375rem;
-  margin: -49px 152px 0 auto;
-  padding: 9px 42px 10px;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    margin: -127px 168px 0 auto;
+    padding: 9px 42px 10px;
 }
 
 .u-header .u-text-1 {
@@ -42389,7 +42389,7 @@ a.u-link.u-text-hover-grey-90:hover {
   font-weight: 700;
   font-family: Montserrat, sans-serif;
   font-size: 3rem;
-  margin: -70px 224px 0 365px;
+  margin: -71px 224px 0 365px;
 }
 
 .u-header .u-btn-2 {
@@ -42402,7 +42402,7 @@ a.u-link.u-text-hover-grey-90:hover {
 }
 
 .u-header .u-text-2 {
-  font-size: 3.75rem;
+  font-size: 4.00rem;
   font-weight: 700;
   margin: 6px 859px 22px 0;
 }

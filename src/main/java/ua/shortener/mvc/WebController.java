@@ -49,7 +49,7 @@ public final class WebController {
 
     @GetMapping("/register")
     public ModelAndView showRegistrationPage(final @ModelAttribute("registrationRequest") RegistrationRequest registrationRequest) {
-        return new ModelAndView("/register");
+        return new ModelAndView("/register_new");
     }
 
     @GetMapping("/login")
@@ -68,10 +68,10 @@ public final class WebController {
     public String registerUser(@Valid RegistrationRequest registrationRequest, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
 
-            return "register";
+            return "register_new";
         } else {
             authenticationService.createUserFromRequest(registrationRequest);
-            return "success";
+            return "login_new";
         }
     }
 
@@ -97,11 +97,7 @@ public final class WebController {
         return REDIRECT_SHORTIFY_HOME_USER;
     }
 
-    @GetMapping("/example")
-    public String showQRcodePage() {
-        return "example_video";
-    }
-
+   
     @PostMapping("/home_user/generate")
     public String generateLink(final @RequestParam("url") String url,
                                final RedirectAttributes redirectAttributes,
@@ -141,15 +137,6 @@ public final class WebController {
         return result;
     }
 
-    @GetMapping("/about")
-    public ModelAndView showAboutPage() {
-        return new ModelAndView("/about");
-    }
-
-    @GetMapping("/thanks_to")
-    public ModelAndView showThanksToPage() {
-        return new ModelAndView("/thanks_to");
-    }
 
     @GetMapping("/redirect/{shortLink}")
     public void redirect(@PathVariable(name = "shortLink") String shortLink, HttpServletResponse response) throws IOException {
